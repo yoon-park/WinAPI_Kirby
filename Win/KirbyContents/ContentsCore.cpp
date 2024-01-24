@@ -1,5 +1,6 @@
 #include "ContentsCore.h"
-#include "Player.h"
+#include "TitleLevel.h"
+#include "PlayLevel.h"
 
 ContentsCore::ContentsCore()
 {
@@ -11,17 +12,20 @@ ContentsCore::~ContentsCore()
 
 }
 
-void ContentsCore::EngineStart()
+void ContentsCore::BeginPlay()
 {
-	Player NewPlayer;
+	CreateLevel<UTitleLevel>("TitleLevel");
+	CreateLevel<UPlayLevel>("PlayLevel");
+
+	ChangeLevel("PlayLevel");
 }
 
-void ContentsCore::EngineUpdate()
+void ContentsCore::Tick(float _DeltaTime)
 {
 
 }
 
-void ContentsCore::EngineEnd()
+void ContentsCore::End()
 {
 
 }

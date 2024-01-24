@@ -13,9 +13,9 @@ public:
 	ContentsCore& operator=(ContentsCore&& _Other) noexcept = delete;
 
 protected:
-	void EngineStart();
-	void EngineUpdate();
-	void EngineEnd();
+	void BeginPlay() override;
+	void Tick(float _DeltaTime) override;
+	void End() override;
 
 private:
 

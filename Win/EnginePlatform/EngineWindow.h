@@ -13,10 +13,15 @@ public:
 	EngineWindow& operator=(const EngineWindow& _Other) = delete;
 	EngineWindow& operator=(EngineWindow&& _Other) noexcept = delete;
 
+	HDC GetWindowDC()
+	{
+		return hDC;
+	}
+
 	void Open(std::string_view _Title = "Title");
 
 	static void Init(HINSTANCE _hInst);
-	static unsigned __int64 WindowMessageLoop();
+	static unsigned __int64 WindowMessageLoop(void(*_Update)(), void(*_End)());
 
 protected:
 

@@ -1,4 +1,5 @@
 #include "EngineWindow.h"
+
 #include <EngineBase\EngineDebug.h>
 
 bool EngineWindow::WindowLive = true;
@@ -9,7 +10,7 @@ void EngineWindow::Init(HINSTANCE _hInst)
 	hInstance = _hInst;
 }
 
-unsigned __int64 EngineWindow::WindowMessageLoop()
+unsigned __int64 EngineWindow::WindowMessageLoop(void(*_Update)(), void(*_End)())
 {
 	MSG msg = {};
 
@@ -20,6 +21,16 @@ unsigned __int64 EngineWindow::WindowMessageLoop()
 			TranslateMessage(&msg);
 			DispatchMessage(&msg);
 		}
+
+		if (_Update != nullptr)
+		{
+			_Update();
+		}
+	}
+
+	if (_End != nullptr)
+	{
+		_End();
 	}
 
 	return msg.wParam;
