@@ -2,6 +2,7 @@
 #include <map>
 
 #include <EngineBase\EngineDebug.h>
+#include <EngineBase\EngineTime.h>
 #include <EngineBase\EngineString.h>
 #include <EnginePlatform\EngineWindow.h>
 
@@ -17,8 +18,9 @@ public:
 	EngineCore& operator=(const EngineCore& _Other) = delete;
 	EngineCore& operator=(EngineCore&& _Other) noexcept = delete;
 
-	// 메인 창 (무조건 존재한다)
+	// 메인 창, 메인 타이머 (무조건 존재한다)
 	EngineWindow MainWindow;
+	EngineTime MainTimer;
 
 	void CoreInit(HINSTANCE _Init);
 

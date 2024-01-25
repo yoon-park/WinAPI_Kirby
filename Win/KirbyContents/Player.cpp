@@ -1,5 +1,6 @@
 #include "Player.h"
 
+#include <EnginePlatform\EngineInput.h>
 #include <EngineCore\EngineCore.h>
 
 Player::Player()

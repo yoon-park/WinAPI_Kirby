@@ -2,6 +2,7 @@
 #include <EngineBase\FTransform.h>
 #include "NameObject.h"
 #include "TickObject.h"
+#include "Level.h"
 
 class ULevel;
 
@@ -41,6 +42,11 @@ public:
 	void SetActorLocation(FVector _Value)
 	{
 		Transform.SetPosition(_Value);
+	}
+
+	void AddActorLocation(FVector _Value)
+	{
+		Transform.AddPosition(_Value);
 	}
 
 protected:

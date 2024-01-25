@@ -27,6 +27,11 @@ public:
 		Position = _Value;
 	}
 
+	void AddPosition(FVector _Value)
+	{
+		Position += _Value;
+	}
+
 	float Left()
 	{
 		return Position.X - Scale.hX();
