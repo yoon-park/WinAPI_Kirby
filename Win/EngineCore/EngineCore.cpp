@@ -21,16 +21,7 @@ void EngineCore::EngineStart(HINSTANCE _hInstance, EngineCore* _UserCore)
 
 void EngineCore::EngineTick()
 {
-	float DeltaTime = GEngine->MainTimer.TimeCheck();
-	EngineInput::KeyCheckTick(DeltaTime);
-
-	if (GEngine->CurLevel == nullptr)
-	{
-		MsgBoxAssert("엔진을 시작할 레벨이 지정되지 않았습니다.");
-	}
-
-	GEngine->CurLevel->Tick(DeltaTime);
-	GEngine->CurLevel->ActorTick(DeltaTime);
+	GEngine->CoreTick();
 }
 
 void EngineCore::EngineEnd()
@@ -89,6 +80,42 @@ void EngineCore::End()
 
 }
 
+void EngineCore::CoreTick()
+{
+	float DeltaTime = MainTimer.TimeCheck();
+	double dDeltaTime = MainTimer.GetDeltaTime();
+
+	if (Frame >= 1)
+	{
+		CurFrameTime += DeltaTime;
+
+		if (CurFrameTime <= FrameTime)
+		{
+			return;
+		}
+
+		CurFrameTime -= FrameTime;
+		DeltaTime = FrameTime;
+	}
+
+	EngineInput::KeyCheckTick(DeltaTime);
+
+	if (CurLevel == nullptr)
+	{
+		MsgBoxAssert("엔진을 시작할 레벨이 지정되지 않았습니다 치명적인 오류입니다");
+	}
+
+	CurLevel->Tick(DeltaTime);
+	CurLevel->LevelTick(DeltaTime);
+	CurLevel->LevelRender(DeltaTime);
+	CurLevel->LevelRelease(DeltaTime);
+}
+
+void EngineCore::LevelInit(ULevel* _Level)
+{
+	_Level->BeginPlay();
+}
+
 void EngineCore::ChangeLevel(std::string_view _Name)
 {
 	std::string UpperName = EngineString::ToUpper(_Name);
@@ -99,9 +126,4 @@ void EngineCore::ChangeLevel(std::string_view _Name)
 	}
 
 	CurLevel = AllLevel[UpperName];
-}
-
-void EngineCore::LevelInit(ULevel* _Level)
-{
-	_Level->BeginPlay();
 }

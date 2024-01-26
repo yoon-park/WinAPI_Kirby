@@ -45,6 +45,12 @@ public:
 
 	void ChangeLevel(std::string_view _Name);
 
+	void SetFrame(int _Frame)
+	{
+		Frame = _Frame;
+		FrameTime = 1 / static_cast<float>(Frame);
+	}
+
 	static void EngineStart(HINSTANCE _hInstance, EngineCore* _UserCore);
 
 protected:
@@ -52,9 +58,15 @@ protected:
 
 private:
 	bool EngineInit = false;
+
+	int Frame = -1;
+	float FrameTime = 0.0f;
+	float CurFrameTime = 0.0f;
+
 	ULevel* CurLevel = nullptr;
 	std::map<std::string, ULevel*> AllLevel;
 
+	void CoreTick();
 	void LevelInit(ULevel* _Level);
 
 	static void EngineTick();

@@ -1,5 +1,6 @@
 #include "Player.h"
 
+#include <EngineBase\EngineTime.h>
 #include <EnginePlatform\EngineInput.h>
 #include <EngineCore\EngineCore.h>
 

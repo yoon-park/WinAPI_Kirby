@@ -1,10 +1,13 @@
 #pragma once
-#include <EngineBase\FTransform.h>
+#include <EngineBase\Transform.h>
 #include "NameObject.h"
 #include "TickObject.h"
 #include "Level.h"
+#include "ImageRenderer.h"
 
 class ULevel;
+class UActorComponent;
+class UImageRenderer;
 
 class AActor : public UNameObject, public UTickObject
 {
@@ -34,11 +37,6 @@ public:
 		return Transform.GetPosition();
 	}
 
-	void SetActorScale(FVector _Value)
-	{
-		Transform.SetScale(_Value);
-	}
-
 	void SetActorLocation(FVector _Value)
 	{
 		Transform.SetPosition(_Value);
@@ -49,11 +47,20 @@ public:
 		Transform.AddPosition(_Value);
 	}
 
+	void SetActorScale(FVector _Value)
+	{
+		Transform.SetScale(_Value);
+	}
+
+	UImageRenderer* CreateImageRenderer(int Order = 0);
+
 protected:
 
 private:
-	ULevel* World;
-	FTransform Transform;
+	ULevel* World = nullptr;
+	FTransform Transform = FTransform();
+
+	std::list<UImageRenderer*> Renderers;
 
 	void SetWorld(ULevel* _Value)
 	{

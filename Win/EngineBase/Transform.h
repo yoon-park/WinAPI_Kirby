@@ -7,19 +7,14 @@ public:
 	FTransform();
 	~FTransform();
 
-	FVector GetScale()
-	{
-		return Scale;
-	}
-	
 	FVector GetPosition()
 	{
 		return Position;
 	}
 
-	void SetScale(FVector _Value)
+	FVector GetScale()
 	{
-		Scale = _Value;
+		return Scale;
 	}
 
 	void SetPosition(FVector _Value)
@@ -30,6 +25,11 @@ public:
 	void AddPosition(FVector _Value)
 	{
 		Position += _Value;
+	}
+
+	void SetScale(FVector _Value)
+	{
+		Scale = _Value;
 	}
 
 	float Left()
@@ -75,6 +75,6 @@ public:
 protected:
 
 private:
-	FVector Scale;
 	FVector Position;
+	FVector Scale;
 };

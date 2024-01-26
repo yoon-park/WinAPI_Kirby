@@ -1,4 +1,5 @@
 #pragma once
+#include <EngineBase\EngineDebug.h>
 
 class UTickObject
 {
@@ -11,29 +12,63 @@ public:
 	UTickObject& operator=(const UTickObject& _Other) = delete;
 	UTickObject& operator=(UTickObject&& _Other) noexcept = delete;
 
-	bool IsOn()
+	int GetOrder()
 	{
-		return (IsUpdateValue) && (IsDeathValue == false);
+		return Order;
 	}
 
-	bool IsDeath()
+	virtual void SetOrder(int _Order)
 	{
-		return IsDeathValue;
+		Order = _Order;
 	}
 
-	void On()
+	bool IsActive()
 	{
-		IsUpdateValue = true;
+		return IsActiveValue && (IsDestroyValue == false);
 	}
 
-	void Off()
+	void SetActive(bool _Active)
 	{
-		IsUpdateValue = false;
+		IsActiveValue = _Active;
 	}
 
-	void Death()
+	void ActiveOn()
 	{
-		IsDeathValue = true;
+		IsActiveValue = true;
+	}
+
+	void ActiveOff()
+	{
+		IsActiveValue = false;
+	}
+
+	bool IsDestroy()
+	{
+		return IsDestroyValue;
+	}
+
+	void Destroy(float _DestroyTime = 0.0f)
+	{
+		IsDestroyUpdate = true;
+		DestroyTime = _DestroyTime;
+		if (_DestroyTime <= 0.0f)
+		{
+			IsDestroyValue = true;
+		}
+	}
+
+	void DestroyUpdate(float _DeltaTime)
+	{
+		if (IsDestroyUpdate == false)
+		{
+			return;
+		}
+
+		DestroyTime -= _DeltaTime;
+		if (DestroyTime <= 0.0f)
+		{
+			IsDestroyValue = true;
+		}
 	}
 
 	virtual void BeginPlay();
@@ -42,6 +77,9 @@ public:
 protected:
 
 private:
-	bool IsUpdateValue = true;
-	bool IsDeathValue = false;
+	int Order = 0;
+	bool IsActiveValue = true;
+	bool IsDestroyValue = false;
+	bool IsDestroyUpdate = false;
+	float DestroyTime = 0.0f;
 };

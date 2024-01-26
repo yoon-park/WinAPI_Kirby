@@ -16,6 +16,11 @@ public:
 
 	float TimeCheck();
 
+	double GetDeltaTime()
+	{
+		return DeltaTime;
+	}
+
 protected:
 
 private:
