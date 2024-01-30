@@ -24,7 +24,6 @@ void UImageRenderer::SetOrder(int _Order)
 
 	UTickObject::SetOrder(_Order);
 
-
 	Renderers[GetOrder()].push_back(this);
 }
 

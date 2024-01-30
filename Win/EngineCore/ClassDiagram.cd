@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="EngineCore" Collapsed="true">
+    <Position X="9" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQIAIAAkFaAAABAAAAoEAAAAAQAEAAAIAAQgAAAgQIE=</HashCode>
+      <FileName>EngineCore.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AActor">
+    <Position X="0.5" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAAAAAEBABAAAAAABAAEQAAAICQAAAAAChEAAAAAA=</HashCode>
+      <FileName>Actor.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UImageRenderer">
+    <Position X="3.5" Y="12.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAgIAAAAAAAAAAAAAAAAAAAAAAAAAAABAgAAAgAAA=</HashCode>
+      <FileName>ImageRenderer.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UActorComponent">
+    <Position X="3.5" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACIAIAAAAAAAAAAAAAAAAAAAAAAAAIgAAAIAAA=</HashCode>
+      <FileName>ActorComponent.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="USceneComponent">
+    <Position X="3.5" Y="9.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAAAAAAAAAAAAAAAAABAAAQAAgAAAgAAAAAgAgAAAAA=</HashCode>
+      <FileName>SceneComponent.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ULevel" Collapsed="true">
+    <Position X="6.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAEAIABAEAAAAAAAAABAAACgQIAgQAA=</HashCode>
+      <FileName>Level.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UNameObject">
+    <Position X="6.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAQAAQAAAAQAAAAAAAgQAAABAA=</HashCode>
+      <FileName>NameObject.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UTickObject">
+    <Position X="3.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAEAAQAAAAAAACgAEAAAAEAAAABAECEABAEgAIAgRQA=</HashCode>
+      <FileName>TickObject.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="맑은 고딕" Size="9" />
+</ClassDiagram>

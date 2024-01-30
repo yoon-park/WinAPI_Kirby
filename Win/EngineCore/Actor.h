@@ -54,6 +54,9 @@ public:
 
 	UImageRenderer* CreateImageRenderer(int Order = 0);
 
+	void Destroy(float _DestroyTime) override;
+	void DestroyUpdate(float _DeltaTime) override;
+
 protected:
 
 private:

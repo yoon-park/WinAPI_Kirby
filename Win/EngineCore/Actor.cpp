@@ -33,3 +33,23 @@ UImageRenderer* AActor::CreateImageRenderer(int Order)
 
 	return NewRenderer;
 }
+
+void AActor::Destroy(float _DestroyTime /*= 0.0f*/)
+{
+	UTickObject::Destroy(_DestroyTime);
+
+	for (UImageRenderer* Renderer : Renderers)
+	{
+		Renderer->Destroy(_DestroyTime);
+	}
+}
+
+void AActor::DestroyUpdate(float _DeltaTime)
+{
+	UTickObject::DestroyUpdate(_DeltaTime);
+
+	for (UImageRenderer* Renderer : Renderers)
+	{
+		Renderer->DestroyUpdate(_DeltaTime);
+	}
+}

@@ -79,6 +79,27 @@ void ULevel::LevelRender(float _DeltaTime)
 
 void ULevel::LevelRelease(float _DeltaTime)
 {
+	for (std::pair<const int, std::list<UImageRenderer*>>& OrderListPair : Renderers)
+	{
+		std::list<UImageRenderer*>& RendererList = OrderListPair.second;
+
+		std::list<UImageRenderer*>::iterator StartIter = RendererList.begin();
+		std::list<UImageRenderer*>::iterator EndIter = RendererList.end();
+
+		for (; StartIter != EndIter; )
+		{
+			UImageRenderer* Renderer = StartIter.operator*();
+
+			if (Renderer->IsDestroy() == false)
+			{
+				++StartIter;
+				continue;
+			}
+
+			StartIter = RendererList.erase(StartIter);
+		}
+	}
+
 	for (std::pair<const int, std::list<AActor*>>& OrderListPair : AllActor)
 	{
 		std::list<AActor*>& ActorList = OrderListPair.second;
