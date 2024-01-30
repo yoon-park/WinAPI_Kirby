@@ -2,7 +2,7 @@
 #include <map>
 #include <list>
 
-#include "NameObject.h"
+#include <EngineBase/NameObject.h>
 
 class AActor;
 class EngineCore;

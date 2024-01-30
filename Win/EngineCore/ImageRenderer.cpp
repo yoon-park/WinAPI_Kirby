@@ -1,8 +1,8 @@
 #include "ImageRenderer.h"
 
 #include "EngineCore.h"
+#include "EngineResourcesManager.h"
 #include "Actor.h"
-#include "Level.h"
 
 UImageRenderer::UImageRenderer()
 {
@@ -12,6 +12,28 @@ UImageRenderer::UImageRenderer()
 UImageRenderer::~UImageRenderer()
 {
 
+}
+
+void UImageRenderer::SetImage(std::string_view _Name, bool _IsImageScale)
+{
+	Image = UEngineResourcesManager::GetInst().FindImg(_Name);
+
+	if (Image == nullptr)
+	{
+		MsgBoxAssert(std::string(_Name) + "이미지가 존재하지 않습니다.");
+		return;
+	}
+
+	if (_IsImageScale == true)
+	{
+		FVector Scale = Image->GetScale();
+		SetScale(Scale);
+	}
+}
+
+void UImageRenderer::SetImageToScale(std::string_view _Name)
+{
+	SetImage(_Name, true);
 }
 
 void UImageRenderer::SetOrder(int _Order)
@@ -29,12 +51,16 @@ void UImageRenderer::SetOrder(int _Order)
 
 void UImageRenderer::Render(float _DeltaTime)
 {
-	HDC WindowDC = GEngine->MainWindow.GetWindowDC();
+	if (Image == nullptr)
+	{
+		MsgBoxAssert("이미지가 존재하지 않는 렌더러입니다.");
+	}
+
 	FTransform ThisTrans = GetTransform();
 	FTransform OwnerTrans = GetOwner()->GetTransform();
 	ThisTrans.AddPosition(OwnerTrans.GetPosition());
 
-	Rectangle(WindowDC, ThisTrans.iLeft(), ThisTrans.iTop(), ThisTrans.iRight(), ThisTrans.iBottom());
+	GEngine->MainWindow.GetWindowImage()->BitCopy(Image, ThisTrans);
 }
 
 void UImageRenderer::BeginPlay()

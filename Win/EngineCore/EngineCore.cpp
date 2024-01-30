@@ -16,7 +16,7 @@ void EngineCore::EngineStart(HINSTANCE _hInstance, EngineCore* _UserCore)
 	Ptr->CoreInit(_hInstance);
 	Ptr->BeginPlay();
 
-	EngineWindow::WindowMessageLoop(EngineTick, EngineEnd);
+	UEngineWindow::WindowMessageLoop(EngineTick, EngineEnd);
 }
 
 void EngineCore::EngineTick()
@@ -57,7 +57,7 @@ void EngineCore::CoreInit(HINSTANCE _HINSTANCE)
 		return;
 	}
 
-	EngineWindow::Init(_HINSTANCE);
+	UEngineWindow::Init(_HINSTANCE);
 	MainWindow.Open();
 
 	this->AllLevel;
@@ -102,7 +102,7 @@ void EngineCore::CoreTick()
 
 	if (CurLevel == nullptr)
 	{
-		MsgBoxAssert("엔진을 시작할 레벨이 지정되지 않았습니다 치명적인 오류입니다");
+		MsgBoxAssert("엔진을 시작할 레벨이 지정되지 않았습니다.");
 	}
 
 	CurLevel->Tick(DeltaTime);
@@ -122,7 +122,7 @@ void EngineCore::ChangeLevel(std::string_view _Name)
 
 	if (AllLevel.contains(UpperName) == false)
 	{
-		MsgBoxAssert(std::string(_Name) + "라는 존재하지 않는 레벨로 체인지 하려고 했습니다");
+		MsgBoxAssert(std::string(_Name) + "라는 존재하지 않는 레벨로 이동하려 했습니다.");
 	}
 
 	CurLevel = AllLevel[UpperName];

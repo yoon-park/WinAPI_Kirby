@@ -6,6 +6,7 @@ class UEngineString
 {
 public:
 	static std::string ToUpper(std::string_view View);
+	static std::wstring AnsiToUniCode(std::string_view View);
 
 protected:
 

@@ -19,7 +19,7 @@ public:
 	EngineCore& operator=(EngineCore&& _Other) noexcept = delete;
 
 	// 메인 창, 메인 타이머 (무조건 존재한다)
-	EngineWindow MainWindow;
+	UEngineWindow MainWindow;
 	EngineTime MainTimer;
 
 	void CoreInit(HINSTANCE _Init);

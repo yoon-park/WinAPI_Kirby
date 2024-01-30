@@ -3,7 +3,7 @@
 #include <string_view>
 #include <map>
 
-class UImage;
+class UWindowImage;
 
 class UEngineResourcesManager
 {
@@ -16,11 +16,13 @@ public:
 	static UEngineResourcesManager& GetInst()
 	{
 		static UEngineResourcesManager Inst = UEngineResourcesManager();
+		
 		return Inst;
 	}
 
-	UImage* LoadImg(std::string_view _Path);
-	UImage* FindImg(std::string_view _Name);
+	UWindowImage* LoadImg(std::string_view _Path);
+	UWindowImage* LoadImg(std::string_view _Path, std::string_view _Name);
+	UWindowImage* FindImg(std::string_view _Name);
 
 protected:
 
@@ -28,6 +30,6 @@ private:
 	UEngineResourcesManager();
 	~UEngineResourcesManager();
 
-	std::map<std::string, UImage*> Images;
+	std::map<std::string, UWindowImage*> Images;
 };
 

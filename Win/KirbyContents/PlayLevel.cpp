@@ -18,14 +18,17 @@ UPlayLevel::~UPlayLevel()
 void UPlayLevel::BeginPlay()
 {
 	UEngineDirectory NewPath;
-	NewPath.MoveParent();
 
+	NewPath.MoveParent();
 	NewPath.Move("ContentsResources");
 
 	std::list<UEngineFile> AllFileList = NewPath.AllFile({ ".png", ".bmp" }, true);
-	UEngineResourcesManager::GetInst().LoadImg("C:\\GM\\Win\\ContentsResources\\AAAA.png");
+	
+	for (UEngineFile& File : AllFileList)
+	{
+		std::string FullPath = File.GetFullPath();
+		UEngineResourcesManager::GetInst().LoadImg(FullPath);
+	}
 
 	SpawnActor<Player>();
-
-	// TODO
 }

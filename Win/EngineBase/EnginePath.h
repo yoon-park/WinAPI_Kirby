@@ -11,8 +11,15 @@ public:
 
 	bool IsFile();
 	bool IsDirectory();
-
 	bool IsExists();
+
+	std::string GetFullPath()
+	{
+		return Path.string();
+	}
+
+	std::string GetExtension();
+	std::string GetFileName();
 
 	void MoveParent();
 	void Move(std::string_view _Path);
