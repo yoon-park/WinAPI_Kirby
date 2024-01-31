@@ -11,7 +11,6 @@ void UEngineCore::EngineStart(HINSTANCE _hInstance, UEngineCore* _UserCore)
 {
 	UEngineCore* Ptr = _UserCore;
 	GEngine = Ptr;
-
 	Ptr->MainTimer.TimeCheckStart();
 	Ptr->CoreInit(_hInstance);
 	Ptr->BeginPlay();
@@ -65,21 +64,6 @@ void UEngineCore::CoreInit(HINSTANCE _HINSTANCE)
 	EngineInit = true;
 }
 
-void UEngineCore::BeginPlay()
-{
-
-}
-
-void UEngineCore::Tick(float _DeltaTime)
-{
-
-}
-
-void UEngineCore::End()
-{
-
-}
-
 void UEngineCore::CoreTick()
 {
 	float DeltaTime = MainTimer.TimeCheck();
@@ -107,7 +91,9 @@ void UEngineCore::CoreTick()
 
 	CurLevel->Tick(DeltaTime);
 	CurLevel->LevelTick(DeltaTime);
+	MainWindow.ScreenClear();
 	CurLevel->LevelRender(DeltaTime);
+	MainWindow.ScreenUpdate();
 	CurLevel->LevelRelease(DeltaTime);
 }
 
@@ -126,4 +112,19 @@ void UEngineCore::ChangeLevel(std::string_view _Name)
 	}
 
 	CurLevel = AllLevel[UpperName];
+}
+
+void UEngineCore::BeginPlay()
+{
+
+}
+
+void UEngineCore::Tick(float _DeltaTime)
+{
+
+}
+
+void UEngineCore::End()
+{
+
 }

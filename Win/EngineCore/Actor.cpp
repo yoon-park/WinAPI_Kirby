@@ -11,7 +11,7 @@ AActor::~AActor()
 	{
 		if (ImageRenderer == nullptr)
 		{
-			MsgBoxAssert("이미지 랜더러가 nullptr인 상황이 있었습니다");
+			MsgBoxAssert("이미지 렌더러가 nullptr입니다.");
 		}
 
 		delete ImageRenderer;
@@ -19,6 +19,12 @@ AActor::~AActor()
 	}
 
 	Renderers.clear();
+}
+
+void AActor::Tick(float _DeltaTime)
+{
+	UTickObject::Tick(_DeltaTime);
+	DestroyUpdate(_DeltaTime);
 }
 
 UImageRenderer* AActor::CreateImageRenderer(int Order)
@@ -34,7 +40,7 @@ UImageRenderer* AActor::CreateImageRenderer(int Order)
 	return NewRenderer;
 }
 
-void AActor::Destroy(float _DestroyTime /*= 0.0f*/)
+void AActor::Destroy(float _DestroyTime)
 {
 	UTickObject::Destroy(_DestroyTime);
 

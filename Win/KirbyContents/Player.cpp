@@ -20,9 +20,11 @@ void Player::BeginPlay()
 	AActor::BeginPlay();
 
 	Renderer = CreateImageRenderer(0);
-	Renderer->SetImageToScale("Kirby.bmp");
 
+	Renderer->SetImage("Kirby.bmp");
 	SetActorLocation({ 100, 100 });
+	Renderer->SetTransform({ {0,0}, {50, 50} });
+	Renderer->SetImageCuttingTransform({ {0,0}, {16, 16} });
 }
 
 void Player::Tick(float _DeltaTime)

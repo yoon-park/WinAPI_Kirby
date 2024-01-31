@@ -39,10 +39,16 @@ public:
 
 	}
 
-	float X;
-	float Y;
-	float Z;
-	float W;
+	union
+	{
+		struct
+		{
+			float X;
+			float Y;
+			float Z;
+			float W;
+		};
+	};
 
 	static const float4 Zero;
 	static const float4 Left;
@@ -50,32 +56,32 @@ public:
 	static const float4 Up;
 	static const float4 Down;
 
-	int iX()
+	int iX() const
 	{
 		return static_cast<int>(X);
 	}
 
-	int iY()
+	int iY() const
 	{
 		return static_cast<int>(Y);
 	}
 
-	float hX()
+	float hX() const
 	{
 		return X * 0.5f;
 	}
 
-	float hY()
+	float hY() const
 	{
 		return Y * 0.5f;
 	}
 
-	int ihX()
+	int ihX() const
 	{
 		return static_cast<int>(hX());
 	}
 
-	int ihY()
+	int ihY() const
 	{
 		return static_cast<int>(hY());
 	}
@@ -154,6 +160,30 @@ public:
 };
 
 using FVector = float4;
+
+class Color8Bit
+{
+public:
+	static const Color8Bit Black;
+	static const Color8Bit Red;
+	static const Color8Bit Green;
+	static const Color8Bit Blue;
+	static const Color8Bit White;
+
+	union
+	{
+		struct
+		{
+			unsigned char R;
+			unsigned char G;
+			unsigned char B;
+			unsigned char A;
+		};
+
+		unsigned char Arr1D[4] = { 0,0,0,255 };
+		unsigned int Color;
+	};
+};
 
 class EngineMath
 {

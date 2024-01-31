@@ -47,17 +47,13 @@ public:
 		Transform.AddPosition(_Value);
 	}
 
-	void SetActorScale(FVector _Value)
-	{
-		Transform.SetScale(_Value);
-	}
-
 	UImageRenderer* CreateImageRenderer(int Order = 0);
 
 	void Destroy(float _DestroyTime) override;
 	void DestroyUpdate(float _DeltaTime) override;
 
 protected:
+	void Tick(float _DeltaTime) override;
 
 private:
 	ULevel* World = nullptr;

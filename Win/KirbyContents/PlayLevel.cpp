@@ -17,10 +17,13 @@ UPlayLevel::~UPlayLevel()
 
 void UPlayLevel::BeginPlay()
 {
+	ULevel::BeginPlay();
+
 	UEngineDirectory NewPath;
 
 	NewPath.MoveParent();
-	NewPath.Move("ContentsResources");
+	NewPath.Move("Resources");
+	NewPath.Move("PlayLevel");
 
 	std::list<UEngineFile> AllFileList = NewPath.AllFile({ ".png", ".bmp" }, true);
 	

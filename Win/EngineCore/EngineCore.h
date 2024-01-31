@@ -22,11 +22,13 @@ public:
 	UEngineWindow MainWindow;
 	EngineTime MainTimer;
 
-	void CoreInit(HINSTANCE _Init);
+	void SetFrame(int _Frame)
+	{
+		Frame = _Frame;
+		FrameTime = 1 / static_cast<float>(Frame);
+	}
 
-	virtual void BeginPlay();
-	virtual void Tick(float _DeltaTime);
-	virtual void End();
+	void CoreInit(HINSTANCE _Init);
 
 	template<typename LevelType>
 	void CreateLevel(std::string_view _Name)
@@ -45,11 +47,9 @@ public:
 
 	void ChangeLevel(std::string_view _Name);
 
-	void SetFrame(int _Frame)
-	{
-		Frame = _Frame;
-		FrameTime = 1 / static_cast<float>(Frame);
-	}
+	virtual void BeginPlay();
+	virtual void Tick(float _DeltaTime);
+	virtual void End();
 
 	static void EngineStart(HINSTANCE _hInstance, UEngineCore* _UserCore);
 
@@ -58,11 +58,9 @@ protected:
 
 private:
 	bool EngineInit = false;
-
 	int Frame = -1;
 	float FrameTime = 0.0f;
 	float CurFrameTime = 0.0f;
-
 	ULevel* CurLevel = nullptr;
 	std::map<std::string, ULevel*> AllLevel;
 

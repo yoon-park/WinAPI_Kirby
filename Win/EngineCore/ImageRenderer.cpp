@@ -14,28 +14,6 @@ UImageRenderer::~UImageRenderer()
 
 }
 
-void UImageRenderer::SetImage(std::string_view _Name, bool _IsImageScale)
-{
-	Image = UEngineResourcesManager::GetInst().FindImg(_Name);
-
-	if (Image == nullptr)
-	{
-		MsgBoxAssert(std::string(_Name) + "이미지가 존재하지 않습니다.");
-		return;
-	}
-
-	if (_IsImageScale == true)
-	{
-		FVector Scale = Image->GetScale();
-		SetScale(Scale);
-	}
-}
-
-void UImageRenderer::SetImageToScale(std::string_view _Name)
-{
-	SetImage(_Name, true);
-}
-
 void UImageRenderer::SetOrder(int _Order)
 {
 	AActor* Owner = GetOwner();
@@ -49,6 +27,17 @@ void UImageRenderer::SetOrder(int _Order)
 	Renderers[GetOrder()].push_back(this);
 }
 
+void UImageRenderer::SetImage(std::string_view _Name)
+{
+	Image = UEngineResourcesManager::GetInst().FindImg(_Name);
+
+	if (Image == nullptr)
+	{
+		MsgBoxAssert(std::string(_Name) + "이미지가 존재하지 않습니다.");
+		return;
+	}
+}
+
 void UImageRenderer::Render(float _DeltaTime)
 {
 	if (Image == nullptr)
@@ -60,7 +49,7 @@ void UImageRenderer::Render(float _DeltaTime)
 	FTransform OwnerTrans = GetOwner()->GetTransform();
 	ThisTrans.AddPosition(OwnerTrans.GetPosition());
 
-	GEngine->MainWindow.GetWindowImage()->BitCopy(Image, ThisTrans);
+	GEngine->MainWindow.GetBackBufferImage()->TransCopy(Image, ThisTrans, ImageCuttingTransform);
 }
 
 void UImageRenderer::BeginPlay()

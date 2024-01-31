@@ -28,8 +28,11 @@ public:
 	UWindowImage& operator=(UWindowImage&& _Other) noexcept = delete;
 
 	FVector GetScale();
+	bool Create(UWindowImage* _Image, const FVector& _Scale);
 	bool Load(UWindowImage* _Image);
+
 	void BitCopy(UWindowImage* _CopyImage, FTransform _Trans);
+	void TransCopy(UWindowImage* _CopyImage, const FTransform& _CopyTrans, const FTransform& _ImageTrans, Color8Bit _Color = Color8Bit::Black);
 
 protected:
 

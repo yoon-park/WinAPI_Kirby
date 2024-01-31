@@ -65,11 +65,42 @@ UEngineWindow::UEngineWindow()
 
 UEngineWindow::~UEngineWindow()
 {
+	if (BackBufferImage != nullptr)
+	{
+		delete BackBufferImage;
+		BackBufferImage = nullptr;
+	}
+
 	if (WindowImage != nullptr)
 	{
 		delete WindowImage;
 		WindowImage = nullptr;
 	}
+}
+
+void UEngineWindow::SetWindowPosition(const FVector& _Pos)
+{
+
+}
+
+void UEngineWindow::SetWindowScale(const FVector& _Scale)
+{
+	Scale = _Scale;
+
+	if (BackBufferImage != nullptr)
+	{
+		delete BackBufferImage;
+		BackBufferImage = nullptr;
+	}
+
+	BackBufferImage = new UWindowImage();
+	BackBufferImage->Create(WindowImage, Scale);
+
+	RECT Rc = { 0, 0, _Scale.iX(), _Scale.iY() };
+
+	AdjustWindowRect(&Rc, WS_OVERLAPPEDWINDOW, FALSE);
+
+	::SetWindowPos(hWnd, nullptr, 0, 0, Rc.right - Rc.left, Rc.bottom - Rc.top, SWP_NOZORDER | SWP_NOMOVE);
 }
 
 void UEngineWindow::Open(std::string_view _Title)
@@ -92,7 +123,14 @@ void UEngineWindow::Open(std::string_view _Title)
 
 	RegisterClassExA(&wcex);
 
-	hWnd = CreateWindowA("DefaultWindow", _Title.data(), WS_OVERLAPPEDWINDOW,
+	int Style = WS_OVERLAPPED |
+		WS_CAPTION |
+		WS_SYSMENU |
+		WS_THICKFRAME |
+		WS_MINIMIZEBOX |
+		WS_MAXIMIZEBOX;
+
+	hWnd = CreateWindowA("DefaultWindow", _Title.data(), Style,
 		CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, nullptr, nullptr, hInstance, nullptr);
 
 	if (!hWnd)
@@ -111,4 +149,18 @@ void UEngineWindow::Open(std::string_view _Title)
 
 	ShowWindow(hWnd, SW_SHOW);
 	UpdateWindow(hWnd);
+}
+
+void UEngineWindow::ScreenClear()
+{
+	Rectangle(BackBufferImage->ImageDC, -1, -1, Scale.iX() + 1, Scale.iY() + 1);
+}
+
+void UEngineWindow::ScreenUpdate()
+{
+	FTransform CopyTrans;
+	CopyTrans.SetPosition({ Scale.ihX(), Scale.ihY() });
+	CopyTrans.SetScale({ Scale.iX(), Scale.iY() });
+
+	WindowImage->BitCopy(BackBufferImage, CopyTrans);
 }

@@ -15,7 +15,10 @@ ContentsCore::~ContentsCore()
 
 void ContentsCore::BeginPlay()
 {
+	MainWindow.SetWindowScale({ 800, 750 });
 	SetFrame(60);
+
+	UEngineCore::BeginPlay();
 
 	CreateLevel<UTitleLevel>("TitleLevel");
 	CreateLevel<UPlayLevel>("PlayLevel");

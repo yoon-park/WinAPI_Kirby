@@ -18,6 +18,11 @@ public:
 		return Transform;
 	}
 
+	void SetTransform(const FTransform& _Value)
+	{
+		Transform = _Value;
+	}
+
 	void SetPosition(const FVector& _Value)
 	{
 		Transform.SetPosition(_Value);

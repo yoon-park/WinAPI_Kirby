@@ -23,6 +23,8 @@ ULevel::~ULevel()
 			Actor = nullptr;
 		}
 	}
+
+	AllActor.clear();
 }
 
 void ULevel::BeginPlay()
@@ -53,7 +55,6 @@ void ULevel::LevelTick(float _DeltaTime)
 				continue;
 			}
 
-			Actor->DestroyUpdate(_DeltaTime);
 			Actor->Tick(_DeltaTime);
 		}
 	}
@@ -74,7 +75,6 @@ void ULevel::LevelRender(float _DeltaTime)
 			Renderer->Render(_DeltaTime);
 		}
 	}
-
 }
 
 void ULevel::LevelRelease(float _DeltaTime)
@@ -113,7 +113,7 @@ void ULevel::LevelRelease(float _DeltaTime)
 
 			if (Actor == nullptr)
 			{
-				MsgBoxAssert("Actor가 nullptr인 경우가 존재했습니다");
+				MsgBoxAssert("Actor가 nullptr입니다.");
 				return;
 			}
 

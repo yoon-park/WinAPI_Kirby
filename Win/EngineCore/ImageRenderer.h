@@ -15,9 +15,18 @@ public:
 	UImageRenderer& operator=(const UImageRenderer& _Other) = delete;
 	UImageRenderer& operator=(UImageRenderer&& _Other) noexcept = delete;
 
-	void SetImage(std::string_view _Name, bool _IsImageScale = false);
-	void SetImageToScale(std::string_view _Name);
 	void SetOrder(int _Order) override;
+	void SetImage(std::string_view _Name);
+
+	void SetTransform(const FTransform& _Value)
+	{
+		USceneComponent::SetTransform(_Value);
+	}
+
+	void SetImageCuttingTransform(const FTransform& _Value)
+	{
+		ImageCuttingTransform = _Value;
+	}
 
 	void Render(float _DeltaTime);
 
@@ -26,5 +35,5 @@ protected:
 
 private:
 	UWindowImage* Image;
+	FTransform ImageCuttingTransform;
 };
-
