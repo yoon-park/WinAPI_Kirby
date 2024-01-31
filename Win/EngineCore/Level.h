@@ -5,12 +5,12 @@
 #include <EngineBase/NameObject.h>
 
 class AActor;
-class EngineCore;
+class UEngineCore;
 class UImageRenderer;
 
 class ULevel : public UNameObject
 {
-	friend EngineCore;
+	friend UEngineCore;
 	friend UImageRenderer;
 
 public:

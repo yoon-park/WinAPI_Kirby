@@ -5,11 +5,11 @@
 #include "EnginePlatform\EngineInput.h"
 #include "Level.h"
 
-EngineCore* GEngine = nullptr;
+UEngineCore* GEngine = nullptr;
 
-void EngineCore::EngineStart(HINSTANCE _hInstance, EngineCore* _UserCore)
+void UEngineCore::EngineStart(HINSTANCE _hInstance, UEngineCore* _UserCore)
 {
-	EngineCore* Ptr = _UserCore;
+	UEngineCore* Ptr = _UserCore;
 	GEngine = Ptr;
 
 	Ptr->MainTimer.TimeCheckStart();
@@ -19,12 +19,12 @@ void EngineCore::EngineStart(HINSTANCE _hInstance, EngineCore* _UserCore)
 	UEngineWindow::WindowMessageLoop(EngineTick, EngineEnd);
 }
 
-void EngineCore::EngineTick()
+void UEngineCore::EngineTick()
 {
 	GEngine->CoreTick();
 }
 
-void EngineCore::EngineEnd()
+void UEngineCore::EngineEnd()
 {
 	for (std::pair<const std::string, ULevel*>& _Pair : GEngine->AllLevel)
 	{
@@ -40,17 +40,17 @@ void EngineCore::EngineEnd()
 	GEngine->AllLevel.clear();
 }
 
-EngineCore::EngineCore()
+UEngineCore::UEngineCore()
 {
 
 }
 
-EngineCore::~EngineCore()
+UEngineCore::~UEngineCore()
 {
 
 }
 
-void EngineCore::CoreInit(HINSTANCE _HINSTANCE)
+void UEngineCore::CoreInit(HINSTANCE _HINSTANCE)
 {
 	if (EngineInit == true)
 	{
@@ -65,22 +65,22 @@ void EngineCore::CoreInit(HINSTANCE _HINSTANCE)
 	EngineInit = true;
 }
 
-void EngineCore::BeginPlay()
+void UEngineCore::BeginPlay()
 {
 
 }
 
-void EngineCore::Tick(float _DeltaTime)
+void UEngineCore::Tick(float _DeltaTime)
 {
 
 }
 
-void EngineCore::End()
+void UEngineCore::End()
 {
 
 }
 
-void EngineCore::CoreTick()
+void UEngineCore::CoreTick()
 {
 	float DeltaTime = MainTimer.TimeCheck();
 	double dDeltaTime = MainTimer.GetDeltaTime();
@@ -111,12 +111,12 @@ void EngineCore::CoreTick()
 	CurLevel->LevelRelease(DeltaTime);
 }
 
-void EngineCore::LevelInit(ULevel* _Level)
+void UEngineCore::LevelInit(ULevel* _Level)
 {
 	_Level->BeginPlay();
 }
 
-void EngineCore::ChangeLevel(std::string_view _Name)
+void UEngineCore::ChangeLevel(std::string_view _Name)
 {
 	std::string UpperName = UEngineString::ToUpper(_Name);
 

@@ -8,15 +8,15 @@
 
 class ULevel;
 
-class EngineCore
+class UEngineCore
 {
 public:
-	~EngineCore();
+	~UEngineCore();
 
-	EngineCore(const EngineCore& _Other) = delete;
-	EngineCore(EngineCore&& _Other) noexcept = delete;
-	EngineCore& operator=(const EngineCore& _Other) = delete;
-	EngineCore& operator=(EngineCore&& _Other) noexcept = delete;
+	UEngineCore(const UEngineCore& _Other) = delete;
+	UEngineCore(UEngineCore&& _Other) noexcept = delete;
+	UEngineCore& operator=(const UEngineCore& _Other) = delete;
+	UEngineCore& operator=(UEngineCore&& _Other) noexcept = delete;
 
 	// 메인 창, 메인 타이머 (무조건 존재한다)
 	UEngineWindow MainWindow;
@@ -51,10 +51,10 @@ public:
 		FrameTime = 1 / static_cast<float>(Frame);
 	}
 
-	static void EngineStart(HINSTANCE _hInstance, EngineCore* _UserCore);
+	static void EngineStart(HINSTANCE _hInstance, UEngineCore* _UserCore);
 
 protected:
-	EngineCore();
+	UEngineCore();
 
 private:
 	bool EngineInit = false;
@@ -74,7 +74,7 @@ private:
 };
 
 // 엔진 코어 (모두가 알 수 있도록 전역)
-extern EngineCore* GEngine;
+extern UEngineCore* GEngine;
 
 #define ENGINESTART(USERCORE) \
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance, \
@@ -84,5 +84,5 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance, \
 { \
 	LeakCheck; \
 	USERCORE NewUserCore = USERCORE(); \
-	EngineCore::EngineStart(hInstance, &NewUserCore); \
+	UEngineCore::EngineStart(hInstance, &NewUserCore); \
 }
