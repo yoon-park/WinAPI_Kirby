@@ -5,17 +5,17 @@
 #include <EngineCore\EngineCore.h>
 #include "Fire.h"
 
-Player::Player()
+APlayer::APlayer()
 {
 
 }
 
-Player::~Player()
+APlayer::~APlayer()
 {
 
 }
 
-void Player::BeginPlay()
+void APlayer::BeginPlay()
 {
 	AActor::BeginPlay();
 
@@ -23,11 +23,11 @@ void Player::BeginPlay()
 
 	Renderer->SetImage("Kirby.bmp");
 	SetActorLocation({ 100, 100 });
-	Renderer->SetTransform({ {0,0}, {50, 50} });
 	Renderer->SetImageCuttingTransform({ {0,0}, {16, 16} });
+	Renderer->SetTransform({ {0,0}, {50, 50} });
 }
 
-void Player::Tick(float _DeltaTime)
+void APlayer::Tick(float _DeltaTime)
 {
 	if (true == EngineInput::IsPress('A'))
 	{

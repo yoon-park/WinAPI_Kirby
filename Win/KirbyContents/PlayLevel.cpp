@@ -33,5 +33,5 @@ void UPlayLevel::BeginPlay()
 		UEngineResourcesManager::GetInst().LoadImg(FullPath);
 	}
 
-	SpawnActor<Player>();
+	Player* Kirby = SpawnActor<Player>();
 }

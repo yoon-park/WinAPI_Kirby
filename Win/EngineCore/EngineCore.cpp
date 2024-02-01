@@ -7,38 +7,6 @@
 
 UEngineCore* GEngine = nullptr;
 
-void UEngineCore::EngineStart(HINSTANCE _hInstance, UEngineCore* _UserCore)
-{
-	UEngineCore* Ptr = _UserCore;
-	GEngine = Ptr;
-	Ptr->MainTimer.TimeCheckStart();
-	Ptr->CoreInit(_hInstance);
-	Ptr->BeginPlay();
-
-	UEngineWindow::WindowMessageLoop(EngineTick, EngineEnd);
-}
-
-void UEngineCore::EngineTick()
-{
-	GEngine->CoreTick();
-}
-
-void UEngineCore::EngineEnd()
-{
-	for (std::pair<const std::string, ULevel*>& _Pair : GEngine->AllLevel)
-	{
-		if (_Pair.second == nullptr)
-		{
-			continue;
-		}
-
-		delete _Pair.second;
-		_Pair.second = nullptr;
-	}
-
-	GEngine->AllLevel.clear();
-}
-
 UEngineCore::UEngineCore()
 {
 
@@ -95,6 +63,37 @@ void UEngineCore::CoreTick()
 	CurLevel->LevelRender(DeltaTime);
 	MainWindow.ScreenUpdate();
 	CurLevel->LevelRelease(DeltaTime);
+}
+
+void UEngineCore::EngineStart(HINSTANCE _hInstance)
+{
+	GEngine = this;
+	MainTimer.TimeCheckStart();
+	CoreInit(_hInstance);
+	BeginPlay();
+
+	UEngineWindow::WindowMessageLoop(EngineTick, EngineEnd);
+}
+
+void UEngineCore::EngineTick()
+{
+	GEngine->CoreTick();
+}
+
+void UEngineCore::EngineEnd()
+{
+	for (std::pair<const std::string, ULevel*>& _Pair : GEngine->AllLevel)
+	{
+		if (_Pair.second == nullptr)
+		{
+			continue;
+		}
+
+		delete _Pair.second;
+		_Pair.second = nullptr;
+	}
+
+	GEngine->AllLevel.clear();
 }
 
 void UEngineCore::LevelInit(ULevel* _Level)

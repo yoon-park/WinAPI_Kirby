@@ -18,8 +18,8 @@ void ATitleLogo::BeginPlay()
 
 	Renderer->SetImage("TitleLogo.bmp");
 	SetActorLocation({ 400, 375 });
-	Renderer->SetTransform({ {0,0}, {800, 750} });
 	Renderer->SetImageCuttingTransform({ {0,0}, {256, 240} });
+	Renderer->SetTransform({ {0,0}, {800, 750} });
 }
 
 void ATitleLogo::Tick(float _DeltaTime)

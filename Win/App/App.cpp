@@ -4,4 +4,4 @@
 #include <KirbyContents\ContentsCore.h>
 
 // 진입점 (사용자로부터 숨겨져 있다)
-ENGINESTART(ContentsCore)
+ENGINESTART(UContentsCore)

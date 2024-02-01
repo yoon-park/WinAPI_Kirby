@@ -3,17 +3,17 @@
 #include "TitleLevel.h"
 #include "PlayLevel.h"
 
-ContentsCore::ContentsCore()
+UContentsCore::UContentsCore()
 {
 
 }
 
-ContentsCore::~ContentsCore()
+UContentsCore::~UContentsCore()
 {
 
 }
 
-void ContentsCore::BeginPlay()
+void UContentsCore::BeginPlay()
 {
 	MainWindow.SetWindowScale({ 800, 750 });
 	SetFrame(60);
@@ -23,15 +23,15 @@ void ContentsCore::BeginPlay()
 	CreateLevel<UTitleLevel>("TitleLevel");
 	CreateLevel<UPlayLevel>("PlayLevel");
 
-	ChangeLevel("PlayLevel");
+	ChangeLevel("TitleLevel");
 }
 
-void ContentsCore::Tick(float _DeltaTime)
+void UContentsCore::Tick(float _DeltaTime)
 {
 
 }
 
-void ContentsCore::End()
+void UContentsCore::End()
 {
 
 }

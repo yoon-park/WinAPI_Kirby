@@ -29,6 +29,7 @@ public:
 	}
 
 	void CoreInit(HINSTANCE _Init);
+	void EngineStart(HINSTANCE _hInstance);
 
 	template<typename LevelType>
 	void CreateLevel(std::string_view _Name)
@@ -50,8 +51,6 @@ public:
 	virtual void BeginPlay();
 	virtual void Tick(float _DeltaTime);
 	virtual void End();
-
-	static void EngineStart(HINSTANCE _hInstance, UEngineCore* _UserCore);
 
 protected:
 	UEngineCore();
@@ -82,5 +81,5 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance, \
 { \
 	LeakCheck; \
 	USERCORE NewUserCore = USERCORE(); \
-	UEngineCore::EngineStart(hInstance, &NewUserCore); \
+	NewUserCore.EngineStart(hInstance); \
 }

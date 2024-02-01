@@ -1,16 +1,16 @@
 #pragma once
 #include <EngineCore\Actor.h>
 
-class Player : public AActor
+class APlayer : public AActor
 {
 public:
-	Player();
-	~Player();
+	APlayer();
+	~APlayer();
 
-	Player(const Player& _Other) = delete;
-	Player(Player&& _Other) noexcept = delete;
-	Player& operator=(const Player& _Other) = delete;
-	Player& operator=(Player&& _Other) noexcept = delete;
+	APlayer(const APlayer& _Other) = delete;
+	APlayer(APlayer&& _Other) noexcept = delete;
+	APlayer& operator=(const APlayer& _Other) = delete;
+	APlayer& operator=(APlayer&& _Other) noexcept = delete;
 
 protected:
 	void BeginPlay() override;

@@ -18,8 +18,8 @@ void AFire::BeginPlay()
 		UImageRenderer* Renderer = CreateImageRenderer(-10);
 
 		Renderer->SetImage("Fire.bmp");
-		Renderer->SetTransform({ {0,0}, {50, 50} });
 		Renderer->SetImageCuttingTransform({ {0,0}, {16, 16} });
+		Renderer->SetTransform({ {0,0}, {50, 50} });
 	}
 
 	Destroy(2.0f);

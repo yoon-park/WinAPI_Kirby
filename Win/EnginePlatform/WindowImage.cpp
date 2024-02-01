@@ -158,16 +158,16 @@ void UWindowImage::TransCopy(UWindowImage* _CopyImage, const FTransform& _Trans,
 	HDC hdcSrc = _CopyImage->ImageDC;
 
 	TransparentBlt(
-		hdc, 				
-		RenderLeft, 		
-		RenderTop, 		  
-		RenderScaleX,		
-		RenderScaleY,		
-		hdcSrc,				
-		ImageLeft,   		
-		ImageTop,   		
-		ImageScaleX, 		
-		ImageScaleY, 		
-		_Color.Color		
+		hdc,
+		RenderLeft,
+		RenderTop,
+		RenderScaleX,
+		RenderScaleY,
+		hdcSrc,
+		ImageLeft,
+		ImageTop,
+		ImageScaleX,
+		ImageScaleY,
+		_Color.Color
 	);
 }
