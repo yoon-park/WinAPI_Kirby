@@ -29,9 +29,11 @@ void UPlayLevel::BeginPlay()
 	
 	for (UEngineFile& File : AllFileList)
 	{
-		std::string FullPath = File.GetFullPath();
-		UEngineResourcesManager::GetInst().LoadImg(FullPath);
+		UEngineResourcesManager::GetInst().LoadImg(File.GetFullPath());
 	}
 
-	Player* Kirby = SpawnActor<Player>();
+	UEngineResourcesManager::GetInst().CuttingImage("Kirby.bmp", 6, 2);
+
+	APlayer* Kirby = SpawnActor<APlayer>();
+	Kirby->SetActorLocation({ 100, 100 });
 }

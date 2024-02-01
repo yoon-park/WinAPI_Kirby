@@ -8,6 +8,12 @@ UEngineDirectory::UEngineDirectory()
 
 }
 
+UEngineDirectory::UEngineDirectory(const UEnginePath& _Path)
+	: UEnginePath(_Path.GetFullPath())
+{
+
+}
+
 UEngineDirectory::~UEngineDirectory()
 {
 

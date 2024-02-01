@@ -16,7 +16,6 @@ void AFire::BeginPlay()
 		AActor::BeginPlay();
 
 		UImageRenderer* Renderer = CreateImageRenderer(-10);
-
 		Renderer->SetImage("Fire.bmp");
 		Renderer->SetImageCuttingTransform({ {0,0}, {16, 16} });
 		Renderer->SetTransform({ {0,0}, {50, 50} });

@@ -18,5 +18,7 @@ protected:
 
 private:
 	float QSkillCool = 0.0f;
+	float AnimationTime = 0.0f;
+	int AnimationFrame = 0;
 	UImageRenderer* Renderer;
 };

@@ -1,8 +1,26 @@
 #pragma once
+#include <map>
+
 #include <EnginePlatform\WindowImage.h>
 #include "SceneComponent.h"
 
 class UWindowImage;
+
+class UAnimationInfo
+{
+public:
+	UWindowImage* Image = nullptr;
+	int Start = -1;
+	int End = -1;
+	int CurFrame = 0;
+	float CurTime = 0.0f;
+	bool Loop = false;
+
+	std::vector<float> Times;
+	std::vector<int> Indexs;
+
+	int Update(float _DeltaTime);
+};
 
 class UImageRenderer : public USceneComponent
 {
@@ -15,8 +33,13 @@ public:
 	UImageRenderer& operator=(const UImageRenderer& _Other) = delete;
 	UImageRenderer& operator=(UImageRenderer&& _Other) noexcept = delete;
 
+	void SetImageIndex(int _InfoIndex)
+	{
+		InfoIndex = _InfoIndex;
+	}
+
 	void SetOrder(int _Order) override;
-	void SetImage(std::string_view _Name);
+	void SetImage(std::string_view _Name, int _InfoIndex = 0);
 
 	void SetTransform(const FTransform& _Value)
 	{
@@ -28,12 +51,28 @@ public:
 		ImageCuttingTransform = _Value;
 	}
 
+	void CreateAnimation(
+		std::string_view _AnimationName,
+		std::string_view _ImageName,
+		int _Start,
+		int _End,
+		float _Inter,
+		bool Loop = true
+	);
+
+	void ChangeAnimation(std::string_view _AnimationName);
+	void AnimationReset();
+
 	void Render(float _DeltaTime);
 
 protected:
 	void BeginPlay() override;
 
 private:
-	UWindowImage* Image;
+	int InfoIndex = 0;
 	FTransform ImageCuttingTransform;
+	UWindowImage* Image;
+	UAnimationInfo* CurAnimation = nullptr;
+
+	std::map<std::string, UAnimationInfo> AnimationInfos;
 };

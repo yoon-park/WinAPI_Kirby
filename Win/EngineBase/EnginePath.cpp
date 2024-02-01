@@ -36,18 +36,23 @@ bool UEnginePath::IsExists()
 	return std::filesystem::exists(Path);
 }
 
-std::string UEnginePath::GetExtension()
+std::string UEnginePath::GetExtension() const
 {
 	std::filesystem::path Text = Path.extension();
 
 	return Text.string();
 }
 
-std::string UEnginePath::GetFileName()
+std::string UEnginePath::GetFileName() const
 {
 	std::filesystem::path Text = Path.filename();
 
 	return Text.string();
+}
+
+std::string UEnginePath::AppendPath(std::string_view _Path)
+{
+	return Path.string() + "\\" + std::string(_Path);
 }
 
 void UEnginePath::MoveParent()

@@ -13,13 +13,15 @@ public:
 	bool IsDirectory();
 	bool IsExists();
 
-	std::string GetFullPath()
+	std::string GetFullPath() const
 	{
 		return Path.string();
 	}
 
-	std::string GetExtension();
-	std::string GetFileName();
+	std::string GetExtension() const;
+	std::string GetFileName() const;
+
+	std::string AppendPath(std::string_view _Path);
 
 	void MoveParent();
 	void Move(std::string_view _Path);

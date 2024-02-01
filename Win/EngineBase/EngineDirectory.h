@@ -9,6 +9,7 @@ class UEngineDirectory : public UEnginePath
 {
 public:
 	UEngineDirectory();
+	UEngineDirectory(const UEnginePath& _Path);
 	~UEngineDirectory();
 
 	std::list<UEngineFile> AllFile(std::vector<std::string> _Ext = std::vector<std::string>(), bool _Recursive = false);
