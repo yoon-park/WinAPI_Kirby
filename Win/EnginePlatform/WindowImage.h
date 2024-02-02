@@ -42,6 +42,11 @@ public:
 	UWindowImage& operator=(const UWindowImage& _Other) = delete;
 	UWindowImage& operator=(UWindowImage&& _Other) noexcept = delete;
 
+	EWIndowImageType GetImageType()
+	{
+		return ImageType;
+	}
+
 	FVector GetScale();
 
 	bool Load(UWindowImage* _Image);
@@ -51,7 +56,8 @@ public:
 	void Cutting(int _X, int _Y);
 
 	void BitCopy(UWindowImage* _CopyImage, FTransform _Trans);
-	void TransCopy(UWindowImage* _CopyImage, const FTransform& _CopyTrans, int _Index, Color8Bit _Color = Color8Bit::Black);
+	void TransCopy(UWindowImage* _CopyImage, const FTransform& _Trans, int _Index, Color8Bit _Color = Color8Bit::Black);
+	void AlphaCopy(UWindowImage* _CopyImage, const FTransform& _Trans, int _Index, Color8Bit _Color = Color8Bit::Black);
 
 protected:
 

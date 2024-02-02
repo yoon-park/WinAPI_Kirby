@@ -153,7 +153,20 @@ void UImageRenderer::Render(float _DeltaTime)
 	FTransform ActorTrans = GetOwner()->GetTransform();
 	RendererTrans.AddPosition(ActorTrans.GetPosition());
 
-	GEngine->MainWindow.GetBackBufferImage()->TransCopy(Image, RendererTrans, InfoIndex);
+	EWIndowImageType ImageType = Image->GetImageType();
+
+	switch (ImageType)
+	{
+	case EWIndowImageType::IMG_BMP:
+		GEngine->MainWindow.GetBackBufferImage()->TransCopy(Image, RendererTrans, InfoIndex, TransColor);
+		break;
+	case EWIndowImageType::IMG_PNG:
+		GEngine->MainWindow.GetBackBufferImage()->AlphaCopy(Image, RendererTrans, InfoIndex, TransColor);
+		break;
+	default:
+		MsgBoxAssert("투명처리가 불가능한 이미지 입니다.");
+		break;
+	}
 }
 
 void UImageRenderer::BeginPlay()

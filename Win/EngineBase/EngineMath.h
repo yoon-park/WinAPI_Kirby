@@ -1,4 +1,5 @@
 #pragma once
+#include <string>
 
 struct float4
 {
@@ -55,36 +56,6 @@ public:
 	static const float4 Right;
 	static const float4 Up;
 	static const float4 Down;
-
-	int iX() const
-	{
-		return static_cast<int>(X);
-	}
-
-	int iY() const
-	{
-		return static_cast<int>(Y);
-	}
-
-	float hX() const
-	{
-		return X * 0.5f;
-	}
-
-	float hY() const
-	{
-		return Y * 0.5f;
-	}
-
-	int ihX() const
-	{
-		return static_cast<int>(hX());
-	}
-
-	int ihY() const
-	{
-		return static_cast<int>(hY());
-	}
 
 	float4 operator+(const float4& _Other)
 	{
@@ -157,6 +128,46 @@ public:
 
 		return *this;
 	}
+
+	int iX() const
+	{
+		return static_cast<int>(X);
+	}
+
+	int iY() const
+	{
+		return static_cast<int>(Y);
+	}
+
+	float hX() const
+	{
+		return X * 0.5f;
+	}
+
+	float hY() const
+	{
+		return Y * 0.5f;
+	}
+
+	int ihX() const
+	{
+		return static_cast<int>(hX());
+	}
+
+	int ihY() const
+	{
+		return static_cast<int>(hY());
+	}
+
+	float4 Half2D()
+	{
+		return { hX(), hY() };
+	}
+
+	std::string ToString()
+	{
+		return "[X : " + std::to_string(X) + " Y : " + std::to_string(Y) + " Z : " + std::to_string(Z) + " W : " + std::to_string(W) + "]";
+	}
 };
 
 using FVector = float4;
@@ -183,6 +194,11 @@ public:
 		unsigned char Arr1D[4] = { 0,0,0,255 };
 		unsigned int Color;
 	};
+
+	Color8Bit ZeroAlphaColor() const
+	{
+		return Color8Bit{ R,G,B,0 };
+	}
 };
 
 class EngineMath

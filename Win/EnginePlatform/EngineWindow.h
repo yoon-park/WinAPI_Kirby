@@ -17,6 +17,11 @@ public:
 	UEngineWindow& operator=(const UEngineWindow& _Other) = delete;
 	UEngineWindow& operator=(UEngineWindow&& _Other) noexcept = delete;
 
+	FVector GetWindowScale()
+	{
+		return Scale;
+	}
+
 	UWindowImage* GetWindowImage()
 	{
 		return WindowImage;
@@ -26,6 +31,8 @@ public:
 	{
 		return BackBufferImage;
 	}
+
+	FVector GetMousePosition();
 
 	void SetWindowPosition(const FVector& _Pos);
 	void SetWindowScale(const FVector& _Scale);
@@ -40,6 +47,7 @@ public:
 protected:
 
 private:
+	FVector Position;
 	FVector Scale;
 	HWND hWnd = nullptr;
 	UWindowImage* WindowImage = nullptr;

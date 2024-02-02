@@ -38,9 +38,6 @@ public:
 		InfoIndex = _InfoIndex;
 	}
 
-	void SetOrder(int _Order) override;
-	void SetImage(std::string_view _Name, int _InfoIndex = 0);
-
 	void SetTransform(const FTransform& _Value)
 	{
 		USceneComponent::SetTransform(_Value);
@@ -50,6 +47,29 @@ public:
 	{
 		ImageCuttingTransform = _Value;
 	}
+
+	void SetTransColor(Color8Bit _Color)
+	{
+		TransColor = _Color;
+	}
+
+	void SetAlpha(float _Alpha)
+	{
+		if (_Alpha <= 0.0f)
+		{
+			_Alpha = 0.0f;
+		}
+
+		if (_Alpha >= 1.0f)
+		{
+			_Alpha = 1.0f;
+		}
+
+		TransColor.A = static_cast<char>(_Alpha * 255.0f);
+	}
+
+	void SetOrder(int _Order) override;
+	void SetImage(std::string_view _Name, int _InfoIndex = 0);
 
 	void CreateAnimation(
 		std::string_view _AnimationName,
@@ -71,6 +91,7 @@ protected:
 private:
 	int InfoIndex = 0;
 	FTransform ImageCuttingTransform;
+	Color8Bit TransColor;
 	UWindowImage* Image;
 	UAnimationInfo* CurAnimation = nullptr;
 
