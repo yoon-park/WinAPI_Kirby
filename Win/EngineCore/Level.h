@@ -25,6 +25,16 @@ public:
 	virtual void BeginPlay();
 	virtual void Tick(float _DeltaTime);
 
+	virtual void LevelStart(ULevel* _PrevLevel)
+	{
+	
+	};
+
+	virtual void LevelEnd(ULevel* _NextLevel)
+	{
+	
+	};
+
 	template<typename ActorType>
 	ActorType* SpawnActor(int _Order = 0)
 	{

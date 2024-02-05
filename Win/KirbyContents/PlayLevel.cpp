@@ -18,7 +18,15 @@ UPlayLevel::~UPlayLevel()
 void UPlayLevel::BeginPlay()
 {
 	ULevel::BeginPlay();
+}
 
+void UPlayLevel::Tick(float _DeltaTime)
+{
+
+}
+
+void UPlayLevel::LevelStart(ULevel* _Level)
+{
 	UEngineDirectory NewPath;
 
 	NewPath.MoveParent();
@@ -26,7 +34,7 @@ void UPlayLevel::BeginPlay()
 	NewPath.Move("PlayLevel");
 
 	std::list<UEngineFile> AllFileList = NewPath.AllFile({ ".png", ".bmp" }, true);
-	
+
 	for (UEngineFile& File : AllFileList)
 	{
 		UEngineResourcesManager::GetInst().LoadImg(File.GetFullPath());
@@ -36,4 +44,8 @@ void UPlayLevel::BeginPlay()
 
 	APlayer* Kirby = SpawnActor<APlayer>();
 	Kirby->SetActorLocation({ 100, 100 });
+}
+void UPlayLevel::LevelEnd(ULevel* _Level)
+{
+
 }

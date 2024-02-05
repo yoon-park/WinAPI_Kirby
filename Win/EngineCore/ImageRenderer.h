@@ -92,7 +92,7 @@ private:
 	int InfoIndex = 0;
 	FTransform ImageCuttingTransform;
 	Color8Bit TransColor;
-	UWindowImage* Image;
+	UWindowImage* Image = nullptr;
 	UAnimationInfo* CurAnimation = nullptr;
 
 	std::map<std::string, UAnimationInfo> AnimationInfos;

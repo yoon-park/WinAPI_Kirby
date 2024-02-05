@@ -61,6 +61,7 @@ private:
 	float FrameTime = 0.0f;
 	float CurFrameTime = 0.0f;
 	ULevel* CurLevel = nullptr;
+	ULevel* NextLevel = nullptr;
 	std::map<std::string, ULevel*> AllLevel;
 
 	void CoreTick();
