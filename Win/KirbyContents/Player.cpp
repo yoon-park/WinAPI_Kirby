@@ -3,6 +3,7 @@
 #include <EngineBase\EngineTime.h>
 #include <EnginePlatform\EngineInput.h>
 #include <EngineCore\EngineCore.h>
+#include "ContentsHelper.h"
 #include "Fire.h"
 
 APlayer::APlayer()
@@ -19,7 +20,7 @@ void APlayer::BeginPlay()
 {
 	AActor::BeginPlay();
 
-	Renderer = CreateImageRenderer(0);
+	Renderer = CreateImageRenderer(KirbyRenderOrder::Player);
 	Renderer->SetImage("Kirby.bmp");
 	Renderer->SetImageCuttingTransform({ {0,0}, {16, 16} });
 	Renderer->SetTransform({ {0,0}, {50, 50} });

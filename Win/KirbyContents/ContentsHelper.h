@@ -3,7 +3,7 @@
 #include <EngineCore\EngineCore.h>
 #include <EngineCore\ImageRenderer.h>
 
-enum MarioRenderOrder
+enum KirbyRenderOrder
 {
 	Map,
 	Player

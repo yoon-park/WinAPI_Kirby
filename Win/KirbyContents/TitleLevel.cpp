@@ -6,6 +6,7 @@
 #include <EngineCore\EngineCore.h>
 #include <EngineCore\EngineResourcesManager.h>
 #include "TitleLogo.h"
+#include "TitleKirby.h"
 
 UTitleLevel::UTitleLevel()
 {
@@ -48,7 +49,12 @@ void UTitleLevel::LevelStart(ULevel* _Level)
 		UEngineResourcesManager::GetInst().LoadImg(FullPath);
 	}
 
+	UEngineResourcesManager::GetInst().CuttingImage("TitleKirby.png", 5, 3);
+
 	ATitleLogo* Logo = SpawnActor<ATitleLogo>();
+
+	ATitleKirby* Kirby = SpawnActor<ATitleKirby>();
+	Kirby->SetActorLocation({ 395, 375 });
 }
 void UTitleLevel::LevelEnd(ULevel* _Level)
 {
