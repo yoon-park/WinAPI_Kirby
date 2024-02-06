@@ -50,6 +50,11 @@ void UEngineCore::CoreTick()
 		DeltaTime = FrameTime;
 	}
 
+	if (DeltaTime >= 1.0f / 60.0f)
+	{
+		DeltaTime = 1.0f / 60.0f;
+	}
+
 	EngineInput::KeyCheckTick(DeltaTime);
 
 	if (NextLevel != nullptr)
@@ -108,9 +113,9 @@ void UEngineCore::EngineEnd()
 	GEngine->AllLevel.clear();
 }
 
-void UEngineCore::LevelInit(ULevel* _Level)
+void UEngineCore::LevelInit(ULevel* _Level, std::string_view _Name)
 {
-	_Level->BeginPlay();
+	_Level->SetName(_Name);
 }
 
 void UEngineCore::ChangeLevel(std::string_view _Name)

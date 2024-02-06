@@ -44,8 +44,18 @@ FVector UWindowImage::GetScale()
 	return FVector(BitMapInfo.bmWidth, BitMapInfo.bmHeight);
 }
 
-Color8Bit UWindowImage::GetColor(int _X, int _Y)
+Color8Bit UWindowImage::GetColor(int _X, int _Y, Color8Bit _DefaultColor)
 {
+	if (
+		_X < 0 ||
+		_Y < 0 ||
+		_X >= GetScale().iX() ||
+		_Y >= GetScale().iY()
+		)
+	{
+		return _DefaultColor;
+	}
+
 	Color8Bit Color;
 
 	Color.Color = ::GetPixel(ImageDC, _X, _Y);

@@ -24,7 +24,7 @@ void AHUD::SetHUDImage(std::string_view _HUDImageName)
 
 void AHUD::BeginPlay()
 {
-	Renderer = CreateImageRenderer(KirbyRenderOrder::Map);
+	Renderer = CreateImageRenderer(KirbyRenderOrder::HUD);
 
 	SetHUDImage("HUD.png");
 }

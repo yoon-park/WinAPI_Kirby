@@ -94,6 +94,7 @@ void UImageRenderer::CreateAnimation(
 
 	UAnimationInfo& Info = AnimationInfos[UpperAniName];
 	Info.Image = FindImage;
+	Info.Name = UpperAniName;
 	Info.CurFrame = 0;
 	Info.Start = _Start;
 	Info.End = _End;
@@ -115,13 +116,18 @@ void UImageRenderer::CreateAnimation(
 	}
 }
 
-void UImageRenderer::ChangeAnimation(std::string_view _AnimationName)
+void UImageRenderer::ChangeAnimation(std::string_view _AnimationName, bool _IsForce)
 {
 	std::string UpperAniName = UEngineString::ToUpper(_AnimationName);
 
 	if (AnimationInfos.contains(UpperAniName) == false)
 	{
 		MsgBoxAssert(std::string(UpperAniName) + "라는 이름의 애니메이션이 존재하지 않습니다.");
+		return;
+	}
+
+	if ((_IsForce == false) && (CurAnimation != nullptr) && (CurAnimation->Name == UpperAniName))
+	{
 		return;
 	}
 
@@ -152,6 +158,11 @@ void UImageRenderer::Render(float _DeltaTime)
 	FTransform RendererTrans = GetTransform();
 	FTransform ActorTrans = GetOwner()->GetTransform();
 	RendererTrans.AddPosition(ActorTrans.GetPosition());
+
+	AActor* Actor = GetOwner();
+	ULevel* World = Actor->GetWorld();
+	FVector CameraPos = World->GetCameraPos();
+	RendererTrans.AddPosition(-CameraPos);
 
 	EWIndowImageType ImageType = Image->GetImageType();
 

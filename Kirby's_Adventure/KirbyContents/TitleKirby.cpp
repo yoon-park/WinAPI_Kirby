@@ -28,5 +28,5 @@ void ATitleKirby::BeginPlay()
 
 void ATitleKirby::Tick(float _DeltaTime)
 {
-
+	AActor::Tick(_DeltaTime);
 }

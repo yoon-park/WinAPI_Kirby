@@ -2,6 +2,7 @@
 #include <map>
 #include <list>
 
+#include <EngineBase/EngineMath.h>
 #include <EngineBase/NameObject.h>
 
 class AActor;
@@ -44,9 +45,26 @@ public:
 		return NewActor;
 	}
 
+	FVector GetCameraPos() const
+	{
+		return CameraPos;
+	}
+
+	void SetCameraPos(FVector _CameraPos)
+	{
+		CameraPos = _CameraPos;
+	}
+
+	void AddCameraPos(FVector _CameraPos)
+	{
+		CameraPos += _CameraPos;
+	}
+
 protected:
 
 private:
+	FVector CameraPos = FVector::Zero;
+
 	std::map<int, std::list<AActor*>> AllActor;
 	std::map<int, std::list<UImageRenderer*>> Renderers;
 
