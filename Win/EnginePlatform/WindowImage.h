@@ -48,6 +48,7 @@ public:
 	}
 
 	FVector GetScale();
+	Color8Bit GetColor(int _X, int _Y);
 
 	bool Load(UWindowImage* _Image);
 	bool LoadFolder(UWindowImage* _Image);

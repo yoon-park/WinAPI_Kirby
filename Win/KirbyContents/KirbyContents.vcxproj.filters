@@ -21,6 +21,12 @@
     <ClInclude Include="TitleKirby.h">
       <Filter>Object\TitleLevel\Actor</Filter>
     </ClInclude>
+    <ClInclude Include="BackGroundMap.h">
+      <Filter>Object\PlayLevel\Actor</Filter>
+    </ClInclude>
+    <ClInclude Include="HUD.h">
+      <Filter>Object\PlayLevel\Actor</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ContentsCore.cpp" />
@@ -42,6 +48,12 @@
     <ClCompile Include="ContentsHelper.cpp" />
     <ClCompile Include="TitleKirby.cpp">
       <Filter>Object\TitleLevel\Actor</Filter>
+    </ClCompile>
+    <ClCompile Include="BackGroundMap.cpp">
+      <Filter>Object\PlayLevel\Actor</Filter>
+    </ClCompile>
+    <ClCompile Include="HUD.cpp">
+      <Filter>Object\PlayLevel\Actor</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

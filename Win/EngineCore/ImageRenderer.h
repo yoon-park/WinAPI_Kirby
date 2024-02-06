@@ -32,6 +32,11 @@ public:
 	UImageRenderer(UImageRenderer&& _Other) noexcept = delete;
 	UImageRenderer& operator=(const UImageRenderer& _Other) = delete;
 	UImageRenderer& operator=(UImageRenderer&& _Other) noexcept = delete;
+	
+	UWindowImage* GetImage() const
+	{
+		return Image;
+	}
 
 	void SetImageIndex(int _InfoIndex)
 	{

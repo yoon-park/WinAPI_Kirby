@@ -52,9 +52,7 @@ void UTitleLevel::LevelStart(ULevel* _Level)
 	UEngineResourcesManager::GetInst().CuttingImage("TitleKirby.png", 5, 3);
 
 	ATitleLogo* Logo = SpawnActor<ATitleLogo>();
-
 	ATitleKirby* Kirby = SpawnActor<ATitleKirby>();
-	Kirby->SetActorLocation({ 395, 375 });
 }
 void UTitleLevel::LevelEnd(ULevel* _Level)
 {

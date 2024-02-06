@@ -11,6 +11,9 @@ enum KirbyRenderOrder
 
 class UContentsHelper
 {
+public:
+	static UWindowImage* ColMapImage;
+
 private:
 	UContentsHelper();
 	~UContentsHelper();

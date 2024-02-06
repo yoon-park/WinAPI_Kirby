@@ -3,6 +3,8 @@
 #include <EngineBase\EngineDirectory.h>
 #include <EngineBase\EngineFile.h>
 #include <EngineCore\EngineResourcesManager.h>
+#include "BackGroundMap.h"
+#include "HUD.h"
 #include "Player.h"
 
 UPlayLevel::UPlayLevel()
@@ -40,10 +42,15 @@ void UPlayLevel::LevelStart(ULevel* _Level)
 		UEngineResourcesManager::GetInst().LoadImg(File.GetFullPath());
 	}
 
-	UEngineResourcesManager::GetInst().CuttingImage("Kirby.bmp", 6, 2);
+	UEngineResourcesManager::GetInst().CuttingImage("Kirby_right.png", 5, 3);
+
+	ABackGroundMap* Map = SpawnActor<ABackGroundMap>();
+	Map->SwitchDebug();
+
+	AHUD* HUD = SpawnActor<AHUD>();
 
 	APlayer* Kirby = SpawnActor<APlayer>();
-	Kirby->SetActorLocation({ 100, 100 });
+	Kirby->SetActorLocation({ 200, 200 });
 }
 void UPlayLevel::LevelEnd(ULevel* _Level)
 {

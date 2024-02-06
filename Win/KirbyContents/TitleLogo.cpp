@@ -16,8 +16,8 @@ void ATitleLogo::BeginPlay()
 
 	UImageRenderer* Renderer = CreateImageRenderer();
 
-	Renderer->SetImage("TitleLogo.bmp");
-	SetActorLocation({ 400, 375 });
+	Renderer->SetImage("TitleLogo.png");
+	SetActorLocation({ 400, 350 });
 	Renderer->SetImageCuttingTransform({ {0,0}, {256, 240} });
 	Renderer->SetTransform({ {0,0}, {800, 750} });
 }

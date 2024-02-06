@@ -17,7 +17,8 @@ protected:
 	void Tick(float _DeltaTime) override;
 
 private:
-	float QSkillCool = 0.0f;
+	float Gravity = 500.0f;
+
 	float AnimationTime = 0.0f;
 	int AnimationFrame = 0;
 	UImageRenderer* Renderer;

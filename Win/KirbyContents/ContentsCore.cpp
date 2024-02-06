@@ -15,7 +15,8 @@ UContentsCore::~UContentsCore()
 
 void UContentsCore::BeginPlay()
 {
-	MainWindow.SetWindowScale({ 800, 750 });
+	MainWindow.SetWindowScale({ 800, 700 });
+	MainWindow.SetWindowPosition({ 0, 0 });
 	SetFrame(60);
 
 	UEngineCore::BeginPlay();

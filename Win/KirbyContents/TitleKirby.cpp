@@ -16,8 +16,9 @@ void ATitleKirby::BeginPlay()
 {
 	AActor::BeginPlay();
 
-	Renderer = CreateImageRenderer(KirbyRenderOrder::Player);
+	Renderer = CreateImageRenderer();
 	Renderer->SetImage("TitleKirby.png");
+	SetActorLocation({ 400, 350 });
 	Renderer->SetImageCuttingTransform({ {0,0}, {64, 64} });
 	Renderer->SetTransform({ {0,0}, {200, 200} });
 

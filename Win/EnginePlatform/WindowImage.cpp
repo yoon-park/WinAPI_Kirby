@@ -44,6 +44,15 @@ FVector UWindowImage::GetScale()
 	return FVector(BitMapInfo.bmWidth, BitMapInfo.bmHeight);
 }
 
+Color8Bit UWindowImage::GetColor(int _X, int _Y)
+{
+	Color8Bit Color;
+
+	Color.Color = ::GetPixel(ImageDC, _X, _Y);
+
+	return Color;
+}
+
 bool UWindowImage::Load(UWindowImage* _Image)
 {
 	LoadType = EImageLoadType::IMG_Cutting;
