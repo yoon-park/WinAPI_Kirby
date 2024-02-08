@@ -33,10 +33,18 @@ void UPlayLevel::LevelStart(ULevel* _Level)
 
 	NewPath.MoveParent();
 	NewPath.Move("Resources");
-	NewPath.Move("PlayLevel");
+	NewPath.Move("Common");
 
 	std::list<UEngineFile> AllFileList = NewPath.AllFile({ ".png", ".bmp" }, true);
+	for (UEngineFile& File : AllFileList)
+	{
+		UEngineResourcesManager::GetInst().LoadImg(File.GetFullPath());
+	}
 
+	NewPath.MoveParent();
+	NewPath.Move("PlayLevel");
+	
+	AllFileList = NewPath.AllFile({ ".png", ".bmp" }, true);
 	for (UEngineFile& File : AllFileList)
 	{
 		UEngineResourcesManager::GetInst().LoadImg(File.GetFullPath());

@@ -44,6 +44,7 @@ private:
 	float Gravity = 500.0f;
 	float MoveSpeed = 500.0f;
 	float FreeMoveSpeed = 1000.0f;
+	float JumpTimer = 0.5f;
 
 	float AnimationTime = 0.0f;
 	int AnimationFrame = 0;

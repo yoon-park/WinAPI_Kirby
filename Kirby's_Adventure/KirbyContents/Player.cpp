@@ -25,9 +25,12 @@ void APlayer::BeginPlay()
 
 	Renderer->CreateAnimation("Idle_Right", "Kirby_Right.png", 0, 1, 0.3f, true);
 	Renderer->CreateAnimation("Move_Right", "Kirby_Right.png", 2, 5, 0.1f, true);
+	Renderer->CreateAnimation("Jump_Right", "Kirby_Right.png", 9, 13, 0.1f, true);
 
 	Renderer->CreateAnimation("Idle_Left", "Kirby_Left.png", 0, 1, 0.3f, true);
 	Renderer->CreateAnimation("Move_Left", "Kirby_Left.png", 2, 5, 0.1f, true);
+	Renderer->CreateAnimation("Jump_Left", "Kirby_Left.png", 9, 13, 0.1f, true);
+
 
 	StateChange(EPlayState::Idle);
 }
@@ -242,6 +245,12 @@ void APlayer::Move(float _DeltaTime)
 		return;
 	}
 
+	if (EngineInput::IsDown(VK_SPACE))
+	{
+		StateChange(EPlayState::Jump);
+		return;
+	}
+
 	FVector MovePos = FVector::Zero;
 
 	if (EngineInput::IsPress(VK_LEFT))
@@ -280,7 +289,58 @@ void APlayer::Move(float _DeltaTime)
 
 void APlayer::Jump(float _DeltaTime)
 {
+	DirCheck();
+	GravityCheck(_DeltaTime);
 
+	if (JumpTimer >= 0)
+	{
+		FVector MovePos_Up;
+		MovePos_Up += FVector::Up * _DeltaTime * FreeMoveSpeed;
+		AddActorLocation(MovePos_Up);
+
+		JumpTimer -= _DeltaTime;
+	}
+
+	FVector MovePos_LR;
+
+	if (EngineInput::IsPress(VK_LEFT))
+	{
+		MovePos_LR += FVector::Left * _DeltaTime * FreeMoveSpeed;
+	}
+
+	if (EngineInput::IsPress(VK_RIGHT))
+	{
+		MovePos_LR += FVector::Right * _DeltaTime * FreeMoveSpeed;
+	}
+
+	FVector CheckPos = GetActorLocation();
+
+	switch (DirState)
+	{
+	case EActorDir::Left:
+		CheckPos.X -= 30;
+		break;
+	case EActorDir::Right:
+		CheckPos.X += 30;
+		break;
+	default:
+		break;
+	}
+
+	Color8Bit Color = UContentsHelper::ColMapImage->GetColor(CheckPos.iX(), CheckPos.iY(), Color8Bit::MagentaA);
+
+	if (Color != Color8Bit(255, 0, 255, 0))
+	{
+		AddActorLocation(MovePos_LR);
+		GetWorld()->AddCameraPos(MovePos_LR);
+	}
+	else
+	{
+		JumpTimer = 0.5f;
+
+		StateChange(EPlayState::Idle);
+		return;
+	}
 }
 
 void APlayer::IdleStart()
@@ -297,6 +357,6 @@ void APlayer::MoveStart()
 
 void APlayer::JumpStart()
 {
-	Renderer->ChangeAnimation(GetAnimationName("Move"));
+	Renderer->ChangeAnimation(GetAnimationName("Jump"));
 	DirCheck();
 }
