@@ -18,7 +18,7 @@ enum class EWIndowImageType
 	IMG_PNG
 };
 
-class ImageInfo
+class UImageInfo
 {
 public:
 	HDC ImageDC = nullptr;
@@ -69,7 +69,7 @@ private:
 	EImageLoadType LoadType = EImageLoadType::IMG_Cutting;
 	EWIndowImageType ImageType = EWIndowImageType::IMG_NONE;
 
-	std::vector<ImageInfo> Infos;
+	std::vector<UImageInfo> Infos;
 
 	bool Create(HDC _MainDC);
 };

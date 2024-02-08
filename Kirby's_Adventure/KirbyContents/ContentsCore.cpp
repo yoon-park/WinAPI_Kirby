@@ -17,14 +17,13 @@ void UContentsCore::BeginPlay()
 {
 	MainWindow.SetWindowScale({ 800, 700 });
 	MainWindow.SetWindowPosition({ 0, 0 });
-	SetFrame(60);
 
 	UEngineCore::BeginPlay();
 
 	CreateLevel<UTitleLevel>("TitleLevel");
 	CreateLevel<UPlayLevel>("PlayLevel");
 
-	ChangeLevel("TitleLevel");
+	ChangeLevel("PlayLevel");
 }
 
 void UContentsCore::Tick(float _DeltaTime)

@@ -5,8 +5,8 @@
 
 enum KirbyRenderOrder
 {
-	HUD,
 	Map,
+	HUD,
 	Player
 };
 

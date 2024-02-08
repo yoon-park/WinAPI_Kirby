@@ -32,4 +32,6 @@ void AHUD::BeginPlay()
 void AHUD::Tick(float _DeltaTime)
 {
 	AActor::Tick(_DeltaTime);
+	
+	SetActorLocation(GetWorld()->GetCameraPos());
 }
