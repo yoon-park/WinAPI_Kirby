@@ -27,9 +27,18 @@ public:
 		return IsActiveValue && (IsDestroyValue == false);
 	}
 
-	void SetActive(bool _Active)
+	void SetActive(bool _Active, float _ActiveTime = 0.0f)
 	{
-		IsActiveValue = _Active;
+		ActiveTime = _ActiveTime;
+
+		if (_Active == true && ActiveTime == 0.0f)
+		{
+			IsActiveValue = _Active;
+			return;
+		}
+
+		IsActiveUpdate = true;
+		IsActiveValue = false;
 	}
 
 	void ActiveOn()
@@ -40,6 +49,21 @@ public:
 	void ActiveOff()
 	{
 		IsActiveValue = false;
+	}
+
+	virtual void ActiveUpdate(float _DeltaTime)
+	{
+		ActiveTime -= _DeltaTime;
+
+		if (IsActiveUpdate == true)
+		{
+			if (ActiveTime <= 0.0f)
+			{
+				IsActiveUpdate = false;
+				IsActiveValue = true;
+				return;
+			}
+		}
 	}
 
 	bool IsDestroy()
@@ -78,8 +102,12 @@ protected:
 
 private:
 	int Order = 0;
+
+	bool IsActiveUpdate = false;
+	float ActiveTime = 0.0f;
 	bool IsActiveValue = true;
-	bool IsDestroyValue = false;
+
 	bool IsDestroyUpdate = false;
 	float DestroyTime = 0.0f;
+	bool IsDestroyValue = false;
 };

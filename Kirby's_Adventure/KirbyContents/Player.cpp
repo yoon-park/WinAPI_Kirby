@@ -31,7 +31,6 @@ void APlayer::BeginPlay()
 	Renderer->CreateAnimation("Move_Left", "Kirby_Left.png", 2, 5, 0.1f, true);
 	Renderer->CreateAnimation("Jump_Left", "Kirby_Left.png", 9, 13, 0.1f, true);
 
-
 	StateChange(EPlayState::Idle);
 }
 

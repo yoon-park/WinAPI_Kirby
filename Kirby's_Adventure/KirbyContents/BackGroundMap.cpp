@@ -39,13 +39,13 @@ void ABackGroundMap::SwitchDebug()
 {
 	if (Renderer->IsActive() == true)
 	{
-		Renderer->SetActive(false);
-		ColRenderer->SetActive(true);
+		Renderer->ActiveOff();
+		ColRenderer->ActiveOn();
 	}
 	else
 	{
-		Renderer->SetActive(true);
-		ColRenderer->SetActive(false);
+		Renderer->ActiveOn();
+		ColRenderer->ActiveOff();
 	}
 }
 
@@ -53,7 +53,7 @@ void ABackGroundMap::BeginPlay()
 {
 	Renderer = CreateImageRenderer(KirbyRenderOrder::Map);
 	ColRenderer = CreateImageRenderer(KirbyRenderOrder::Map);
-	ColRenderer->SetActive(false);
+	ColRenderer->ActiveOff();
 
 	SetMapImage("Stage1-1.png");
 	SetColMapImage("Stage1-1_Col.png");

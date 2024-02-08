@@ -1,5 +1,10 @@
 #include "EngineInput.h"
 
+bool EngineInput::AnykeyDown = false;
+bool EngineInput::AnykeyPress = false;
+bool EngineInput::AnykeyUp = false;
+bool EngineInput::AnykeyFree = true;
+
 std::map<int, EngineInput::EngineKey> EngineInput::AllKeys;
 
 void EngineInput::EngineKey::KeyCheck()
@@ -52,17 +57,58 @@ EngineInput::~EngineInput()
 
 void EngineInput::KeyCheckTick(float _DeltaTime)
 {
+	bool KeyCheck = false;
+
 	for (std::pair<const int, EngineKey>& Key : AllKeys)
 	{
 		EngineKey& CurKey = Key.second;
 
 		CurKey.KeyCheck();
+
+		if (CurKey.Press == true)
+		{
+			KeyCheck = true;
+		}
+	}
+
+	if (KeyCheck == true)
+	{
+		if (AnykeyFree == true)
+		{
+			AnykeyDown = true;
+			AnykeyPress = true;
+			AnykeyUp = false;
+			AnykeyFree = false;
+		}
+		else if (AnykeyDown == true)
+		{
+			AnykeyDown = false;
+			AnykeyPress = true;
+			AnykeyUp = false;
+			AnykeyFree = false;
+		}
+	}
+	else
+	{
+		if (AnykeyPress == true)
+		{
+			AnykeyDown = false;
+			AnykeyPress = false;
+			AnykeyUp = true;
+			AnykeyFree = false;
+		}
+		else if (AnykeyUp == true)
+		{
+			AnykeyDown = false;
+			AnykeyPress = false;
+			AnykeyUp = false;
+			AnykeyFree = true;
+		}
 	}
 }
 
 void EngineInput::InputInit()
 {
-	int a = 0;
 	AllKeys[VK_LBUTTON] = EngineKey(VK_LBUTTON);
 	AllKeys[VK_RBUTTON] = EngineKey(VK_RBUTTON);
 	AllKeys[VK_CANCEL] = EngineKey(VK_CANCEL);
