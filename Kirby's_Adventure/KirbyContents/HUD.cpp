@@ -25,6 +25,7 @@ void AHUD::SetHUDImage(std::string_view _HUDImageName)
 void AHUD::BeginPlay()
 {
 	Renderer = CreateImageRenderer(KirbyRenderOrder::HUD);
+	Renderer->CameraEffectOff();
 
 	SetHUDImage("HUD.png");
 }
@@ -32,6 +33,4 @@ void AHUD::BeginPlay()
 void AHUD::Tick(float _DeltaTime)
 {
 	AActor::Tick(_DeltaTime);
-	
-	SetActorLocation(GetWorld()->GetCameraPos());
 }

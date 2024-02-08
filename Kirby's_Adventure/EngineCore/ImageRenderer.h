@@ -77,6 +77,11 @@ public:
 	void SetOrder(int _Order) override;
 	void SetImage(std::string_view _Name, int _InfoIndex = 0);
 
+	void CameraEffectOff()
+	{
+		CameraEffect = false;
+	}
+
 	void CreateAnimation(
 		std::string_view _AnimationName,
 		std::string_view _ImageName,
@@ -99,6 +104,7 @@ private:
 	FTransform ImageCuttingTransform;
 	Color8Bit TransColor;
 	UWindowImage* Image = nullptr;
+	bool CameraEffect = true;
 	UAnimationInfo* CurAnimation = nullptr;
 
 	std::map<std::string, UAnimationInfo> AnimationInfos;
