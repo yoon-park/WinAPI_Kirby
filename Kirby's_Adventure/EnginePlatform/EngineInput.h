@@ -4,14 +4,14 @@
 
 #include <EngineBase\EngineDebug.h>
 
-class EngineInput
+class UEngineInput
 {
 	friend class InputInitCreator;
 
 private:
 	class EngineKey
 	{
-		friend EngineInput;
+		friend UEngineInput;
 
 	public:
 		EngineKey()
@@ -38,13 +38,13 @@ private:
 	};
 
 public:
-	EngineInput();
-	~EngineInput();
+	UEngineInput();
+	~UEngineInput();
 
-	EngineInput(const EngineInput& _Other) = delete;
-	EngineInput(EngineInput&& _Other) noexcept = delete;
-	EngineInput& operator=(const EngineInput& _Other) = delete;
-	EngineInput& operator=(EngineInput&& _Other) noexcept = delete;
+	UEngineInput(const UEngineInput& _Other) = delete;
+	UEngineInput(UEngineInput&& _Other) noexcept = delete;
+	UEngineInput& operator=(const UEngineInput& _Other) = delete;
+	UEngineInput& operator=(UEngineInput&& _Other) noexcept = delete;
 
 	static bool IsDown(int _Key)
 	{

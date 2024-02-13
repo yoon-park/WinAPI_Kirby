@@ -164,7 +164,12 @@ void UEngineWindow::Open(std::string_view _Title)
 
 void UEngineWindow::ScreenClear()
 {
+	HBRUSH myBrush = (HBRUSH)CreateSolidBrush(ClearColor.Color);
+	HBRUSH oldBrush = (HBRUSH)SelectObject(BackBufferImage->ImageDC, myBrush);
 	Rectangle(BackBufferImage->ImageDC, -1, -1, Scale.iX() + 1, Scale.iY() + 1);
+	
+	SelectObject(BackBufferImage->ImageDC, oldBrush);
+	DeleteObject(myBrush);
 }
 
 void UEngineWindow::ScreenUpdate()

@@ -55,7 +55,7 @@ void UEngineCore::CoreTick()
 		DeltaTime = 1.0f / 60.0f;
 	}
 
-	EngineInput::KeyCheckTick(DeltaTime);
+	UEngineInput::KeyCheckTick(DeltaTime);
 
 	if (NextLevel != nullptr)
 	{

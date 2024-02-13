@@ -27,7 +27,7 @@ void UTitleLevel::Tick(float _DeltaTime)
 {
 	ULevel::Tick(_DeltaTime);
 
-	if (EngineInput::IsDown('P'))
+	if (UEngineInput::IsDown('P'))
 	{
 		GEngine->ChangeLevel("PlayLevel");
 	}

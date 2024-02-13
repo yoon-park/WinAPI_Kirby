@@ -1,13 +1,13 @@
 #include "EngineInput.h"
 
-bool EngineInput::AnykeyDown = false;
-bool EngineInput::AnykeyPress = false;
-bool EngineInput::AnykeyUp = false;
-bool EngineInput::AnykeyFree = true;
+bool UEngineInput::AnykeyDown = false;
+bool UEngineInput::AnykeyPress = false;
+bool UEngineInput::AnykeyUp = false;
+bool UEngineInput::AnykeyFree = true;
 
-std::map<int, EngineInput::EngineKey> EngineInput::AllKeys;
+std::map<int, UEngineInput::EngineKey> UEngineInput::AllKeys;
 
-void EngineInput::EngineKey::KeyCheck()
+void UEngineInput::EngineKey::KeyCheck()
 {
 	if (GetAsyncKeyState(Key) != 0)
 	{
@@ -45,17 +45,17 @@ void EngineInput::EngineKey::KeyCheck()
 	}
 }
 
-EngineInput::EngineInput()
+UEngineInput::UEngineInput()
 {
 
 }
 
-EngineInput::~EngineInput()
+UEngineInput::~UEngineInput()
 {
 
 }
 
-void EngineInput::KeyCheckTick(float _DeltaTime)
+void UEngineInput::KeyCheckTick(float _DeltaTime)
 {
 	bool KeyCheck = false;
 
@@ -107,7 +107,7 @@ void EngineInput::KeyCheckTick(float _DeltaTime)
 	}
 }
 
-void EngineInput::InputInit()
+void UEngineInput::InputInit()
 {
 	AllKeys[VK_LBUTTON] = EngineKey(VK_LBUTTON);
 	AllKeys[VK_RBUTTON] = EngineKey(VK_RBUTTON);
@@ -218,7 +218,7 @@ class InputInitCreator
 public:
 	InputInitCreator()
 	{
-		EngineInput::InputInit();
+		UEngineInput::InputInit();
 	}
 };
 

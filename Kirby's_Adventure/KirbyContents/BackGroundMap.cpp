@@ -55,15 +55,15 @@ void ABackGroundMap::BeginPlay()
 	ColRenderer = CreateImageRenderer(KirbyRenderOrder::Map);
 	ColRenderer->ActiveOff();
 
-	SetMapImage("Stage1-1.png");
-	SetColMapImage("Stage1-1_Col.png");
+	SetMapImage("Stage1-2.png");
+	SetColMapImage("Stage1-2_Col.png");
 }
 
 void ABackGroundMap::Tick(float _DeltaTime)
 {
 	AActor::Tick(_DeltaTime);
 
-	if (EngineInput::IsDown('O'))
+	if (UEngineInput::IsDown('O'))
 	{
 		SwitchDebug();
 	}

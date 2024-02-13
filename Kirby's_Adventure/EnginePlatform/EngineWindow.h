@@ -37,6 +37,12 @@ public:
 	void SetWindowPosition(const FVector& _Pos);
 	void SetWindowScale(const FVector& _Scale);
 
+	void SetClearColor(Color8Bit _Color)
+	{
+		_Color.A = 0;
+		ClearColor = _Color;
+	}
+
 	void Open(std::string_view _Title = "Title");
 	void ScreenClear();
 	void ScreenUpdate();
@@ -52,6 +58,7 @@ private:
 	HWND hWnd = nullptr;
 	UWindowImage* WindowImage = nullptr;
 	UWindowImage* BackBufferImage = nullptr;
+	Color8Bit ClearColor = Color8Bit::WhiteA;
 
 	static bool WindowLive;
 	static HINSTANCE hInstance;

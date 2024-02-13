@@ -23,11 +23,11 @@ void APlayer::BeginPlay()
 	Renderer->SetImage("Kirby_Right.png");
 	Renderer->SetTransform({ {0,0}, {128, 128} });
 
-	Renderer->CreateAnimation("Idle_Right", "Kirby_Right.png", 0, 1, 0.3f, true);
+	Renderer->CreateAnimation("Idle_Right", "Kirby_Right.png", 0, 1, 0.5f, true);
 	Renderer->CreateAnimation("Move_Right", "Kirby_Right.png", 2, 5, 0.1f, true);
 	Renderer->CreateAnimation("Jump_Right", "Kirby_Right.png", 9, 13, 0.1f, true);
 
-	Renderer->CreateAnimation("Idle_Left", "Kirby_Left.png", 0, 1, 0.3f, true);
+	Renderer->CreateAnimation("Idle_Left", "Kirby_Left.png", 0, 1, 0.5f, true);
 	Renderer->CreateAnimation("Move_Left", "Kirby_Left.png", 2, 5, 0.1f, true);
 	Renderer->CreateAnimation("Jump_Left", "Kirby_Left.png", 9, 13, 0.1f, true);
 
@@ -45,12 +45,12 @@ void APlayer::DirCheck()
 {
 	EActorDir Dir = DirState;
 
-	if (EngineInput::IsPress(VK_LEFT))
+	if (UEngineInput::IsPress(VK_LEFT))
 	{
 		Dir = EActorDir::Left;
 	}
 
-	if (EngineInput::IsPress(VK_RIGHT))
+	if (UEngineInput::IsPress(VK_RIGHT))
 	{
 		Dir = EActorDir::Right;
 	}
@@ -143,28 +143,28 @@ void APlayer::StateChange(EPlayState _State)
 
 void APlayer::CameraFreeMove(float _DeltaTime)
 {
-	if (EngineInput::IsDown('2'))
+	if (UEngineInput::IsDown('2'))
 	{
 		StateChange(EPlayState::Idle);
 		return;
 	}
 
-	if (EngineInput::IsPress(VK_LEFT))
+	if (UEngineInput::IsPress(VK_LEFT))
 	{
 		GetWorld()->AddCameraPos(FVector::Left * _DeltaTime * 500.0f);
 	}
 
-	if (EngineInput::IsPress(VK_RIGHT))
+	if (UEngineInput::IsPress(VK_RIGHT))
 	{
 		GetWorld()->AddCameraPos(FVector::Right * _DeltaTime * 500.0f);
 	}
 
-	if (EngineInput::IsPress(VK_UP))
+	if (UEngineInput::IsPress(VK_UP))
 	{
 		GetWorld()->AddCameraPos(FVector::Up * _DeltaTime * 500.0f);
 	}
 
-	if (EngineInput::IsPress(VK_DOWN))
+	if (UEngineInput::IsPress(VK_DOWN))
 	{
 		GetWorld()->AddCameraPos(FVector::Down * _DeltaTime * 500.0f);
 	}
@@ -172,7 +172,7 @@ void APlayer::CameraFreeMove(float _DeltaTime)
 
 void APlayer::FreeMove(float _DeltaTime)
 {
-	if (EngineInput::IsDown('1'))
+	if (UEngineInput::IsDown('1'))
 	{
 		StateChange(EPlayState::Idle);
 		return;
@@ -180,22 +180,22 @@ void APlayer::FreeMove(float _DeltaTime)
 
 	FVector MovePos;
 
-	if (EngineInput::IsPress(VK_LEFT))
+	if (UEngineInput::IsPress(VK_LEFT))
 	{
 		MovePos += FVector::Left * _DeltaTime * FreeMoveSpeed;
 	}
 
-	if (EngineInput::IsPress(VK_RIGHT))
+	if (UEngineInput::IsPress(VK_RIGHT))
 	{
 		MovePos += FVector::Right * _DeltaTime * FreeMoveSpeed;
 	}
 
-	if (EngineInput::IsPress(VK_UP))
+	if (UEngineInput::IsPress(VK_UP))
 	{
 		MovePos += FVector::Up * _DeltaTime * FreeMoveSpeed;
 	}
 
-	if (EngineInput::IsPress(VK_DOWN))
+	if (UEngineInput::IsPress(VK_DOWN))
 	{
 		MovePos += FVector::Down * _DeltaTime * FreeMoveSpeed;
 	}
@@ -206,25 +206,25 @@ void APlayer::FreeMove(float _DeltaTime)
 
 void APlayer::Idle(float _DeltaTime)
 {
-	if (EngineInput::IsDown('1'))
+	if (UEngineInput::IsDown('1'))
 	{
 		StateChange(EPlayState::FreeMove);
 		return;
 	}
 
-	if (EngineInput::IsDown('2'))
+	if (UEngineInput::IsDown('2'))
 	{
 		StateChange(EPlayState::CameraFreeMove);
 		return;
 	}
 
-	if (EngineInput::IsPress(VK_LEFT) || EngineInput::IsPress(VK_RIGHT))
+	if (UEngineInput::IsPress(VK_LEFT) || UEngineInput::IsPress(VK_RIGHT))
 	{
 		StateChange(EPlayState::Move);
 		return;
 	}
 
-	if (EngineInput::IsDown(VK_SPACE))
+	if (UEngineInput::IsDown(VK_SPACE))
 	{
 		StateChange(EPlayState::Jump);
 		return;
@@ -238,13 +238,13 @@ void APlayer::Move(float _DeltaTime)
 	DirCheck();
 	GravityCheck(_DeltaTime);
 
-	if (EngineInput::IsFree(VK_LEFT) && EngineInput::IsFree(VK_RIGHT))
+	if (UEngineInput::IsFree(VK_LEFT) && UEngineInput::IsFree(VK_RIGHT))
 	{
 		StateChange(EPlayState::Idle);
 		return;
 	}
 
-	if (EngineInput::IsDown(VK_SPACE))
+	if (UEngineInput::IsDown(VK_SPACE))
 	{
 		StateChange(EPlayState::Jump);
 		return;
@@ -252,12 +252,12 @@ void APlayer::Move(float _DeltaTime)
 
 	FVector MovePos = FVector::Zero;
 
-	if (EngineInput::IsPress(VK_LEFT))
+	if (UEngineInput::IsPress(VK_LEFT))
 	{
 		MovePos += FVector::Left * _DeltaTime * FreeMoveSpeed;
 	}
 
-	if (EngineInput::IsPress(VK_RIGHT))
+	if (UEngineInput::IsPress(VK_RIGHT))
 	{
 		MovePos += FVector::Right * _DeltaTime * FreeMoveSpeed;
 	}
@@ -302,12 +302,12 @@ void APlayer::Jump(float _DeltaTime)
 
 	FVector MovePos_LR;
 
-	if (EngineInput::IsPress(VK_LEFT))
+	if (UEngineInput::IsPress(VK_LEFT))
 	{
 		MovePos_LR += FVector::Left * _DeltaTime * FreeMoveSpeed;
 	}
 
-	if (EngineInput::IsPress(VK_RIGHT))
+	if (UEngineInput::IsPress(VK_RIGHT))
 	{
 		MovePos_LR += FVector::Right * _DeltaTime * FreeMoveSpeed;
 	}
