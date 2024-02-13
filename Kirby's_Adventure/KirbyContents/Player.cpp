@@ -59,7 +59,7 @@ void APlayer::DirCheck()
 	{
 		DirState = Dir;
 		std::string Name = GetAnimationName(CurAnimationName);
-		Renderer->ChangeAnimation(Name);
+		Renderer->ChangeAnimation(Name, true, Renderer->GetCurAnimationFrame(), Renderer->GetCurAnimationTime());
 	}
 }
 

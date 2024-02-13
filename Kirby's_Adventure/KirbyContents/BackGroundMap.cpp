@@ -57,6 +57,8 @@ void ABackGroundMap::BeginPlay()
 
 	SetMapImage("Stage1-2.png");
 	SetColMapImage("Stage1-2_Col.png");
+
+	Map->SwitchDebug();
 }
 
 void ABackGroundMap::Tick(float _DeltaTime)
