@@ -13,6 +13,8 @@ public:
 	APlayer& operator=(const APlayer& _Other) = delete;
 	APlayer& operator=(APlayer&& _Other) noexcept = delete;
 
+	static APlayer* GetMainPlayer();
+
 protected:
 	EPlayState State = EPlayState::None;
 	EActorDir DirState = EActorDir::Right;
@@ -46,7 +48,14 @@ private:
 	float FreeMoveSpeed = 1000.0f;
 	float JumpTimer = 0.5f;
 
+	FVector RunVector;
+	FVector GravityVector;
+	FVector JumpVector;
+	FVector MoveVector;
+
 	float AnimationTime = 0.0f;
 	int AnimationFrame = 0;
 	UImageRenderer* Renderer;
+
+	static APlayer* MainPlayer;
 };

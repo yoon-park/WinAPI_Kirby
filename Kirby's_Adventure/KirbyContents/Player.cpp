@@ -5,6 +5,13 @@
 #include <EngineCore\EngineCore.h>
 #include "ContentsHelper.h"
 
+APlayer* APlayer::MainPlayer = nullptr;
+
+APlayer* APlayer::GetMainPlayer()
+{
+	return MainPlayer;
+}
+
 APlayer::APlayer()
 {
 
@@ -18,6 +25,8 @@ APlayer::~APlayer()
 void APlayer::BeginPlay()
 {
 	AActor::BeginPlay();
+
+	MainPlayer = this;
 
 	Renderer = CreateImageRenderer(KirbyRenderOrder::Player);
 	Renderer->SetImage("Kirby_Right.png");
@@ -178,30 +187,28 @@ void APlayer::FreeMove(float _DeltaTime)
 		return;
 	}
 
-	FVector MovePos;
-
 	if (UEngineInput::IsPress(VK_LEFT))
 	{
-		MovePos += FVector::Left * _DeltaTime * FreeMoveSpeed;
+		MoveVector += FVector::Left * _DeltaTime * FreeMoveSpeed;
 	}
 
 	if (UEngineInput::IsPress(VK_RIGHT))
 	{
-		MovePos += FVector::Right * _DeltaTime * FreeMoveSpeed;
+		MoveVector += FVector::Right * _DeltaTime * FreeMoveSpeed;
 	}
 
 	if (UEngineInput::IsPress(VK_UP))
 	{
-		MovePos += FVector::Up * _DeltaTime * FreeMoveSpeed;
+		MoveVector += FVector::Up * _DeltaTime * FreeMoveSpeed;
 	}
 
 	if (UEngineInput::IsPress(VK_DOWN))
 	{
-		MovePos += FVector::Down * _DeltaTime * FreeMoveSpeed;
+		MoveVector += FVector::Down * _DeltaTime * FreeMoveSpeed;
 	}
 
-	AddActorLocation(MovePos);
-	GetWorld()->AddCameraPos(MovePos);
+	AddActorLocation(MoveVector * _DeltaTime);
+	GetWorld()->AddCameraPos(MoveVector * _DeltaTime);
 }
 
 void APlayer::Idle(float _DeltaTime)

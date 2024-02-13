@@ -12,7 +12,7 @@ public:
 	UTickObject& operator=(const UTickObject& _Other) = delete;
 	UTickObject& operator=(UTickObject&& _Other) noexcept = delete;
 
-	int GetOrder()
+	int GetOrder() const
 	{
 		return Order;
 	}
@@ -70,7 +70,7 @@ public:
 		}
 	}
 
-	bool IsDestroy()
+	bool IsDestroy() const
 	{
 		return IsDestroyValue;
 	}
