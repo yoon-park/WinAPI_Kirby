@@ -33,11 +33,11 @@ void APlayer::BeginPlay()
 	Renderer->SetTransform({ {0,0}, {128, 128} });
 
 	Renderer->CreateAnimation("Idle_Right", "Kirby_Right.png", 0, 1, 0.5f, true);
-	Renderer->CreateAnimation("Move_Right", "Kirby_Right.png", 2, 5, 0.1f, true);
+	Renderer->CreateAnimation("Run_Right", "Kirby_Right.png", 2, 5, 0.1f, true);
 	Renderer->CreateAnimation("Jump_Right", "Kirby_Right.png", 9, 13, 0.1f, true);
 
 	Renderer->CreateAnimation("Idle_Left", "Kirby_Left.png", 0, 1, 0.5f, true);
-	Renderer->CreateAnimation("Move_Left", "Kirby_Left.png", 2, 5, 0.1f, true);
+	Renderer->CreateAnimation("Run_Left", "Kirby_Left.png", 2, 5, 0.1f, true);
 	Renderer->CreateAnimation("Jump_Left", "Kirby_Left.png", 9, 13, 0.1f, true);
 
 	StateChange(EPlayState::Idle);
@@ -48,6 +48,27 @@ void APlayer::Tick(float _DeltaTime)
 	AActor::Tick(_DeltaTime);
 
 	StateUpdate(_DeltaTime);
+}
+
+std::string APlayer::GetAnimationName(std::string _Name)
+{
+	std::string DirName = "";
+
+	switch (DirState)
+	{
+	case EActorDir::Left:
+		DirName = "_Left";
+		break;
+	case EActorDir::Right:
+		DirName = "_Right";
+		break;
+	default:
+		break;
+	}
+
+	CurAnimationName = _Name;
+
+	return _Name + DirName;
 }
 
 void APlayer::DirCheck()
@@ -72,37 +93,6 @@ void APlayer::DirCheck()
 	}
 }
 
-void APlayer::GravityCheck(float _DeltaTime)
-{
-	Color8Bit Color = UContentsHelper::ColMapImage->GetColor(GetActorLocation().iX(), GetActorLocation().iY(), Color8Bit::MagentaA);
-
-	if (Color != Color8Bit(255, 0, 255, 0))
-	{
-		AddActorLocation(FVector::Down * _DeltaTime * Gravity);
-	}
-}
-
-std::string APlayer::GetAnimationName(std::string _Name)
-{
-	std::string DirName = "";
-
-	switch (DirState)
-	{
-	case EActorDir::Left:
-		DirName = "_Left";
-		break;
-	case EActorDir::Right:
-		DirName = "_Right";
-		break;
-	default:
-		break;
-	}
-
-	CurAnimationName = _Name;
-
-	return _Name + DirName;
-}
-
 void APlayer::StateUpdate(float _DeltaTime)
 {
 	switch (State)
@@ -116,8 +106,8 @@ void APlayer::StateUpdate(float _DeltaTime)
 	case EPlayState::Idle:
 		Idle(_DeltaTime);
 		break;
-	case EPlayState::Move:
-		Move(_DeltaTime);
+	case EPlayState::Run:
+		Run(_DeltaTime);
 		break;
 	case EPlayState::Jump:
 		Jump(_DeltaTime);
@@ -136,8 +126,8 @@ void APlayer::StateChange(EPlayState _State)
 		case EPlayState::Idle:
 			IdleStart();
 			break;
-		case EPlayState::Move:
-			MoveStart();
+		case EPlayState::Run:
+			RunStart();
 			break;
 		case EPlayState::Jump:
 			JumpStart();
@@ -181,6 +171,8 @@ void APlayer::CameraFreeMove(float _DeltaTime)
 
 void APlayer::FreeMove(float _DeltaTime)
 {
+	FVector FreeMove = FVector::Zero;
+
 	if (UEngineInput::IsDown('1'))
 	{
 		StateChange(EPlayState::Idle);
@@ -189,26 +181,26 @@ void APlayer::FreeMove(float _DeltaTime)
 
 	if (UEngineInput::IsPress(VK_LEFT))
 	{
-		MoveVector += FVector::Left * _DeltaTime * FreeMoveSpeed;
+		FreeMove += FVector::Left * _DeltaTime * FreeMoveSpeed;
 	}
 
 	if (UEngineInput::IsPress(VK_RIGHT))
 	{
-		MoveVector += FVector::Right * _DeltaTime * FreeMoveSpeed;
+		FreeMove += FVector::Right * _DeltaTime * FreeMoveSpeed;
 	}
 
 	if (UEngineInput::IsPress(VK_UP))
 	{
-		MoveVector += FVector::Up * _DeltaTime * FreeMoveSpeed;
+		FreeMove += FVector::Up * _DeltaTime * FreeMoveSpeed;
 	}
 
 	if (UEngineInput::IsPress(VK_DOWN))
 	{
-		MoveVector += FVector::Down * _DeltaTime * FreeMoveSpeed;
+		FreeMove += FVector::Down * _DeltaTime * FreeMoveSpeed;
 	}
 
-	AddActorLocation(MoveVector * _DeltaTime);
-	GetWorld()->AddCameraPos(MoveVector * _DeltaTime);
+	AddActorLocation(FreeMove * _DeltaTime);
+	GetWorld()->AddCameraPos(FreeMove * _DeltaTime);
 }
 
 void APlayer::Idle(float _DeltaTime)
@@ -227,7 +219,7 @@ void APlayer::Idle(float _DeltaTime)
 
 	if (UEngineInput::IsPress(VK_LEFT) || UEngineInput::IsPress(VK_RIGHT))
 	{
-		StateChange(EPlayState::Move);
+		StateChange(EPlayState::Run);
 		return;
 	}
 
@@ -237,13 +229,12 @@ void APlayer::Idle(float _DeltaTime)
 		return;
 	}
 
-	GravityCheck(_DeltaTime);
+	MoveUpdate(_DeltaTime);
 }
 
-void APlayer::Move(float _DeltaTime)
+void APlayer::Run(float _DeltaTime)
 {
 	DirCheck();
-	GravityCheck(_DeltaTime);
 
 	if (UEngineInput::IsFree(VK_LEFT) && UEngineInput::IsFree(VK_RIGHT))
 	{
@@ -257,18 +248,70 @@ void APlayer::Move(float _DeltaTime)
 		return;
 	}
 
-	FVector MovePos = FVector::Zero;
-
 	if (UEngineInput::IsPress(VK_LEFT))
 	{
-		MovePos += FVector::Left * _DeltaTime * FreeMoveSpeed;
+		AddMoveVector(FVector::Left * _DeltaTime);
 	}
 
 	if (UEngineInput::IsPress(VK_RIGHT))
 	{
-		MovePos += FVector::Right * _DeltaTime * FreeMoveSpeed;
+		AddMoveVector(FVector::Right * _DeltaTime);
 	}
 
+	MoveUpdate(_DeltaTime);
+}
+
+void APlayer::Jump(float _DeltaTime)
+{
+	DirCheck();
+
+	if (UEngineInput::IsPress(VK_LEFT))
+	{
+		AddMoveVector(FVector::Left * _DeltaTime);
+	}
+
+	if (UEngineInput::IsPress(VK_RIGHT))
+	{
+		AddMoveVector(FVector::Right * _DeltaTime);
+	}
+
+	MoveUpdate(_DeltaTime);
+
+	Color8Bit Color = UContentsHelper::ColMapImage->GetColor(GetActorLocation().iX(), GetActorLocation().iY(), Color8Bit::MagentaA);
+	if (Color == Color8Bit(255, 0, 255, 0))
+	{
+		JumpVector = FVector::Zero;
+		StateChange(EPlayState::Idle);
+		return;
+	}
+}
+
+void APlayer::IdleStart()
+{
+	Renderer->ChangeAnimation(GetAnimationName("Idle"));
+	DirCheck();
+}
+
+void APlayer::RunStart()
+{
+	Renderer->ChangeAnimation(GetAnimationName("Run"));
+	DirCheck();
+}
+
+void APlayer::JumpStart()
+{
+	JumpVector = JumpPower;
+	Renderer->ChangeAnimation(GetAnimationName("Jump"));
+	DirCheck();
+}
+
+void APlayer::AddMoveVector(const FVector& _DirDelta)
+{
+	MoveVector += _DirDelta * MoveAcc;
+}
+
+void APlayer::CalMoveVector(float _DeltaTime)
+{
 	FVector CheckPos = GetActorLocation();
 
 	switch (DirState)
@@ -285,84 +328,64 @@ void APlayer::Move(float _DeltaTime)
 	CheckPos.Y -= 30;
 
 	Color8Bit Color = UContentsHelper::ColMapImage->GetColor(CheckPos.iX(), CheckPos.iY(), Color8Bit::MagentaA);
-	
-	if (Color != Color8Bit(255, 0, 255, 0))
+	if (Color == Color8Bit(255, 0, 255, 0))
 	{
-		AddActorLocation(MovePos);
-		GetWorld()->AddCameraPos(MovePos);
+		MoveVector = FVector::Zero;
+	}
+
+	if (UEngineInput::IsFree(VK_LEFT) == true && UEngineInput::IsFree(VK_RIGHT) == true)
+	{
+		if (MoveVector.Size2D() >= 0.001)
+		{
+			MoveVector += (-MoveVector.Normalize2DReturn()) * _DeltaTime * MoveAcc;
+		}
+		else
+		{
+			MoveVector = float4::Zero;
+		}
+	}
+
+	if (MoveVector.Size2D() >= MoveMaxSpeed)
+	{
+		MoveVector = MoveVector.Normalize2DReturn() * MoveMaxSpeed;
 	}
 }
 
-void APlayer::Jump(float _DeltaTime)
+void APlayer::CalGravityVector(float _DeltaTime)
 {
-	DirCheck();
-	GravityCheck(_DeltaTime);
+	GravityVector += GravityAcc * _DeltaTime;
 
-	if (JumpTimer >= 0)
+	Color8Bit Color = UContentsHelper::ColMapImage->GetColor(GetActorLocation().iX(), GetActorLocation().iY(), Color8Bit::MagentaA);
+	if (Color == Color8Bit(255, 0, 255, 0))
 	{
-		FVector MovePos_Up;
-		MovePos_Up += FVector::Up * _DeltaTime * FreeMoveSpeed;
-		AddActorLocation(MovePos_Up);
-
-		JumpTimer -= _DeltaTime;
-	}
-
-	FVector MovePos_LR;
-
-	if (UEngineInput::IsPress(VK_LEFT))
-	{
-		MovePos_LR += FVector::Left * _DeltaTime * FreeMoveSpeed;
-	}
-
-	if (UEngineInput::IsPress(VK_RIGHT))
-	{
-		MovePos_LR += FVector::Right * _DeltaTime * FreeMoveSpeed;
-	}
-
-	FVector CheckPos = GetActorLocation();
-
-	switch (DirState)
-	{
-	case EActorDir::Left:
-		CheckPos.X -= 30;
-		break;
-	case EActorDir::Right:
-		CheckPos.X += 30;
-		break;
-	default:
-		break;
-	}
-
-	Color8Bit Color = UContentsHelper::ColMapImage->GetColor(CheckPos.iX(), CheckPos.iY(), Color8Bit::MagentaA);
-
-	if (Color != Color8Bit(255, 0, 255, 0))
-	{
-		AddActorLocation(MovePos_LR);
-		GetWorld()->AddCameraPos(MovePos_LR);
-	}
-	else
-	{
-		JumpTimer = 0.5f;
-
-		StateChange(EPlayState::Idle);
-		return;
+		GravityVector = FVector::Zero;
 	}
 }
 
-void APlayer::IdleStart()
+void APlayer::CalJumpVector(float _DeltaTime)
 {
-	Renderer->ChangeAnimation(GetAnimationName("Idle"));
-	DirCheck();
+
 }
 
-void APlayer::MoveStart()
+void APlayer::CalLastMoveVector(float _DeltaTime)
 {
-	Renderer->ChangeAnimation(GetAnimationName("Move"));
-	DirCheck();
+	LastMoveVector = FVector::Zero;
+	LastMoveVector = LastMoveVector + MoveVector;
+	LastMoveVector = LastMoveVector + JumpVector;
+	LastMoveVector = LastMoveVector + GravityVector;
+	LastMoveVector + JumpVector;
 }
 
-void APlayer::JumpStart()
+void APlayer::MoveLastMoveVector(float _DeltaTime)
 {
-	Renderer->ChangeAnimation(GetAnimationName("Jump"));
-	DirCheck();
+	GetWorld()->AddCameraPos(MoveVector * _DeltaTime);
+	AddActorLocation(LastMoveVector * _DeltaTime);
+}
+
+void APlayer::MoveUpdate(float _DeltaTime)
+{
+	CalMoveVector(_DeltaTime);
+	CalGravityVector(_DeltaTime);
+	CalLastMoveVector(_DeltaTime);
+	MoveLastMoveVector(_DeltaTime);
 }

@@ -22,7 +22,7 @@ enum class EPlayState
 	CameraFreeMove,
 	FreeMove,
 	Idle,
-	Move,
+	Run,
 	Jump,
 };
 
