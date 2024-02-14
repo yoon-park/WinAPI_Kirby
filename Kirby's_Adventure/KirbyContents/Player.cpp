@@ -27,18 +27,25 @@ void APlayer::BeginPlay()
 	AActor::BeginPlay();
 
 	MainPlayer = this;
+	
+	{
+		Renderer = CreateImageRenderer(KirbyRenderOrder::Player);
+		Renderer->SetImage("Kirby_Right.png");
+		Renderer->SetTransform({ {0,0}, {128, 128} });
 
-	Renderer = CreateImageRenderer(KirbyRenderOrder::Player);
-	Renderer->SetImage("Kirby_Right.png");
-	Renderer->SetTransform({ {0,0}, {128, 128} });
+		Renderer->CreateAnimation("Idle_Right", "Kirby_Right.png", 0, 1, 0.5f, true);
+		Renderer->CreateAnimation("Run_Right", "Kirby_Right.png", 2, 5, 0.1f, true);
+		Renderer->CreateAnimation("Jump_Right", "Kirby_Right.png", 9, 13, 0.1f, true);
 
-	Renderer->CreateAnimation("Idle_Right", "Kirby_Right.png", 0, 1, 0.5f, true);
-	Renderer->CreateAnimation("Run_Right", "Kirby_Right.png", 2, 5, 0.1f, true);
-	Renderer->CreateAnimation("Jump_Right", "Kirby_Right.png", 9, 13, 0.1f, true);
+		Renderer->CreateAnimation("Idle_Left", "Kirby_Left.png", 0, 1, 0.5f, true);
+		Renderer->CreateAnimation("Run_Left", "Kirby_Left.png", 2, 5, 0.1f, true);
+		Renderer->CreateAnimation("Jump_Left", "Kirby_Left.png", 9, 13, 0.1f, true);
+	}
 
-	Renderer->CreateAnimation("Idle_Left", "Kirby_Left.png", 0, 1, 0.5f, true);
-	Renderer->CreateAnimation("Run_Left", "Kirby_Left.png", 2, 5, 0.1f, true);
-	Renderer->CreateAnimation("Jump_Left", "Kirby_Left.png", 9, 13, 0.1f, true);
+	{
+		BodyCollision = CreateCollision(KirbyCollisionOrder::Player);
+		BodyCollision->SetScale({ 128, 128 });
+	}
 
 	StateChange(EPlayState::Idle);
 }
@@ -382,10 +389,27 @@ void APlayer::MoveLastMoveVector(float _DeltaTime)
 	AddActorLocation(LastMoveVector * _DeltaTime);
 }
 
+void APlayer::GroundUp()
+{
+	while (true)
+	{
+		Color8Bit Color = UContentsHelper::ColMapImage->GetColor(GetActorLocation().iX(), GetActorLocation().iY() - 1, Color8Bit::MagentaA);
+		if (Color == Color8Bit(255, 0, 255, 0))
+		{
+			AddActorLocation(FVector::Up);
+		}
+		else
+		{
+			break;
+		}
+	}
+}
+
 void APlayer::MoveUpdate(float _DeltaTime)
 {
 	CalMoveVector(_DeltaTime);
 	CalGravityVector(_DeltaTime);
 	CalLastMoveVector(_DeltaTime);
 	MoveLastMoveVector(_DeltaTime);
+	GroundUp();
 }

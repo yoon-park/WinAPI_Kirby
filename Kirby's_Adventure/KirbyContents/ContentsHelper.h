@@ -3,10 +3,18 @@
 #include <EngineCore\EngineCore.h>
 #include <EngineCore\ImageRenderer.h>
 
-enum KirbyRenderOrder
+enum class KirbyRenderOrder
 {
 	Map,
 	HUD,
+	Monster,
+	Player
+};
+
+enum class KirbyCollisionOrder
+{
+	PlayerAbility,
+	Monster,
 	Player
 };
 

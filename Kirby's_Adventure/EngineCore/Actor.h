@@ -3,10 +3,12 @@
 #include <EngineBase/NameObject.h>
 #include "TickObject.h"
 #include "Level.h"
+#include "Collision.h"
 #include "ImageRenderer.h"
 
 class ULevel;
 class UActorComponent;
+class UCollision;
 class UImageRenderer;
 
 class AActor : public UNameObject, public UTickObject
@@ -47,10 +49,24 @@ public:
 		Transform.AddPosition(_Value);
 	}
 
-	UImageRenderer* CreateImageRenderer(int Order = 0);
+	template<typename EnumType>
+	UCollision* CreateCollision(EnumType _Order = 0)
+	{
+		return CreateCollision(static_cast<int>(_Order));
+	}
+
+	UCollision* CreateCollision(int _Order = 0);
+
+	template<typename EnumType>
+	UImageRenderer* CreateImageRenderer(EnumType _Order = 0)
+	{
+		return CreateImageRenderer(static_cast<int>(_Order));
+	}
+
+	UImageRenderer* CreateImageRenderer(int _Order = 0);
 
 	void ActiveUpdate(float _DeltaTime) override;
-	void Destroy(float _DestroyTime) override;
+	void Destroy(float _DestroyTime = 0.0f) override;
 	void DestroyUpdate(float _DeltaTime) override;
 
 protected:
@@ -60,6 +76,7 @@ private:
 	ULevel* World = nullptr;
 	FTransform Transform = FTransform();
 
+	std::list<UCollision*> Collisions;
 	std::list<UImageRenderer*> Renderers;
 
 	void SetWorld(ULevel* _Value)

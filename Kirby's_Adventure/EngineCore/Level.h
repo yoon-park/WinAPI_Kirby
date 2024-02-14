@@ -7,11 +7,13 @@
 
 class AActor;
 class UEngineCore;
+class UCollision;
 class UImageRenderer;
 
 class ULevel : public UNameObject
 {
 	friend UEngineCore;
+	friend UCollision;
 	friend UImageRenderer;
 
 public:
@@ -66,6 +68,7 @@ private:
 	FVector CameraPos = FVector::Zero;
 
 	std::map<int, std::list<AActor*>> AllActor;
+	std::map<int, std::list<UCollision*>> Collisions;
 	std::map<int, std::list<UImageRenderer*>> Renderers;
 
 	void ActorInit(AActor* _NewActor);

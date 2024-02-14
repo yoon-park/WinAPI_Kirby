@@ -1,6 +1,13 @@
 #pragma once
 #include "EngineMath.h"
 
+enum ECollisionType
+{
+	Point,
+	CirCle,
+	Rect,
+};
+
 class FTransform
 {
 public:
@@ -76,6 +83,8 @@ public:
 	{
 		return std::lround(Bottom());
 	}
+
+	bool Collision(ECollisionType _ThisType, ECollisionType _OtherType, const FTransform& _Other);
 
 protected:
 

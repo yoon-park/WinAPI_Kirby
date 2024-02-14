@@ -24,6 +24,9 @@
     <ClInclude Include="HUD.h">
       <Filter>Object\PlayLevel\Actor</Filter>
     </ClInclude>
+    <ClInclude Include="Monster.h">
+      <Filter>Object\PlayLevel\Actor</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ContentsCore.cpp" />
@@ -47,6 +50,9 @@
       <Filter>Object\PlayLevel\Actor</Filter>
     </ClCompile>
     <ClCompile Include="HUD.cpp">
+      <Filter>Object\PlayLevel\Actor</Filter>
+    </ClCompile>
+    <ClCompile Include="Monster.cpp">
       <Filter>Object\PlayLevel\Actor</Filter>
     </ClCompile>
   </ItemGroup>

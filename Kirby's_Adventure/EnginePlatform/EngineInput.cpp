@@ -7,12 +7,13 @@ bool UEngineInput::AnykeyFree = true;
 
 std::map<int, UEngineInput::EngineKey> UEngineInput::AllKeys;
 
-void UEngineInput::EngineKey::KeyCheck()
+void UEngineInput::EngineKey::KeyCheck(float _DeltaTime)
 {
 	if (GetAsyncKeyState(Key) != 0)
 	{
 		if (Free == true)
 		{
+			PressTime = 0.0f;
 			Down = true;
 			Press = true;
 			Up = false;
@@ -20,6 +21,7 @@ void UEngineInput::EngineKey::KeyCheck()
 		}
 		else if (Down == true)
 		{
+			PressTime += _DeltaTime;
 			Down = false;
 			Press = true;
 			Up = false;
@@ -30,6 +32,7 @@ void UEngineInput::EngineKey::KeyCheck()
 	{
 		if (Press == true)
 		{
+			PressTime = 0.0f;
 			Down = false;
 			Press = false;
 			Up = true;
@@ -37,6 +40,7 @@ void UEngineInput::EngineKey::KeyCheck()
 		}
 		else if (Up == true)
 		{
+			PressTime = 0.0f;
 			Down = false;
 			Press = false;
 			Up = false;
@@ -63,7 +67,7 @@ void UEngineInput::KeyCheckTick(float _DeltaTime)
 	{
 		EngineKey& CurKey = Key.second;
 
-		CurKey.KeyCheck();
+		CurKey.KeyCheck(_DeltaTime);
 
 		if (CurKey.Press == true)
 		{

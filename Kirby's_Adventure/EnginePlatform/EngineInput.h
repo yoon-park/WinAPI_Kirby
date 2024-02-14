@@ -26,15 +26,14 @@ private:
 		}
 
 		int Key = -1;
-
+		
+		float PressTime = 0.0f;
 		bool Down = false;	
 		bool Press = false; 
 		bool Up = false;	
-		bool Free = true;	
+		bool Free = true;
 
-		float PressTime = 0.0f;
-
-		void KeyCheck();
+		void KeyCheck(float _DeltaTime);
 	};
 
 public:
@@ -45,6 +44,16 @@ public:
 	UEngineInput(UEngineInput&& _Other) noexcept = delete;
 	UEngineInput& operator=(const UEngineInput& _Other) = delete;
 	UEngineInput& operator=(UEngineInput&& _Other) noexcept = delete;
+
+	static float GetPressTime(int _Key)
+	{
+		if (AllKeys.contains(_Key) == false)
+		{
+			MsgBoxAssert("입력설정이 존재하지 않는 키 입니다");
+		}
+
+		return AllKeys[_Key].PressTime;
+	}
 
 	static bool IsDown(int _Key)
 	{

@@ -41,9 +41,10 @@ protected:
 	void JumpStart();
 
 private:
+	UCollision* BodyCollision = nullptr;
+	UImageRenderer* Renderer = nullptr;
 	float AnimationTime = 0.0f;
 	int AnimationFrame = 0;
-	UImageRenderer* Renderer;
 
 	bool Dir = false;
 	float FreeMoveSpeed = 1000.0f;
@@ -53,10 +54,10 @@ private:
 	float MoveMaxSpeed = 500.0f;
 
 	FVector GravityVector = FVector::Zero;
-	FVector GravityAcc = FVector::Down * 2000.0f;
+	FVector GravityAcc = FVector::Down * 1000.0f;
 
 	FVector JumpVector = FVector::Zero;
-	FVector JumpPower = FVector::Up * 1000;
+	FVector JumpPower = FVector::Up * 500;
 
 	FVector LastMoveVector = FVector::Zero;
 
@@ -68,5 +69,6 @@ private:
 	void CalJumpVector(float _DeltaTime);
 	void CalLastMoveVector(float _DeltaTime);
 	void MoveLastMoveVector(float _DeltaTime);
+	void GroundUp();
 	void MoveUpdate(float _DeltaTime);
 };

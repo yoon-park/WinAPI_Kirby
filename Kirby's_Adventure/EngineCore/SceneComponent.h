@@ -18,6 +18,8 @@ public:
 		return Transform;
 	}
 
+	FTransform GetActorBaseTransform();
+
 	void SetTransform(const FTransform& _Value)
 	{
 		Transform = _Value;
