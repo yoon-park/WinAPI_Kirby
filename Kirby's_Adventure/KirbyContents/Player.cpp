@@ -37,17 +37,19 @@ void APlayer::BeginPlay()
 		Renderer->CreateAnimation("Run_Right", "Kirby_Right.png", 2, 5, 0.1f, true);
 		Renderer->CreateAnimation("Jump_Right", "Kirby_Right.png", 9, 13, 0.1f, true);
 		Renderer->CreateAnimation("Down_Right", "Kirby_Right.png", 7, 7, 0.1f, true);
+		Renderer->CreateAnimation("Squeeze_Right", "Kirby_Right.png", 6, 6, 0.2f, true);
 
 		Renderer->CreateAnimation("Idle_Left", "Kirby_Left.png", 0, 1, 0.5f, true);
 		Renderer->CreateAnimation("Run_Left", "Kirby_Left.png", 2, 5, 0.1f, true);
 		Renderer->CreateAnimation("Jump_Left", "Kirby_Left.png", 9, 13, 0.1f, true);
 		Renderer->CreateAnimation("Down_Left", "Kirby_Left.png", 7, 7, 0.1f, true);
+		Renderer->CreateAnimation("Squeeze_Left", "Kirby_Left.png", 6, 6, 0.2f, true);
 	}
 
 	{
 		BodyCollision = CreateCollision(KirbyCollisionOrder::Player);
-		BodyCollision->SetTransform({ {0, -32}, { 64, 64 } });
 		BodyCollision->SetColType(ECollisionType::Rect);
+		BodyCollision->SetTransform({ {0, -32}, { 64, 64 } });
 	}
 
 	StateChange(EPlayState::Idle);
@@ -375,15 +377,15 @@ void APlayer::CalMoveVector(float _DeltaTime)
 	switch (DirState)
 	{
 	case EActorDir::Left:
-		CheckPos.X -= 30;
+		CheckPos.X -= 25;
 		break;
 	case EActorDir::Right:
-		CheckPos.X += 30;
+		CheckPos.X += 25;
 		break;
 	default:
 		break;
 	}
-	CheckPos.Y -= 30;
+	CheckPos.Y -= 32;
 
 	Color8Bit Color = UContentsHelper::ColMapImage->GetColor(CheckPos.iX(), CheckPos.iY(), Color8Bit::MagentaA);
 	if (Color == Color8Bit(255, 0, 255, 0))

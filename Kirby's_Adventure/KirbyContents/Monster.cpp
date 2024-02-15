@@ -24,8 +24,8 @@ void AMonster::BeginPlay()
 
 	{
 		BodyCollision = CreateCollision(KirbyCollisionOrder::Monster);
-		BodyCollision->SetScale({ 50, 50 });
 		BodyCollision->SetColType(ECollisionType::Rect);
+		BodyCollision->SetScale({ 50, 50 });
 	}
 }
 
