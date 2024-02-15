@@ -33,6 +33,8 @@ public:
 	UImageRenderer& operator=(const UImageRenderer& _Other) = delete;
 	UImageRenderer& operator=(UImageRenderer&& _Other) noexcept = delete;
 	
+	FTransform GetRenderTransForm();
+
 	UWindowImage* GetImage() const
 	{
 		return Image;
@@ -97,6 +99,23 @@ public:
 	void SetOrder(int _Order) override;
 	void SetImage(std::string_view _Name, int _InfoIndex = 0);
 
+	void SetText(std::string_view _Text)
+	{
+		Text = _Text;
+	}
+	void SetFont(std::string_view _Font)
+	{
+		Font = _Font;
+	}
+	void SetTextSize(float _Value)
+	{
+		Size = _Value;
+	}
+	void SetTextColor(Color8Bit _Color)
+	{
+		TextColor = _Color;
+	}
+
 	void CameraEffectOff()
 	{
 		CameraEffect = false;
@@ -129,6 +148,8 @@ public:
 	void AnimationReset();
 
 	void Render(float _DeltaTime);
+	void ImageRender(float _DeltaTime);
+	void TextRender(float _DeltaTime);
 
 protected:
 	void BeginPlay() override;
@@ -138,6 +159,12 @@ private:
 	FTransform ImageCuttingTransform;
 	Color8Bit TransColor;
 	UWindowImage* Image = nullptr;
+
+	std::string Text = "";
+	std::string Font = "±Ã¼­";
+	float Size = 10.0f;
+	Color8Bit TextColor = Color8Bit::BlackA;
+
 	bool CameraEffect = true;
 	UAnimationInfo* CurAnimation = nullptr;
 

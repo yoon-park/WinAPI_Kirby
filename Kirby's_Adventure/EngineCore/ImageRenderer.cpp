@@ -44,6 +44,21 @@ UImageRenderer::~UImageRenderer()
 
 }
 
+FTransform UImageRenderer::GetRenderTransForm()
+{
+	FTransform RendererTrans = GetActorBaseTransform();
+
+	if (CameraEffect == true)
+	{
+		AActor* Actor = GetOwner();
+		ULevel* World = Actor->GetWorld();
+		FVector CameraPos = World->GetCameraPos();
+		RendererTrans.AddPosition(-CameraPos);
+	}
+
+	return RendererTrans;
+}
+
 void UImageRenderer::SetOrder(int _Order)
 {
 	AActor* Owner = GetOwner();
@@ -172,6 +187,19 @@ void UImageRenderer::AnimationReset()
 
 void UImageRenderer::Render(float _DeltaTime)
 {
+	if (Text.empty() == false)
+	{
+		TextRender(_DeltaTime);
+	}
+	else
+	{
+		ImageRender(_DeltaTime);
+	}
+}
+
+void UImageRenderer::ImageRender(float _DeltaTime)
+{
+
 	if (Image == nullptr)
 	{
 		MsgBoxAssert("이미지가 존재하지 않는 렌더러입니다.");
@@ -183,17 +211,7 @@ void UImageRenderer::Render(float _DeltaTime)
 		InfoIndex = CurAnimation->Update(_DeltaTime);
 	}
 
-	FTransform RendererTrans = GetTransform();
-	FTransform ActorTrans = GetOwner()->GetTransform();
-	RendererTrans.AddPosition(ActorTrans.GetPosition());
-
-	if (CameraEffect == true)
-	{
-		AActor* Actor = GetOwner();
-		ULevel* World = Actor->GetWorld();
-		FVector CameraPos = World->GetCameraPos();
-		RendererTrans.AddPosition(-CameraPos);
-	}
+	FTransform RendererTrans = GetRenderTransForm();
 
 	EWIndowImageType ImageType = Image->GetImageType();
 
@@ -206,9 +224,16 @@ void UImageRenderer::Render(float _DeltaTime)
 		GEngine->MainWindow.GetBackBufferImage()->AlphaCopy(Image, RendererTrans, InfoIndex, TransColor);
 		break;
 	default:
-		MsgBoxAssert("투명처리가 불가능한 이미지 입니다.");
+		MsgBoxAssert("투명 처리가 불가능한 이미지입니다.");
 		break;
 	}
+}
+
+void UImageRenderer::TextRender(float _DeltaTime)
+{
+	FTransform RendererTrans = GetRenderTransForm();
+
+	GEngine->MainWindow.GetBackBufferImage()->TextCopy(Text, Font, Size, RendererTrans, TextColor);
 }
 
 void UImageRenderer::BeginPlay()
