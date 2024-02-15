@@ -39,7 +39,7 @@ bool UCollision::CollisionCheck(int _Order, std::vector<UCollision*>& _Result)
 	{
 		FTransform OtherTransform = _OtherCollision->GetActorBaseTransform();
 
-		if (ThisTransform.Collision(ECollisionType::CirCle, ECollisionType::CirCle, OtherTransform) == true)
+		if (ThisTransform.Collision(ColType, _OtherCollision->ColType, OtherTransform) == true)
 		{
 			_Result.push_back(_OtherCollision);
 		}

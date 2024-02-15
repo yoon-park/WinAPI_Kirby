@@ -82,6 +82,29 @@ void ULevel::LevelRender(float _DeltaTime)
 
 void ULevel::LevelRelease(float _DeltaTime)
 {
+	{
+		for (std::pair<const int, std::list<UCollision*>>& OrderListPair : Collisions)
+		{
+			std::list<UCollision*>& List = OrderListPair.second;
+
+			std::list<UCollision*>::iterator StartIter = List.begin();
+			std::list<UCollision*>::iterator EndIter = List.end();
+
+			for (; StartIter != EndIter; )
+			{
+				UCollision* Collision = StartIter.operator*();
+
+				if (false == Collision->IsDestroy())
+				{
+					++StartIter;
+					continue;
+				}
+
+				StartIter = List.erase(StartIter);
+			}
+		}
+	}
+
 	for (std::pair<const int, std::list<UImageRenderer*>>& OrderListPair : Renderers)
 	{
 		std::list<UImageRenderer*>& RendererList = OrderListPair.second;

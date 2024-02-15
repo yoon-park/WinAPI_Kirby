@@ -28,4 +28,5 @@ protected:
 	void BeginPlay() override;
 
 private:
+	ECollisionType ColType = ECollisionType::CirCle;
 };

@@ -61,11 +61,12 @@ void UPlayLevel::LevelStart(ULevel* _Level)
 		AHUD* HUD = SpawnActor<AHUD>();
 
 		APlayer* Kirby = SpawnActor<APlayer>();
+		Kirby->SetName("Kirby");
 		Kirby->SetActorLocation({ 200, 200 });
 
 		AMonster* Monster = SpawnActor<AMonster>();
 		Monster->SetName("Monster");
-		Monster->SetActorLocation({ 400, 200 });
+		Monster->SetActorLocation({ 1000, 200 });
 	}
 }
 
