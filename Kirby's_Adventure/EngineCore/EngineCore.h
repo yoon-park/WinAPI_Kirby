@@ -52,10 +52,21 @@ public:
 	virtual void Tick(float _DeltaTime);
 	virtual void End();
 
+	static bool IsDebug()
+	{
+		return IsDebugValue;
+	}
+
+	static void EngineDebugSwitch() {
+		IsDebugValue = !IsDebugValue;
+	}
+
 protected:
 	UEngineCore();
 
 private:
+	static bool IsDebugValue;
+
 	bool EngineInit = false;
 	int Frame = -1;
 	float FrameTime = 0.0f;

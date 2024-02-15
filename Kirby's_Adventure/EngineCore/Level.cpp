@@ -1,5 +1,6 @@
 #include "Level.h"
 
+#include "EngineCore.h"
 #include "Actor.h"
 
 ULevel::ULevel()
@@ -76,6 +77,23 @@ void ULevel::LevelRender(float _DeltaTime)
 			}
 
 			Renderer->Render(_DeltaTime);
+		}
+	}
+
+	if (GEngine->IsDebug() == true)
+	{
+		for (std::pair<const int, std::list<UCollision*>>& OrderListPair : Collisions)
+		{
+			std::list<UCollision*>& RendererList = OrderListPair.second;
+			for (UCollision* Collision : RendererList)
+			{
+				if (Collision->IsActive() == false)
+				{
+					continue;
+				}
+
+				Collision->DebugRender(CameraPos);
+			}
 		}
 	}
 }

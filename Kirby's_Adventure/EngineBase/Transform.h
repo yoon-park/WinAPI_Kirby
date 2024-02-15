@@ -6,6 +6,7 @@ enum ECollisionType
 	Point,
 	CirCle,
 	Rect,
+	Max
 };
 
 class CollisionFunctionInit;
@@ -91,6 +92,7 @@ public:
 	bool Collision(ECollisionType _ThisType, ECollisionType _OtherType, const FTransform& _Other);
 
 	static bool CircleToCircle(const FTransform& _Left, const FTransform& _Right);
+	static bool RectToRect(const FTransform& _Left, const FTransform& _Right);
 
 protected:
 
@@ -98,5 +100,5 @@ private:
 	FVector Position;
 	FVector Scale;
 
-	static bool (*CollisionFunction[static_cast<int>(Rect)][static_cast<int>(Rect)])(const FTransform& _Left, const FTransform& _Right);
+	static bool (*CollisionFunction[static_cast<int>(ECollisionType::Max)][static_cast<int>(ECollisionType::Max)])(const FTransform& _Left, const FTransform& _Right);
 };

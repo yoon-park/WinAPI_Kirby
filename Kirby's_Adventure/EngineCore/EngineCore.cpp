@@ -6,6 +6,7 @@
 #include "Level.h"
 
 UEngineCore* GEngine = nullptr;
+bool UEngineCore::IsDebugValue = false;
 
 UEngineCore::UEngineCore()
 {
@@ -74,6 +75,7 @@ void UEngineCore::CoreTick()
 		MsgBoxAssert("엔진을 시작할 레벨이 지정되지 않았습니다.");
 	}
 
+	GEngine->Tick(DeltaTime);
 	CurLevel->Tick(DeltaTime);
 	CurLevel->LevelTick(DeltaTime);
 	MainWindow.ScreenClear();

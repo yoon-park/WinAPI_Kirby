@@ -257,6 +257,16 @@ void UWindowImage::Cutting(int _X, int _Y)
 	}
 }
 
+void UWindowImage::DrawRectangle(const FTransform& _Trans)
+{
+	Rectangle(ImageDC, _Trans.iLeft(), _Trans.iTop(), _Trans.iRight(), _Trans.iBottom());
+}
+
+void UWindowImage::DrawEllipse(const FTransform& _Trans)
+{
+	Ellipse(ImageDC, _Trans.iLeft(), _Trans.iTop(), _Trans.iRight(), _Trans.iBottom());
+}
+
 void UWindowImage::BitCopy(UWindowImage* _CopyImage, FTransform _Trans)
 {
 	if (_CopyImage == nullptr)
