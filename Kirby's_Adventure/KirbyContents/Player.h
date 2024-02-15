@@ -26,6 +26,7 @@ protected:
 	std::string GetAnimationName(std::string _Name);
 
 	void DirCheck();
+	bool IsWallCheck();
 	void StateUpdate(float _DeltaTime);
 	void StateChange(EPlayState _State);
 
@@ -36,11 +37,13 @@ protected:
 	void Run(float _DeltaTime);
 	void Jump(float _DeltaTime);
 	void Down(float _DeltaTime);
+	void Squeeze(float _DeltaTime);
 
 	void IdleStart();
 	void RunStart();
 	void JumpStart();
 	void DownStart();
+	void SqueezeStart();
 
 private:
 	UCollision* BodyCollision = nullptr;

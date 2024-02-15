@@ -37,13 +37,13 @@ void APlayer::BeginPlay()
 		Renderer->CreateAnimation("Run_Right", "Kirby_Right.png", 2, 5, 0.1f, true);
 		Renderer->CreateAnimation("Jump_Right", "Kirby_Right.png", 9, 13, 0.1f, true);
 		Renderer->CreateAnimation("Down_Right", "Kirby_Right.png", 7, 7, 0.1f, true);
-		Renderer->CreateAnimation("Squeeze_Right", "Kirby_Right.png", 6, 6, 0.2f, true);
+		Renderer->CreateAnimation("Squeeze_Right", "Kirby_Right.png", 6, 6, 30.0f, false);
 
 		Renderer->CreateAnimation("Idle_Left", "Kirby_Left.png", 0, 1, 0.5f, true);
 		Renderer->CreateAnimation("Run_Left", "Kirby_Left.png", 2, 5, 0.1f, true);
 		Renderer->CreateAnimation("Jump_Left", "Kirby_Left.png", 9, 13, 0.1f, true);
 		Renderer->CreateAnimation("Down_Left", "Kirby_Left.png", 7, 7, 0.1f, true);
-		Renderer->CreateAnimation("Squeeze_Left", "Kirby_Left.png", 6, 6, 0.2f, true);
+		Renderer->CreateAnimation("Squeeze_Left", "Kirby_Left.png", 6, 6, 1.0f, false);
 	}
 
 	{
@@ -105,6 +105,32 @@ void APlayer::DirCheck()
 	}
 }
 
+bool APlayer::IsWallCheck()
+{
+	FVector CheckPos = GetActorLocation();
+
+	switch (DirState)
+	{
+	case EActorDir::Left:
+		CheckPos.X -= 26;
+		break;
+	case EActorDir::Right:
+		CheckPos.X += 26;
+		break;
+	default:
+		break;
+	}
+	CheckPos.Y -= 32;
+
+	Color8Bit Color = UContentsHelper::ColMapImage->GetColor(CheckPos.iX(), CheckPos.iY(), Color8Bit::MagentaA);
+	if (Color == Color8Bit(255, 0, 255, 0))
+	{
+		return true;
+	}
+
+	return false;
+}
+
 void APlayer::StateUpdate(float _DeltaTime)
 {
 	switch (State)
@@ -126,6 +152,9 @@ void APlayer::StateUpdate(float _DeltaTime)
 		break;
 	case EPlayState::Down:
 		Down(_DeltaTime);
+		break;
+	case EPlayState::Squeeze:
+		Squeeze(_DeltaTime);
 		break;
 	default:
 		break;
@@ -149,6 +178,9 @@ void APlayer::StateChange(EPlayState _State)
 			break;
 		case EPlayState::Down:
 			DownStart();
+			break;
+		case EPlayState::Squeeze:
+			SqueezeStart();
 			break;
 		default:
 			break;
@@ -260,6 +292,12 @@ void APlayer::Run(float _DeltaTime)
 {
 	DirCheck();
 
+	if (IsWallCheck() == true)
+	{
+		StateChange(EPlayState::Squeeze);
+		return;
+	}
+
 	if (UEngineInput::IsFree(VK_LEFT) && UEngineInput::IsFree(VK_RIGHT))
 	{
 		if (MoveVector.Size2D() <= 0.06f)
@@ -340,6 +378,34 @@ void APlayer::Down(float _DeltaTime)
 	MoveUpdate(_DeltaTime);
 }
 
+void APlayer::Squeeze(float _DeltaTime)
+{
+	if (Renderer->IsCurAnimationEnd() == true)
+	{
+		Renderer->ChangeAnimation(GetAnimationName("Idle"));
+	}
+
+	if (UEngineInput::IsFree(VK_LEFT) && UEngineInput::IsFree(VK_RIGHT))
+	{
+		StateChange(EPlayState::Idle);
+		return;
+	}
+
+	if (UEngineInput::IsDown(VK_SPACE))
+	{
+		StateChange(EPlayState::Jump);
+		return;
+	}
+
+	if (UEngineInput::IsPress(VK_DOWN))
+	{
+		StateChange(EPlayState::Down);
+		return;
+	}
+
+	MoveUpdate(_DeltaTime);
+}
+
 void APlayer::IdleStart()
 {
 	Renderer->ChangeAnimation(GetAnimationName("Idle"));
@@ -365,6 +431,12 @@ void APlayer::DownStart()
 	DirCheck();
 }
 
+void APlayer::SqueezeStart()
+{
+	Renderer->ChangeAnimation(GetAnimationName("Squeeze"));
+	DirCheck();
+}
+
 void APlayer::AddMoveVector(const FVector& _DirDelta)
 {
 	MoveVector += _DirDelta * MoveAcc;
@@ -372,23 +444,7 @@ void APlayer::AddMoveVector(const FVector& _DirDelta)
 
 void APlayer::CalMoveVector(float _DeltaTime)
 {
-	FVector CheckPos = GetActorLocation();
-
-	switch (DirState)
-	{
-	case EActorDir::Left:
-		CheckPos.X -= 25;
-		break;
-	case EActorDir::Right:
-		CheckPos.X += 25;
-		break;
-	default:
-		break;
-	}
-	CheckPos.Y -= 32;
-
-	Color8Bit Color = UContentsHelper::ColMapImage->GetColor(CheckPos.iX(), CheckPos.iY(), Color8Bit::MagentaA);
-	if (Color == Color8Bit(255, 0, 255, 0))
+	if (IsWallCheck() == true)
 	{
 		MoveVector = FVector::Zero;
 	}
@@ -438,7 +494,15 @@ void APlayer::CalLastMoveVector(float _DeltaTime)
 
 void APlayer::MoveLastMoveVector(float _DeltaTime)
 {
-	GetWorld()->AddCameraPos(MoveVector * _DeltaTime);
+	float Pos = GetActorLocation().X;
+	float WindowHalfSize = GEngine->MainWindow.GetWindowScale().hX();
+	float MapSize = UContentsHelper::ColMapImage->GetScale().X;
+
+	if (Pos > WindowHalfSize && Pos < (MapSize - WindowHalfSize))
+	{
+		GetWorld()->AddCameraPos(MoveVector * _DeltaTime);
+	}
+
 	AddActorLocation(LastMoveVector * _DeltaTime);
 }
 

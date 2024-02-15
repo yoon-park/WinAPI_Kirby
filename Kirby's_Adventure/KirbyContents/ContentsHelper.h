@@ -33,6 +33,7 @@ enum class EPlayState
 	Run,
 	Jump,
 	Down,
+	Squeeze,
 };
 
 class UContentsHelper
