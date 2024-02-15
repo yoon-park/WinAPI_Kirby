@@ -25,6 +25,7 @@ void AMonster::BeginPlay()
 	{
 		BodyCollision = CreateCollision(KirbyCollisionOrder::Monster);
 		BodyCollision->SetScale({ 50, 50 });
+		BodyCollision->SetColType(ECollisionType::Rect);
 	}
 }
 
@@ -60,5 +61,5 @@ void AMonster::Tick(float _DeltaTime)
 	FVector MonsterDir = PlayerPos - MonsterPos;
 	FVector MonsterDirNormal = MonsterDir.Normalize2DReturn();
 
-	AddActorLocation(MonsterDirNormal * _DeltaTime * 300.0f);
+	AddActorLocation(MonsterDirNormal * _DeltaTime * 100.0f);
 }

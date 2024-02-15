@@ -66,7 +66,7 @@ void UPlayLevel::LevelStart(ULevel* _Level)
 
 		AMonster* Monster = SpawnActor<AMonster>();
 		Monster->SetName("Monster");
-		Monster->SetActorLocation({ 1000, 200 });
+		Monster->SetActorLocation({ 500, 200 });
 	}
 }
 

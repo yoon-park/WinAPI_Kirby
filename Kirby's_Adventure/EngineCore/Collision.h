@@ -16,6 +16,11 @@ public:
 
 	void SetOrder(int _Order) override;
 
+	void SetColType(ECollisionType _Type)
+	{
+		ColType = _Type;
+	}
+
 	template<typename EnumType>
 	bool CollisionCheck(EnumType _Order, std::vector<UCollision*>& _Result)
 	{

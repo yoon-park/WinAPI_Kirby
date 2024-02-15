@@ -44,7 +44,8 @@ void APlayer::BeginPlay()
 
 	{
 		BodyCollision = CreateCollision(KirbyCollisionOrder::Player);
-		BodyCollision->SetScale({ 128, 128 });
+		BodyCollision->SetTransform({ {0, -32}, { 64, 64 } });
+		BodyCollision->SetColType(ECollisionType::Rect);
 	}
 
 	StateChange(EPlayState::Idle);
