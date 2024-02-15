@@ -8,20 +8,20 @@ enum class KirbyRenderOrder
 	Map,
 	HUD,
 	Monster,
-	Player
+	Player,
 };
 
 enum class KirbyCollisionOrder
 {
 	PlayerAbility,
 	Monster,
-	Player
+	Player,
 };
 
 enum class EActorDir
 {
 	Left,
-	Right,
+	Right
 };
 
 enum class EPlayState
@@ -32,6 +32,7 @@ enum class EPlayState
 	Idle,
 	Run,
 	Jump,
+	Down,
 };
 
 class UContentsHelper

@@ -257,14 +257,14 @@ void UWindowImage::Cutting(int _X, int _Y)
 	}
 }
 
-void UWindowImage::DrawRectangle(const FTransform& _Trans)
-{
-	Rectangle(ImageDC, _Trans.iLeft(), _Trans.iTop(), _Trans.iRight(), _Trans.iBottom());
-}
-
 void UWindowImage::DrawEllipse(const FTransform& _Trans)
 {
 	Ellipse(ImageDC, _Trans.iLeft(), _Trans.iTop(), _Trans.iRight(), _Trans.iBottom());
+}
+
+void UWindowImage::DrawRectangle(const FTransform& _Trans)
+{
+	Rectangle(ImageDC, _Trans.iLeft(), _Trans.iTop(), _Trans.iRight(), _Trans.iBottom());
 }
 
 void UWindowImage::BitCopy(UWindowImage* _CopyImage, FTransform _Trans)
@@ -388,7 +388,11 @@ void UWindowImage::TextCopy(const std::string& _Text, const std::string& _Font, 
 	Gdiplus::Font fnt(WFont.c_str(), _Size, 0, Gdiplus::UnitPixel);
 	Gdiplus::SolidBrush hB(Gdiplus::Color(_Color.R, _Color.G, _Color.B));
 	FVector Pos = _Trans.GetPosition();
-	Gdiplus::PointF ptf(Pos.X, Pos.Y);
+	Gdiplus::RectF  rectF(_Trans.GetPosition().X, _Trans.GetPosition().Y, 0, 0);
+
+	Gdiplus::StringFormat stringFormat;
+	stringFormat.SetAlignment(Gdiplus::StringAlignmentCenter);
+	stringFormat.SetLineAlignment(Gdiplus::StringAlignmentCenter);
 	std::wstring WText = UEngineString::AnsiToUniCode(_Text);
-	graphics.DrawString(WText.c_str(), -1, &fnt, ptf, &hB);
+	graphics.DrawString(WText.c_str(), -1, &fnt, rectF, &stringFormat, &hB);
 }

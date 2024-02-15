@@ -232,6 +232,7 @@ void UImageRenderer::ImageRender(float _DeltaTime)
 void UImageRenderer::TextRender(float _DeltaTime)
 {
 	FTransform RendererTrans = GetRenderTransForm();
+	float TextCount = static_cast<float>(Text.size());
 
 	GEngine->MainWindow.GetBackBufferImage()->TextCopy(Text, Font, Size, RendererTrans, TextColor);
 }

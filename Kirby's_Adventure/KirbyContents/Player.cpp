@@ -27,7 +27,7 @@ void APlayer::BeginPlay()
 	AActor::BeginPlay();
 
 	MainPlayer = this;
-	
+
 	{
 		Renderer = CreateImageRenderer(KirbyRenderOrder::Player);
 		Renderer->SetImage("Kirby_Right.png");
@@ -36,10 +36,12 @@ void APlayer::BeginPlay()
 		Renderer->CreateAnimation("Idle_Right", "Kirby_Right.png", 0, 1, 0.5f, true);
 		Renderer->CreateAnimation("Run_Right", "Kirby_Right.png", 2, 5, 0.1f, true);
 		Renderer->CreateAnimation("Jump_Right", "Kirby_Right.png", 9, 13, 0.1f, true);
+		Renderer->CreateAnimation("Down_Right", "Kirby_Right.png", 7, 7, 0.1f, true);
 
 		Renderer->CreateAnimation("Idle_Left", "Kirby_Left.png", 0, 1, 0.5f, true);
 		Renderer->CreateAnimation("Run_Left", "Kirby_Left.png", 2, 5, 0.1f, true);
 		Renderer->CreateAnimation("Jump_Left", "Kirby_Left.png", 9, 13, 0.1f, true);
+		Renderer->CreateAnimation("Down_Left", "Kirby_Left.png", 7, 7, 0.1f, true);
 	}
 
 	{
@@ -120,6 +122,9 @@ void APlayer::StateUpdate(float _DeltaTime)
 	case EPlayState::Jump:
 		Jump(_DeltaTime);
 		break;
+	case EPlayState::Down:
+		Down(_DeltaTime);
+		break;
 	default:
 		break;
 	}
@@ -139,6 +144,9 @@ void APlayer::StateChange(EPlayState _State)
 			break;
 		case EPlayState::Jump:
 			JumpStart();
+			break;
+		case EPlayState::Down:
+			DownStart();
 			break;
 		default:
 			break;
@@ -237,6 +245,12 @@ void APlayer::Idle(float _DeltaTime)
 		return;
 	}
 
+	if (UEngineInput::IsPress(VK_DOWN))
+	{
+		StateChange(EPlayState::Down);
+		return;
+	}
+
 	MoveUpdate(_DeltaTime);
 }
 
@@ -246,8 +260,11 @@ void APlayer::Run(float _DeltaTime)
 
 	if (UEngineInput::IsFree(VK_LEFT) && UEngineInput::IsFree(VK_RIGHT))
 	{
-		StateChange(EPlayState::Idle);
-		return;
+		if (MoveVector.Size2D() <= 0.06f)
+		{
+			StateChange(EPlayState::Idle);
+			return;
+		}
 	}
 
 	if (UEngineInput::IsDown(VK_SPACE))
@@ -264,6 +281,12 @@ void APlayer::Run(float _DeltaTime)
 	if (UEngineInput::IsPress(VK_RIGHT))
 	{
 		AddMoveVector(FVector::Right * _DeltaTime);
+	}
+
+	if (UEngineInput::IsPress(VK_DOWN))
+	{
+		StateChange(EPlayState::Down);
+		return;
 	}
 
 	MoveUpdate(_DeltaTime);
@@ -294,6 +317,27 @@ void APlayer::Jump(float _DeltaTime)
 	}
 }
 
+void APlayer::Down(float _DeltaTime)
+{
+	if (UEngineInput::IsFree(VK_DOWN))
+	{
+		StateChange(EPlayState::Idle);
+		return;
+	}
+
+	if (UEngineInput::IsDown(VK_SPACE))
+	{
+
+	}
+
+	if (UEngineInput::IsDown('Z'))
+	{
+		
+	}
+
+	MoveUpdate(_DeltaTime);
+}
+
 void APlayer::IdleStart()
 {
 	Renderer->ChangeAnimation(GetAnimationName("Idle"));
@@ -310,6 +354,12 @@ void APlayer::JumpStart()
 {
 	JumpVector = JumpPower;
 	Renderer->ChangeAnimation(GetAnimationName("Jump"));
+	DirCheck();
+}
+
+void APlayer::DownStart()
+{
+	Renderer->ChangeAnimation(GetAnimationName("Down"));
 	DirCheck();
 }
 
@@ -394,8 +444,9 @@ void APlayer::GroundUp()
 {
 	while (true)
 	{
-		Color8Bit Color = UContentsHelper::ColMapImage->GetColor(GetActorLocation().iX(), GetActorLocation().iY() - 1, Color8Bit::MagentaA);
-		if (Color == Color8Bit(255, 0, 255, 0))
+		Color8Bit Color_L = UContentsHelper::ColMapImage->GetColor(GetActorLocation().iX() - 5, GetActorLocation().iY() - 1, Color8Bit::MagentaA);
+		Color8Bit Color_R = UContentsHelper::ColMapImage->GetColor(GetActorLocation().iX() + 5, GetActorLocation().iY() - 1, Color8Bit::MagentaA);
+		if (Color_L == Color8Bit(255, 0, 255, 0) || Color_R == Color8Bit(255, 0, 255, 0))
 		{
 			AddActorLocation(FVector::Up);
 		}

@@ -35,10 +35,12 @@ protected:
 	void Idle(float _DeltaTime);
 	void Run(float _DeltaTime);
 	void Jump(float _DeltaTime);
+	void Down(float _DeltaTime);
 
 	void IdleStart();
 	void RunStart();
 	void JumpStart();
+	void DownStart();
 
 private:
 	UCollision* BodyCollision = nullptr;
@@ -50,14 +52,14 @@ private:
 	float FreeMoveSpeed = 1000.0f;
 
 	FVector MoveVector = FVector::Zero;
-	FVector MoveAcc = FVector::Right * 500.0f;
-	float MoveMaxSpeed = 500.0f;
+	FVector MoveAcc = FVector::Right * 700.0f;
+	float MoveMaxSpeed = 400.0f;
 
 	FVector GravityVector = FVector::Zero;
 	FVector GravityAcc = FVector::Down * 1000.0f;
 
 	FVector JumpVector = FVector::Zero;
-	FVector JumpPower = FVector::Up * 500;
+	FVector JumpPower = FVector::Up * 400;
 
 	FVector LastMoveVector = FVector::Zero;
 

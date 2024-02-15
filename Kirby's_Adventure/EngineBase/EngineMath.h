@@ -205,6 +205,11 @@ public:
 		return Result;
 	}
 
+	bool IsZeroVector2D() const
+	{
+		return X == 0.0f && Y == 0.0f;
+	}
+
 	std::string ToString()
 	{
 		return "[X : " + std::to_string(X) + " Y : " + std::to_string(Y) + " Z : " + std::to_string(Z) + " W : " + std::to_string(W) + "]";

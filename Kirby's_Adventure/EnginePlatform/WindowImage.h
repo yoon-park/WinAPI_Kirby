@@ -56,8 +56,8 @@ public:
 	bool Create(UWindowImage* _Image, const FVector& _Scale);
 	void Cutting(int _X, int _Y);
 
-	void DrawRectangle(const FTransform& _Trans);
 	void DrawEllipse(const FTransform& _Trans);
+	void DrawRectangle(const FTransform& _Trans);
 
 	void BitCopy(UWindowImage* _CopyImage, FTransform _Trans);
 	void TransCopy(UWindowImage* _CopyImage, const FTransform& _Trans, int _Index, Color8Bit _Color = Color8Bit::Black);
