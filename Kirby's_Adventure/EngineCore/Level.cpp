@@ -163,6 +163,7 @@ void ULevel::LevelRelease(float _DeltaTime)
 
 			if (Actor->IsDestroy() == false)
 			{
+				Actor->CheckReleaseChild();
 				++StartIter;
 				continue;
 			}
