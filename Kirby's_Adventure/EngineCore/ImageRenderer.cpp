@@ -13,11 +13,19 @@ int UAnimationInfo::Update(float _DeltaTime)
 	{
 		CurTime = Times[CurFrame];
 		++CurFrame;
+
+		if (Indexs.size() == 1)
+		{
+			IsEnd = true;
+		}
 	}
 
 	if (CurFrame >= Indexs.size())
 	{
-		IsEnd = true;
+		if (Indexs.size() > 1)
+		{
+			IsEnd = true;
+		}
 
 		if (Loop == true)
 		{
@@ -170,9 +178,9 @@ void UImageRenderer::ChangeAnimation(
 	UAnimationInfo& Info = AnimationInfos[UpperAniName];
 	CurAnimation = &Info;
 	CurAnimation->CurFrame = _StartIndex;
-	CurAnimation->CurTime = _Time;
-
-	if (_Time <= 0.0f)
+	CurAnimation->CurTime = CurAnimation->Times[_StartIndex];
+	
+	if (_Time > 0.0f)
 	{
 		CurAnimation->CurTime = _Time;
 	}

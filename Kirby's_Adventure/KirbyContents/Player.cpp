@@ -36,14 +36,14 @@ void APlayer::BeginPlay()
 		Renderer->CreateAnimation("Idle_Right", "Kirby_Right.png", 0, 1, 0.5f, true);
 		Renderer->CreateAnimation("Run_Right", "Kirby_Right.png", 2, 5, 0.1f, true);
 		Renderer->CreateAnimation("Jump_Right", "Kirby_Right.png", 9, 13, 0.1f, true);
-		Renderer->CreateAnimation("Down_Right", "Kirby_Right.png", 7, 7, 0.1f, true);
-		Renderer->CreateAnimation("Squeeze_Right", "Kirby_Right.png", 6, 6, 30.0f, false);
+		Renderer->CreateAnimation("Crouch_Right", "Kirby_Right.png", 7, 7, 0.1f, true);
+		Renderer->CreateAnimation("Squeeze_Right", "Kirby_Right.png", 6, 6, 0.1f, false);
 
 		Renderer->CreateAnimation("Idle_Left", "Kirby_Left.png", 0, 1, 0.5f, true);
 		Renderer->CreateAnimation("Run_Left", "Kirby_Left.png", 2, 5, 0.1f, true);
 		Renderer->CreateAnimation("Jump_Left", "Kirby_Left.png", 9, 13, 0.1f, true);
-		Renderer->CreateAnimation("Down_Left", "Kirby_Left.png", 7, 7, 0.1f, true);
-		Renderer->CreateAnimation("Squeeze_Left", "Kirby_Left.png", 6, 6, 1.0f, false);
+		Renderer->CreateAnimation("Crouch_Left", "Kirby_Left.png", 7, 7, 0.1f, true);
+		Renderer->CreateAnimation("Squeeze_Left", "Kirby_Left.png", 6, 6, 0.1f, false);
 	}
 
 	{
@@ -150,8 +150,8 @@ void APlayer::StateUpdate(float _DeltaTime)
 	case EPlayState::Jump:
 		Jump(_DeltaTime);
 		break;
-	case EPlayState::Down:
-		Down(_DeltaTime);
+	case EPlayState::Crouch:
+		Crouch(_DeltaTime);
 		break;
 	case EPlayState::Squeeze:
 		Squeeze(_DeltaTime);
@@ -163,7 +163,7 @@ void APlayer::StateUpdate(float _DeltaTime)
 
 void APlayer::StateChange(EPlayState _State)
 {
-	if (_State != State)
+	if (State != _State)
 	{
 		switch (_State)
 		{
@@ -176,8 +176,8 @@ void APlayer::StateChange(EPlayState _State)
 		case EPlayState::Jump:
 			JumpStart();
 			break;
-		case EPlayState::Down:
-			DownStart();
+		case EPlayState::Crouch:
+			CrouchStart();
 			break;
 		case EPlayState::Squeeze:
 			SqueezeStart();
@@ -281,7 +281,7 @@ void APlayer::Idle(float _DeltaTime)
 
 	if (UEngineInput::IsPress(VK_DOWN))
 	{
-		StateChange(EPlayState::Down);
+		StateChange(EPlayState::Crouch);
 		return;
 	}
 
@@ -325,7 +325,7 @@ void APlayer::Run(float _DeltaTime)
 
 	if (UEngineInput::IsPress(VK_DOWN))
 	{
-		StateChange(EPlayState::Down);
+		StateChange(EPlayState::Crouch);
 		return;
 	}
 
@@ -357,7 +357,7 @@ void APlayer::Jump(float _DeltaTime)
 	}
 }
 
-void APlayer::Down(float _DeltaTime)
+void APlayer::Crouch(float _DeltaTime)
 {
 	if (UEngineInput::IsFree(VK_DOWN))
 	{
@@ -385,6 +385,16 @@ void APlayer::Squeeze(float _DeltaTime)
 		Renderer->ChangeAnimation(GetAnimationName("Idle"));
 	}
 
+	if (UEngineInput::IsPress(VK_LEFT))
+	{
+		AddMoveVector(FVector::Left * _DeltaTime);
+	}
+
+	if (UEngineInput::IsPress(VK_RIGHT))
+	{
+		AddMoveVector(FVector::Right * _DeltaTime);
+	}
+
 	if (UEngineInput::IsFree(VK_LEFT) && UEngineInput::IsFree(VK_RIGHT))
 	{
 		StateChange(EPlayState::Idle);
@@ -399,7 +409,7 @@ void APlayer::Squeeze(float _DeltaTime)
 
 	if (UEngineInput::IsPress(VK_DOWN))
 	{
-		StateChange(EPlayState::Down);
+		StateChange(EPlayState::Crouch);
 		return;
 	}
 
@@ -425,9 +435,9 @@ void APlayer::JumpStart()
 	DirCheck();
 }
 
-void APlayer::DownStart()
+void APlayer::CrouchStart()
 {
-	Renderer->ChangeAnimation(GetAnimationName("Down"));
+	Renderer->ChangeAnimation(GetAnimationName("Crouch"));
 	DirCheck();
 }
 

@@ -36,13 +36,13 @@ protected:
 	void Idle(float _DeltaTime);
 	void Run(float _DeltaTime);
 	void Jump(float _DeltaTime);
-	void Down(float _DeltaTime);
+	void Crouch(float _DeltaTime);
 	void Squeeze(float _DeltaTime);
 
 	void IdleStart();
 	void RunStart();
 	void JumpStart();
-	void DownStart();
+	void CrouchStart();
 	void SqueezeStart();
 
 private:
@@ -62,7 +62,7 @@ private:
 	FVector GravityAcc = FVector::Down * 1000.0f;
 
 	FVector JumpVector = FVector::Zero;
-	FVector JumpPower = FVector::Up * 400;
+	FVector JumpPower = FVector::Up * 1400;
 
 	FVector LastMoveVector = FVector::Zero;
 

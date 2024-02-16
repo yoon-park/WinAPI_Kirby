@@ -32,7 +32,7 @@ enum class EPlayState
 	Idle,
 	Run,
 	Jump,
-	Down,
+	Crouch,
 	Squeeze,
 };
 
