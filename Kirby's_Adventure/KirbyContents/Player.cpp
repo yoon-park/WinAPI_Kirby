@@ -131,6 +131,36 @@ bool APlayer::IsWallCheck()
 	return false;
 }
 
+bool APlayer::IsLeftWallCheck()
+{
+	FVector CheckPos = GetActorLocation();
+	CheckPos.X -= 26;
+	CheckPos.Y -= 32;
+
+	Color8Bit Color = UContentsHelper::ColMapImage->GetColor(CheckPos.iX(), CheckPos.iY(), Color8Bit::MagentaA);
+	if (Color == Color8Bit(255, 0, 255, 0))
+	{
+		return true;
+	}
+
+	return false;
+}
+
+bool APlayer::IsRightWallCheck()
+{
+	FVector CheckPos = GetActorLocation();
+	CheckPos.X += 26;
+	CheckPos.Y -= 32;
+
+	Color8Bit Color = UContentsHelper::ColMapImage->GetColor(CheckPos.iX(), CheckPos.iY(), Color8Bit::MagentaA);
+	if (Color == Color8Bit(255, 0, 255, 0))
+	{
+		return true;
+	}
+
+	return false;
+}
+
 void APlayer::StateUpdate(float _DeltaTime)
 {
 	switch (State)
@@ -267,10 +297,29 @@ void APlayer::Idle(float _DeltaTime)
 		return;
 	}
 
-	if (UEngineInput::IsPress(VK_LEFT) || UEngineInput::IsPress(VK_RIGHT))
+	if (IsWallCheck() == false)
 	{
-		StateChange(EPlayState::Run);
-		return;
+		if (UEngineInput::IsPress(VK_LEFT) || UEngineInput::IsPress(VK_RIGHT))
+		{
+			StateChange(EPlayState::Run);
+			return;
+		}
+	}
+	else if (IsRightWallCheck() == true)
+	{
+		if (UEngineInput::IsPress(VK_LEFT))
+		{
+			StateChange(EPlayState::Run);
+			return;
+		}
+	}
+	else if (IsLeftWallCheck() == true)
+	{
+		if (UEngineInput::IsPress(VK_RIGHT))
+		{
+			StateChange(EPlayState::Run);
+			return;
+		}
 	}
 
 	if (UEngineInput::IsDown(VK_SPACE))

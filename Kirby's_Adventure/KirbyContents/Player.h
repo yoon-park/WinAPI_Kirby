@@ -27,6 +27,8 @@ protected:
 
 	void DirCheck();
 	bool IsWallCheck();
+	bool IsLeftWallCheck();
+	bool IsRightWallCheck();
 	void StateUpdate(float _DeltaTime);
 	void StateChange(EPlayState _State);
 
