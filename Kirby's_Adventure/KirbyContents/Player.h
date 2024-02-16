@@ -62,7 +62,7 @@ private:
 	FVector GravityAcc = FVector::Down * 1000.0f;
 
 	FVector JumpVector = FVector::Zero;
-	FVector JumpPower = FVector::Up * 1400;
+	FVector JumpPower = FVector::Up * 400;
 
 	FVector LastMoveVector = FVector::Zero;
 
