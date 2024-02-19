@@ -26,7 +26,8 @@ private:
 		}
 
 		int Key = -1;
-		
+
+		float UpTime = 0.0f;
 		float PressTime = 0.0f;
 		bool Down = false;	
 		bool Press = false; 
@@ -53,6 +54,24 @@ public:
 		}
 
 		return AllKeys[_Key].PressTime;
+	}
+
+	static bool IsDoubleClick(int _Key, float _ClickTime)
+	{
+		if (AllKeys.contains(_Key) == false)
+		{
+			MsgBoxAssert("입력설정이 존재하지 않는 키 입니다");
+		}
+
+		bool Value = AllKeys[_Key].Down;
+		float Time = AllKeys[_Key].UpTime;
+
+		if (AllKeys[_Key].Down && AllKeys[_Key].UpTime < _ClickTime == true)
+		{
+			return true;
+		}
+
+		return false;
 	}
 
 	static bool IsDown(int _Key)
