@@ -43,6 +43,11 @@ bool UCollision::CollisionCheck(int _Order, std::vector<UCollision*>& _Result)
 
 	for (UCollision* _OtherCollision : Collisions)
 	{
+		if (_OtherCollision == this)
+		{
+			continue;
+		}
+
 		if (_OtherCollision->IsActive() == false)
 		{
 			continue;
