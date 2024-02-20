@@ -63,10 +63,7 @@ public:
 			MsgBoxAssert("입력설정이 존재하지 않는 키 입니다");
 		}
 
-		bool Value = AllKeys[_Key].Down;
-		float Time = AllKeys[_Key].UpTime;
-
-		if (AllKeys[_Key].Down && AllKeys[_Key].UpTime < _ClickTime == true)
+		if (AllKeys[_Key].Down == true && AllKeys[_Key].UpTime < _ClickTime)
 		{
 			return true;
 		}

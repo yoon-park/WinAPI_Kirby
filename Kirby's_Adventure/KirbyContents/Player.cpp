@@ -251,6 +251,7 @@ void APlayer::CameraFreeMove(float _DeltaTime)
 
 void APlayer::FreeMove(float _DeltaTime)
 {
+	DirCheck();
 	FVector FreeMove = FVector::Zero;
 
 	if (UEngineInput::IsDown('1'))
@@ -261,26 +262,26 @@ void APlayer::FreeMove(float _DeltaTime)
 
 	if (UEngineInput::IsPress(VK_LEFT))
 	{
-		FreeMove += FVector::Left * _DeltaTime * FreeMoveSpeed;
+		FreeMove = FVector::Left * _DeltaTime * FreeMoveSpeed;
 	}
 
 	if (UEngineInput::IsPress(VK_RIGHT))
 	{
-		FreeMove += FVector::Right * _DeltaTime * FreeMoveSpeed;
+		FreeMove = FVector::Right * _DeltaTime * FreeMoveSpeed;
 	}
 
 	if (UEngineInput::IsPress(VK_UP))
 	{
-		FreeMove += FVector::Up * _DeltaTime * FreeMoveSpeed;
+		FreeMove = FVector::Up * _DeltaTime * FreeMoveSpeed;
 	}
 
 	if (UEngineInput::IsPress(VK_DOWN))
 	{
-		FreeMove += FVector::Down * _DeltaTime * FreeMoveSpeed;
+		FreeMove = FVector::Down * _DeltaTime * FreeMoveSpeed;
 	}
 
-	AddActorLocation(FreeMove * _DeltaTime);
-	GetWorld()->AddCameraPos(FreeMove * _DeltaTime);
+	AddActorLocation(FreeMove);
+	GetWorld()->AddCameraPos(FreeMove);
 }
 
 void APlayer::Idle(float _DeltaTime)
