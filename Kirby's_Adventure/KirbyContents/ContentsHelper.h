@@ -32,8 +32,17 @@ enum class EPlayState
 	Idle,
 	Run,
 	Jump,
+	Breakfall,
+	Fall,
 	Crouch,
 	Squeeze,
+};
+
+enum class EGroundType
+{
+	Flat,
+	Slope,
+	Scarp,
 };
 
 class UContentsHelper

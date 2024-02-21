@@ -31,19 +31,25 @@ void APlayer::BeginPlay()
 	{
 		Renderer = CreateImageRenderer(KirbyRenderOrder::Player);
 		Renderer->SetImage("Kirby_Right.png");
-		Renderer->SetTransform({ {0,0}, {128, 128} });
+		Renderer->SetTransform({ {0,0}, {256, 256} });
 
 		Renderer->CreateAnimation("Idle_Right", "Kirby_Right.png", 0, 1, 0.5f, true);
+		Renderer->CreateAnimation("Idle_Slope_Right", "Kirby_Right.png", 10, 10, 0.1f, true);
 		Renderer->CreateAnimation("Run_Right", "Kirby_Right.png", 2, 5, 0.1f, true);
-		Renderer->CreateAnimation("Jump_Right", "Kirby_Right.png", 9, 13, 0.1f, true);
-		Renderer->CreateAnimation("Crouch_Right", "Kirby_Right.png", 7, 7, 0.1f, true);
-		Renderer->CreateAnimation("Squeeze_Right", "Kirby_Right.png", 6, 6, 0.1f, false);
+		Renderer->CreateAnimation("Jump_Right", "Kirby_Right.png", 23, 23, 0.1f, true);
+		Renderer->CreateAnimation("Breakfall_Right", "Kirby_Right.png", 24, 27, 0.07f, false);
+		Renderer->CreateAnimation("Fall_Right", "Kirby_Right.png", 28, 28, 0.1f, false);
+		Renderer->CreateAnimation("Crouch_Right", "Kirby_Right.png", 8, 8, 0.07f, true);
+		Renderer->CreateAnimation("Squeeze_Right", "Kirby_Right.png", 7, 7, 0.1f, false);
 
 		Renderer->CreateAnimation("Idle_Left", "Kirby_Left.png", 0, 1, 0.5f, true);
+		Renderer->CreateAnimation("Idle_Slope_Left", "Kirby_Left.png", 11, 11, 0.1f, true);
 		Renderer->CreateAnimation("Run_Left", "Kirby_Left.png", 2, 5, 0.1f, true);
-		Renderer->CreateAnimation("Jump_Left", "Kirby_Left.png", 9, 13, 0.1f, true);
-		Renderer->CreateAnimation("Crouch_Left", "Kirby_Left.png", 7, 7, 0.1f, true);
-		Renderer->CreateAnimation("Squeeze_Left", "Kirby_Left.png", 6, 6, 0.1f, false);
+		Renderer->CreateAnimation("Jump_Left", "Kirby_Left.png", 23, 23, 0.1f, true);
+		Renderer->CreateAnimation("Breakfall_Left", "Kirby_Left.png", 24, 27, 0.07f, false);
+		Renderer->CreateAnimation("Fall_Left", "Kirby_Left.png", 28, 28, 0.1f, false);
+		Renderer->CreateAnimation("Crouch_Left", "Kirby_Left.png", 8, 8, 0.07f, true);
+		Renderer->CreateAnimation("Squeeze_Left", "Kirby_Left.png", 7, 7, 0.1f, false);
 	}
 
 	{
@@ -102,6 +108,40 @@ void APlayer::DirCheck()
 		DirState = Dir;
 		std::string Name = GetAnimationName(CurAnimationName);
 		Renderer->ChangeAnimation(Name, true, Renderer->GetCurAnimationFrame(), Renderer->GetCurAnimationTime());
+	}
+}
+
+void APlayer::GroundTypeCheck()
+{
+	Color8Bit Color = UContentsHelper::ColMapImage->GetColor(GetActorLocation().iX(), GetActorLocation().iY(), Color8Bit::MagentaA);
+	if (Color == Color8Bit(255, 0, 255, 0))
+	{
+		GroundType = EGroundType::Flat;
+	}
+	else if (Color == Color8Bit(0, 255, 255, 0))
+	{
+		GroundType = EGroundType::Slope;
+	}
+	else if (Color == Color8Bit(0, 0, 255, 0))
+	{
+
+	}
+}
+
+bool APlayer::IsGroundCheck(FVector _Pos)
+{
+	Color8Bit Color = UContentsHelper::ColMapImage->GetColor(_Pos.iX(), _Pos.iY(), Color8Bit::MagentaA);
+	if (
+		Color == Color8Bit(255, 0, 255, 0) ||
+		Color == Color8Bit(0, 255, 255, 0) ||
+		Color == Color8Bit(0, 0, 255, 0)
+		)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
 	}
 }
 
@@ -180,6 +220,12 @@ void APlayer::StateUpdate(float _DeltaTime)
 	case EPlayState::Jump:
 		Jump(_DeltaTime);
 		break;
+	case EPlayState::Breakfall:
+		Breakfall(_DeltaTime);
+		break;
+	case EPlayState::Fall:
+		Fall(_DeltaTime);
+		break;
 	case EPlayState::Crouch:
 		Crouch(_DeltaTime);
 		break;
@@ -205,6 +251,12 @@ void APlayer::StateChange(EPlayState _State)
 			break;
 		case EPlayState::Jump:
 			JumpStart();
+			break;
+		case EPlayState::Breakfall:
+			BreakfallStart();
+			break;
+		case EPlayState::Fall:
+			FallStart();
 			break;
 		case EPlayState::Crouch:
 			CrouchStart();
@@ -302,7 +354,7 @@ void APlayer::Idle(float _DeltaTime)
 	{
 		if (UEngineInput::IsPress(VK_LEFT) || UEngineInput::IsPress(VK_RIGHT))
 		{
-			StateChange(EPlayState::Run);
+ 			StateChange(EPlayState::Run);
 			return;
 		}
 	}
@@ -350,7 +402,7 @@ void APlayer::Run(float _DeltaTime)
 
 	if (UEngineInput::IsFree(VK_LEFT) && UEngineInput::IsFree(VK_RIGHT))
 	{
-		if (MoveVector.Size2D() <= 0.06f)
+		if (MoveVector.Size2D() <= 0.05f)
 		{
 			StateChange(EPlayState::Idle);
 			return;
@@ -385,6 +437,49 @@ void APlayer::Run(float _DeltaTime)
 void APlayer::Jump(float _DeltaTime)
 {
 	DirCheck();
+	JumpTimer += _DeltaTime;
+
+	if ((JumpVector.Y + GravityVector.Y > 0) || (JumpTimer > 0.3f))
+	{
+		JumpTimer = 0.0f;
+		StateChange(EPlayState::Breakfall);
+		return;
+	}
+
+	if (UEngineInput::IsPress(VK_LEFT))
+	{
+		AddMoveVector(FVector::Left * _DeltaTime);
+	}
+
+	if (UEngineInput::IsPress(VK_RIGHT))
+	{
+		AddMoveVector(FVector::Right * _DeltaTime);
+	}
+
+	if (UEngineInput::IsFree(VK_SPACE) == true)
+	{
+		MoveUpdate(_DeltaTime, true, false);
+	}
+	else
+	{
+		MoveUpdate(_DeltaTime, false, false);
+	}
+}
+
+void APlayer::Breakfall(float _DeltaTime)
+{
+	DirCheck();
+
+	if (IsGroundCheck(GetActorLocation()) == true)
+	{
+		JumpVector = FVector::Zero;
+		Renderer->ChangeAnimation(GetAnimationName("Crouch"));
+		if (Renderer->IsCurAnimationEnd() == true)
+		{
+			StateChange(EPlayState::Idle);
+			return;
+		}
+	}
 
 	if (UEngineInput::IsPress(VK_LEFT))
 	{
@@ -397,14 +492,11 @@ void APlayer::Jump(float _DeltaTime)
 	}
 
 	MoveUpdate(_DeltaTime);
+}
 
-	Color8Bit Color = UContentsHelper::ColMapImage->GetColor(GetActorLocation().iX(), GetActorLocation().iY(), Color8Bit::MagentaA);
-	if (Color == Color8Bit(255, 0, 255, 0))
-	{
-		JumpVector = FVector::Zero;
-		StateChange(EPlayState::Idle);
-		return;
-	}
+void APlayer::Fall(float _DeltaTime)
+{
+
 }
 
 void APlayer::Crouch(float _DeltaTime)
@@ -468,7 +560,21 @@ void APlayer::Squeeze(float _DeltaTime)
 
 void APlayer::IdleStart()
 {
-	Renderer->ChangeAnimation(GetAnimationName("Idle"));
+	GroundTypeCheck();
+
+	if (GroundType == EGroundType::Flat)
+	{
+		Renderer->ChangeAnimation(GetAnimationName("Idle"));
+	}
+	else if (GroundType == EGroundType::Slope)
+	{
+		Renderer->ChangeAnimation(GetAnimationName("Idle_Slope"));
+	}
+	else if (GroundType == EGroundType::Scarp)
+	{
+		
+	}
+
 	DirCheck();
 }
 
@@ -483,6 +589,17 @@ void APlayer::JumpStart()
 	JumpVector = JumpPower;
 	Renderer->ChangeAnimation(GetAnimationName("Jump"));
 	DirCheck();
+}
+
+void APlayer::BreakfallStart()
+{
+	Renderer->ChangeAnimation(GetAnimationName("Breakfall"));
+	DirCheck();
+}
+
+void APlayer::FallStart()
+{
+
 }
 
 void APlayer::CrouchStart()
@@ -531,16 +648,10 @@ void APlayer::CalGravityVector(float _DeltaTime)
 {
 	GravityVector += GravityAcc * _DeltaTime;
 
-	Color8Bit Color = UContentsHelper::ColMapImage->GetColor(GetActorLocation().iX(), GetActorLocation().iY(), Color8Bit::MagentaA);
-	if (Color == Color8Bit(255, 0, 255, 0))
+	if (IsGroundCheck(GetActorLocation()) == true)
 	{
 		GravityVector = FVector::Zero;
 	}
-}
-
-void APlayer::CalJumpVector(float _DeltaTime)
-{
-
 }
 
 void APlayer::CalLastMoveVector(float _DeltaTime)
@@ -570,9 +681,10 @@ void APlayer::GroundUp()
 {
 	while (true)
 	{
-		Color8Bit Color_L = UContentsHelper::ColMapImage->GetColor(GetActorLocation().iX() - 5, GetActorLocation().iY() - 1, Color8Bit::MagentaA);
-		Color8Bit Color_R = UContentsHelper::ColMapImage->GetColor(GetActorLocation().iX() + 5, GetActorLocation().iY() - 1, Color8Bit::MagentaA);
-		if (Color_L == Color8Bit(255, 0, 255, 0) || Color_R == Color8Bit(255, 0, 255, 0))
+		FVector LeftPos = { GetActorLocation().iX() - 1, GetActorLocation().iY() -2};
+		FVector RightPos = { GetActorLocation().iX() + 1, GetActorLocation().iY() -2};
+		
+		if (IsGroundCheck(LeftPos) || IsGroundCheck(RightPos))
 		{
 			AddActorLocation(FVector::Up);
 		}
@@ -582,12 +694,18 @@ void APlayer::GroundUp()
 		}
 	}
 }
-
-void APlayer::MoveUpdate(float _DeltaTime)
+ 
+void APlayer::MoveUpdate(float _DeltaTime, bool _IsGravity, bool _IsGroundUp)
 {
 	CalMoveVector(_DeltaTime);
-	CalGravityVector(_DeltaTime);
+	if (_IsGravity == true)
+	{
+		CalGravityVector(_DeltaTime);
+	}
 	CalLastMoveVector(_DeltaTime);
 	MoveLastMoveVector(_DeltaTime);
-	GroundUp();
+	if (_IsGroundUp == true)
+	{
+		GroundUp();
+	}
 }

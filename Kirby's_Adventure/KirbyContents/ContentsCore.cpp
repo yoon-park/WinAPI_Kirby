@@ -24,7 +24,7 @@ void UContentsCore::BeginPlay()
 	CreateLevel<UTitleLevel>("TitleLevel");
 	CreateLevel<UPlayLevel>("PlayLevel");
 
-	ChangeLevel("TitleLevel");
+	ChangeLevel("PlayLevel");
 }
 
 void UContentsCore::Tick(float _DeltaTime)

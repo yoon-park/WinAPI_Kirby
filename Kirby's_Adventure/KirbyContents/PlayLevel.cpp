@@ -53,8 +53,8 @@ void UPlayLevel::LevelStart(ULevel* _Level)
 		}
 	}
 
-	UEngineResourcesManager::GetInst().CuttingImage("Kirby_Right.png", 5, 3);
-	UEngineResourcesManager::GetInst().CuttingImage("Kirby_Left.png", 5, 3);
+	UEngineResourcesManager::GetInst().CuttingImage("Kirby_Right.png", 8, 8);
+	UEngineResourcesManager::GetInst().CuttingImage("Kirby_Left.png", 8, 8);
 
 	{
 		ABackGroundMap* Map = SpawnActor<ABackGroundMap>();
