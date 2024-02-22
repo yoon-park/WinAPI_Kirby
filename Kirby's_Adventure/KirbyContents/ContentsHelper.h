@@ -41,8 +41,10 @@ enum class EPlayState
 enum class EGroundType
 {
 	Flat,
-	Slope,
-	Scarp,
+	SlopeUp,
+	SlopeDown,
+	ScarpUp,
+	ScarpDown
 };
 
 class UContentsHelper

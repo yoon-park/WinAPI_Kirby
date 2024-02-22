@@ -34,7 +34,8 @@ void APlayer::BeginPlay()
 		Renderer->SetTransform({ {0,0}, {256, 256} });
 
 		Renderer->CreateAnimation("Idle_Right", "Kirby_Right.png", 0, 1, 0.5f, true);
-		Renderer->CreateAnimation("Idle_Slope_Right", "Kirby_Right.png", 10, 10, 0.1f, true);
+		Renderer->CreateAnimation("Idle_SlopeUp_Right", "Kirby_Right.png", 10, 10, 0.1f, true);
+		Renderer->CreateAnimation("Idle_SlopeDown_Right", "Kirby_Right.png", 11, 11, 0.1f, true);
 		Renderer->CreateAnimation("Run_Right", "Kirby_Right.png", 2, 5, 0.1f, true);
 		Renderer->CreateAnimation("Jump_Right", "Kirby_Right.png", 23, 23, 0.1f, true);
 		Renderer->CreateAnimation("Breakfall_Right", "Kirby_Right.png", 24, 27, 0.07f, false);
@@ -43,7 +44,8 @@ void APlayer::BeginPlay()
 		Renderer->CreateAnimation("Squeeze_Right", "Kirby_Right.png", 7, 7, 0.1f, false);
 
 		Renderer->CreateAnimation("Idle_Left", "Kirby_Left.png", 0, 1, 0.5f, true);
-		Renderer->CreateAnimation("Idle_Slope_Left", "Kirby_Left.png", 11, 11, 0.1f, true);
+		Renderer->CreateAnimation("Idle_SlopeUp_Left", "Kirby_Left.png", 11, 11, 0.1f, true);
+		Renderer->CreateAnimation("Idle_SlopeDown_Left", "Kirby_Left.png", 10, 10, 0.1f, true);
 		Renderer->CreateAnimation("Run_Left", "Kirby_Left.png", 2, 5, 0.1f, true);
 		Renderer->CreateAnimation("Jump_Left", "Kirby_Left.png", 23, 23, 0.1f, true);
 		Renderer->CreateAnimation("Breakfall_Left", "Kirby_Left.png", 24, 27, 0.07f, false);
@@ -113,16 +115,24 @@ void APlayer::DirCheck()
 
 void APlayer::GroundTypeCheck()
 {
-	Color8Bit Color = UContentsHelper::ColMapImage->GetColor(GetActorLocation().iX(), GetActorLocation().iY(), Color8Bit::MagentaA);
-	if (Color == Color8Bit(255, 0, 255, 0))
+	FVector PosL = { GetActorLocation().iX() - 25 , GetActorLocation().iY() };
+	FVector PosR = { GetActorLocation().iX() + 25 , GetActorLocation().iY() };
+
+	Color8Bit ColorL = UContentsHelper::ColMapImage->GetColor(PosL.iX(), PosL.iY(), Color8Bit::MagentaA);
+	Color8Bit ColorR = UContentsHelper::ColMapImage->GetColor(PosR.iX(), PosR.iY(), Color8Bit::MagentaA);
+	if (ColorL == Color8Bit(255, 0, 255, 0) || ColorR == Color8Bit(255, 0, 255, 0))
 	{
 		GroundType = EGroundType::Flat;
 	}
-	else if (Color == Color8Bit(0, 255, 255, 0))
+	else if (ColorL == Color8Bit(0, 255, 255, 0))
 	{
-		GroundType = EGroundType::Slope;
+		GroundType = EGroundType::SlopeDown;
 	}
-	else if (Color == Color8Bit(0, 0, 255, 0))
+	else if (ColorR == Color8Bit(0, 255, 255, 0))
+	{
+		GroundType = EGroundType::SlopeUp;
+	}
+	else if (ColorL == Color8Bit(0, 0, 255, 0))
 	{
 
 	}
@@ -566,11 +576,15 @@ void APlayer::IdleStart()
 	{
 		Renderer->ChangeAnimation(GetAnimationName("Idle"));
 	}
-	else if (GroundType == EGroundType::Slope)
+	else if (GroundType == EGroundType::SlopeUp)
 	{
-		Renderer->ChangeAnimation(GetAnimationName("Idle_Slope"));
+		Renderer->ChangeAnimation(GetAnimationName("Idle_SlopeUp"));
 	}
-	else if (GroundType == EGroundType::Scarp)
+	else if (GroundType == EGroundType::SlopeDown)
+	{
+		Renderer->ChangeAnimation(GetAnimationName("Idle_SlopeDown"));
+	}
+	else if (GroundType == EGroundType::ScarpUp)
 	{
 		
 	}
