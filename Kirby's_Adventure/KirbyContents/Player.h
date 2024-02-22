@@ -18,7 +18,7 @@ public:
 protected:
 	EPlayState State = EPlayState::None;
 	EActorDir DirState = EActorDir::Right;
-	EGroundType GroundType = EGroundType::Flat;
+	EGroundType GroundType = EGroundType::None;
 	std::string CurAnimationName = "None";
 
 	void BeginPlay() override;

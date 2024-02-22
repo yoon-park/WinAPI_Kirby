@@ -42,6 +42,7 @@ enum class EPlayState
 
 enum class EGroundType
 {
+	None,
 	Flat,
 	SlopeUp,
 	SlopeDown,

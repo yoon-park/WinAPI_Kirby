@@ -131,7 +131,7 @@ void APlayer::DirCheck()
 
 void APlayer::GroundTypeCheck()
 {
-	FVector Pos = { GetActorLocation().iX(), GetActorLocation().iY() + 10 };
+	FVector Pos = { GetActorLocation().iX(), GetActorLocation().iY() + 5};
 	FVector PosL = { Pos.iX() - 25 , Pos.iY() };
 	FVector PosR = { Pos.iX() + 25 , Pos.iY() };
 
@@ -144,22 +144,22 @@ void APlayer::GroundTypeCheck()
 	}
 	else if (Color == Color8Bit(0, 255, 255, 0))
 	{
-		if (ColorL == Color8Bit(0, 255, 255, 0))
+		if (ColorL == Color8Bit(0, 255, 255, 0) || ColorR == Color8Bit(0, 0, 0, 0))
 		{
 			GroundType = EGroundType::SlopeDown;
 		}
-		else if (ColorR == Color8Bit(0, 255, 255, 0))
+		else if (ColorL == Color8Bit(0, 0, 0, 0) || ColorR == Color8Bit(0, 255, 255, 0))
 		{
 			GroundType = EGroundType::SlopeUp;
 		}
 	}
 	else if (Color == Color8Bit(255, 255, 0, 0))
 	{
-		if (ColorL == Color8Bit(255, 255, 0, 0))
+		if (ColorL == Color8Bit(255, 255, 0, 0) || ColorR == Color8Bit(0, 0, 0, 0))
 		{
 			GroundType = EGroundType::ScarpDown;
 		}
-		else if (ColorR == Color8Bit(255, 255, 0, 0))
+		else if (ColorL == Color8Bit(0, 0, 0, 0) || ColorR == Color8Bit(255, 255, 0, 0))
 		{
 			GroundType = EGroundType::ScarpUp;
 		}
@@ -594,10 +594,12 @@ void APlayer::Break(float _DeltaTime)
 
 		if (UEngineInput::IsPress(VK_LEFT) || UEngineInput::IsPress(VK_RIGHT))
 		{
-			StateChange(EPlayState::Run);
+ 			StateChange(EPlayState::Run);
 			return;
 		}
 	}
+
+	MoveUpdate(_DeltaTime);
 }
 
 void APlayer::Jump(float _DeltaTime)
@@ -861,7 +863,7 @@ void APlayer::CalGravityVector(float _DeltaTime)
 {
 	GravityVector += GravityAcc * _DeltaTime;
 
-	FVector Pos = GetActorLocation();
+	FVector Pos = { GetActorLocation().iX(), GetActorLocation().iY()};
 	FVector PosL = { Pos.iX() - 25 , Pos.iY() };
 	FVector PosR = { Pos.iX() + 25 , Pos.iY() };
 
