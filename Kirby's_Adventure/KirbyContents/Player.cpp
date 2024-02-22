@@ -39,10 +39,16 @@ void APlayer::BeginPlay()
 		Renderer->CreateAnimation("Idle_ScarpUp_Right", "Kirby_Right.png", 14, 14, 0.1f, true);
 		Renderer->CreateAnimation("Idle_ScarpDown_Right", "Kirby_Right.png", 15, 15, 0.1f, true);
 		Renderer->CreateAnimation("Run_Right", "Kirby_Right.png", 2, 5, 0.1f, true);
+		Renderer->CreateAnimation("Dash_Right", "Kirby_Right.png", 2, 5, 0.07f, true);
+		Renderer->CreateAnimation("Break_Left", "Kirby_Right.png", 6, 6, 0.1f, false);
 		Renderer->CreateAnimation("Jump_Right", "Kirby_Right.png", 23, 23, 0.1f, true);
 		Renderer->CreateAnimation("Breakfall_Right", "Kirby_Right.png", 24, 27, 0.07f, false);
 		Renderer->CreateAnimation("Fall_Right", "Kirby_Right.png", 28, 28, 0.1f, false);
 		Renderer->CreateAnimation("Crouch_Right", "Kirby_Right.png", 8, 8, 0.07f, true);
+		Renderer->CreateAnimation("Crouch_SlopeUp_Right", "Kirby_Right.png", 12, 12, 0.07f, true);
+		Renderer->CreateAnimation("Crouch_SlopeDown_Right", "Kirby_Right.png", 13, 13, 0.07f, true);
+		Renderer->CreateAnimation("Crouch_ScarpUp_Right", "Kirby_Right.png", 21, 21, 0.07f, true);
+		Renderer->CreateAnimation("Crouch_ScarpDown_Right", "Kirby_Right.png", 22, 22, 0.07f, true);
 		Renderer->CreateAnimation("Squeeze_Right", "Kirby_Right.png", 7, 7, 0.1f, false);
 
 		Renderer->CreateAnimation("Idle_Left", "Kirby_Left.png", 0, 1, 0.5f, true);
@@ -51,10 +57,16 @@ void APlayer::BeginPlay()
 		Renderer->CreateAnimation("Idle_ScarpUp_Left", "Kirby_Left.png", 15, 15, 0.1f, true);
 		Renderer->CreateAnimation("Idle_ScarpDown_Left", "Kirby_Left.png", 14, 14, 0.1f, true);
 		Renderer->CreateAnimation("Run_Left", "Kirby_Left.png", 2, 5, 0.1f, true);
+		Renderer->CreateAnimation("Dash_Left", "Kirby_Left.png", 2, 5, 0.07f, true);
+		Renderer->CreateAnimation("Break_Right", "Kirby_Left.png", 6, 6, 0.1f, false);
 		Renderer->CreateAnimation("Jump_Left", "Kirby_Left.png", 23, 23, 0.1f, true);
 		Renderer->CreateAnimation("Breakfall_Left", "Kirby_Left.png", 24, 27, 0.07f, false);
 		Renderer->CreateAnimation("Fall_Left", "Kirby_Left.png", 28, 28, 0.1f, false);
 		Renderer->CreateAnimation("Crouch_Left", "Kirby_Left.png", 8, 8, 0.07f, true);
+		Renderer->CreateAnimation("Crouch_SlopeUp_Left", "Kirby_Left.png", 13, 13, 0.07f, true);
+		Renderer->CreateAnimation("Crouch_SlopeDown_Left", "Kirby_Left.png", 12, 12, 0.07f, true);
+		Renderer->CreateAnimation("Crouch_ScarpUp_Left", "Kirby_Left.png", 22, 22, 0.07f, true);
+		Renderer->CreateAnimation("Crouch_ScarpDown_Left", "Kirby_Left.png", 21, 21, 0.07f, true);
 		Renderer->CreateAnimation("Squeeze_Left", "Kirby_Left.png", 7, 7, 0.1f, false);
 	}
 
@@ -119,7 +131,7 @@ void APlayer::DirCheck()
 
 void APlayer::GroundTypeCheck()
 {
-	FVector Pos = { GetActorLocation().iX(), GetActorLocation().iY() };
+	FVector Pos = { GetActorLocation().iX(), GetActorLocation().iY() + 10 };
 	FVector PosL = { Pos.iX() - 25 , Pos.iY() };
 	FVector PosR = { Pos.iX() + 25 , Pos.iY() };
 
@@ -227,6 +239,16 @@ bool APlayer::IsRightWallCheck()
 	return false;
 }
 
+void APlayer::DashOn()
+{
+	MoveMaxSpeed = 400.0f;
+}
+
+void APlayer::DashOff()
+{
+	MoveMaxSpeed = 300.0f;
+}
+
 void APlayer::StateUpdate(float _DeltaTime)
 {
 	switch (State)
@@ -242,6 +264,12 @@ void APlayer::StateUpdate(float _DeltaTime)
 		break;
 	case EPlayState::Run:
 		Run(_DeltaTime);
+		break;
+	case EPlayState::Dash:
+		Dash(_DeltaTime);
+		break;
+	case EPlayState::Break:
+		Break(_DeltaTime);
 		break;
 	case EPlayState::Jump:
 		Jump(_DeltaTime);
@@ -274,6 +302,12 @@ void APlayer::StateChange(EPlayState _State)
 			break;
 		case EPlayState::Run:
 			RunStart();
+			break;
+		case EPlayState::Dash:
+			DashStart();
+			break;
+		case EPlayState::Break:
+			BreakStart();
 			break;
 		case EPlayState::Jump:
 			JumpStart();
@@ -418,6 +452,76 @@ void APlayer::Idle(float _DeltaTime)
 
 void APlayer::Run(float _DeltaTime)
 {
+	EActorDir PrevDir = DirState;
+	DirCheck();
+
+	if (IsWallCheck() == true)
+	{
+		StateChange(EPlayState::Squeeze);
+		return;
+	}
+
+	if (UEngineInput::IsFree(VK_LEFT) && UEngineInput::IsFree(VK_RIGHT))
+	{
+		if (MoveVector.Size2D() <= 0.05f)
+		{
+			StateChange(EPlayState::Idle);
+			return;
+		}
+	}
+
+	if (UEngineInput::IsDoubleClick(VK_LEFT, 1.0f) || UEngineInput::IsDoubleClick(VK_RIGHT, 1.0f))
+	{
+		StateChange(EPlayState::Dash);
+		return;
+	}
+
+	if (UEngineInput::IsDown(VK_SPACE))
+	{
+		StateChange(EPlayState::Jump);
+		return;
+	}
+
+	if (UEngineInput::IsPress(VK_LEFT))
+	{
+		if (DirState == PrevDir)
+		{
+			AddMoveVector(FVector::Left * _DeltaTime);
+		}
+		else
+		{
+			MoveVector = FVector::Zero;
+			StateChange(EPlayState::Break);
+			return;
+		}
+	}
+
+	if (UEngineInput::IsPress(VK_RIGHT))
+	{
+		if (DirState == PrevDir)
+		{
+			AddMoveVector(FVector::Right * _DeltaTime);
+		}
+		else
+		{
+			MoveVector = FVector::Zero;
+			StateChange(EPlayState::Break);
+			return;
+		}
+	}
+
+	if (UEngineInput::IsPress(VK_DOWN))
+	{
+		StateChange(EPlayState::Crouch);
+		return;
+	}
+
+	MoveUpdate(_DeltaTime);
+}
+
+void APlayer::Dash(float _DeltaTime)
+{
+	EActorDir PrevDir = DirState;
 	DirCheck();
 
 	if (IsWallCheck() == true)
@@ -443,12 +547,30 @@ void APlayer::Run(float _DeltaTime)
 
 	if (UEngineInput::IsPress(VK_LEFT))
 	{
-		AddMoveVector(FVector::Left * _DeltaTime);
+		if (DirState == PrevDir)
+		{
+			AddMoveVector(FVector::Left * _DeltaTime);
+		}
+		else
+		{
+			MoveVector = FVector::Zero;
+			StateChange(EPlayState::Break);
+			return;
+		}
 	}
 
 	if (UEngineInput::IsPress(VK_RIGHT))
 	{
-		AddMoveVector(FVector::Right * _DeltaTime);
+		if (DirState == PrevDir)
+		{
+			AddMoveVector(FVector::Right * _DeltaTime);
+		}
+		else
+		{
+			MoveVector = FVector::Zero;
+			StateChange(EPlayState::Break);
+			return;
+		}
 	}
 
 	if (UEngineInput::IsPress(VK_DOWN))
@@ -460,14 +582,32 @@ void APlayer::Run(float _DeltaTime)
 	MoveUpdate(_DeltaTime);
 }
 
+void APlayer::Break(float _DeltaTime)
+{
+	if (Renderer->IsCurAnimationEnd())
+	{
+		if (UEngineInput::IsFree(VK_LEFT) && UEngineInput::IsFree(VK_RIGHT))
+		{
+			StateChange(EPlayState::Idle);
+			return;
+		}
+
+		if (UEngineInput::IsPress(VK_LEFT) || UEngineInput::IsPress(VK_RIGHT))
+		{
+			StateChange(EPlayState::Run);
+			return;
+		}
+	}
+}
+
 void APlayer::Jump(float _DeltaTime)
 {
 	DirCheck();
-	JumpTimer += _DeltaTime;
+	JumpTimer -= _DeltaTime;
 
-	if ((JumpVector.Y + GravityVector.Y > 0) || (JumpTimer > 0.3f))
+	if ((JumpVector.Y + GravityVector.Y > 0) || (JumpTimer < 0.0f))
 	{
-		JumpTimer = 0.0f;
+		JumpTimer = 0.3f;
 		StateChange(EPlayState::Breakfall);
 		return;
 	}
@@ -502,7 +642,7 @@ void APlayer::Breakfall(float _DeltaTime)
 		Renderer->ChangeAnimation(GetAnimationName("Crouch"));
 		if (Renderer->IsCurAnimationEnd() == true)
 		{
-			StateChange(EPlayState::Idle);
+			StateChange(EPlayState::Run);
 			return;
 		}
 	}
@@ -517,7 +657,7 @@ void APlayer::Breakfall(float _DeltaTime)
 		AddMoveVector(FVector::Right * _DeltaTime);
 	}
 
-	MoveUpdate(_DeltaTime);
+    MoveUpdate(_DeltaTime, true, false);
 }
 
 void APlayer::Fall(float _DeltaTime)
@@ -609,12 +749,27 @@ void APlayer::IdleStart()
 		Renderer->ChangeAnimation(GetAnimationName("Idle_ScarpDown"));
 	}
 
+	DashOff();
 	DirCheck();
 }
 
 void APlayer::RunStart()
 {
 	Renderer->ChangeAnimation(GetAnimationName("Run"));
+	DirCheck();
+}
+
+void APlayer::DashStart()
+{
+	Renderer->ChangeAnimation(GetAnimationName("Dash"));
+	DashOn();
+	DirCheck();
+}
+
+void APlayer::BreakStart()
+{
+	Renderer->ChangeAnimation(GetAnimationName("Break"));
+	DashOff();
 	DirCheck();
 }
 
@@ -638,13 +793,37 @@ void APlayer::FallStart()
 
 void APlayer::CrouchStart()
 {
-	Renderer->ChangeAnimation(GetAnimationName("Crouch"));
+	GroundTypeCheck();
+
+	if (GroundType == EGroundType::Flat)
+	{
+		Renderer->ChangeAnimation(GetAnimationName("Crouch"));
+	}
+	else if (GroundType == EGroundType::SlopeUp)
+	{
+		Renderer->ChangeAnimation(GetAnimationName("Crouch_SlopeUp"));
+	}
+	else if (GroundType == EGroundType::SlopeDown)
+	{
+		Renderer->ChangeAnimation(GetAnimationName("Crouch_SlopeDown"));
+	}
+	else if (GroundType == EGroundType::ScarpUp)
+	{
+		Renderer->ChangeAnimation(GetAnimationName("Crouch_ScarpUp"));
+	}
+	else if (GroundType == EGroundType::ScarpDown)
+	{
+		Renderer->ChangeAnimation(GetAnimationName("Crouch_ScarpDown"));
+	}
+
+	DashOff();
 	DirCheck();
 }
 
 void APlayer::SqueezeStart()
 {
 	Renderer->ChangeAnimation(GetAnimationName("Squeeze"));
+	DashOff();
 	DirCheck();
 }
 
@@ -682,9 +861,29 @@ void APlayer::CalGravityVector(float _DeltaTime)
 {
 	GravityVector += GravityAcc * _DeltaTime;
 
-	if (IsGroundCheck(GetActorLocation()) == true)
+	FVector Pos = GetActorLocation();
+	FVector PosL = { Pos.iX() - 25 , Pos.iY() };
+	FVector PosR = { Pos.iX() + 25 , Pos.iY() };
+
+	GroundTypeCheck();
+	if (
+		GroundType == EGroundType::SlopeUp ||
+		GroundType == EGroundType::SlopeDown ||
+		GroundType == EGroundType::ScarpUp ||
+		GroundType == EGroundType::ScarpDown
+		)
 	{
-		GravityVector = FVector::Zero;
+		if (IsGroundCheck(Pos) == true)
+		{
+			GravityVector = FVector::Zero;
+		}
+	}
+	else if (GroundType == EGroundType::Flat)
+	{
+		if (IsGroundCheck(PosL) == true || IsGroundCheck(PosR) == true)
+		{
+			GravityVector = FVector::Zero;
+		}
 	}
 }
 

@@ -32,6 +32,9 @@ protected:
 	bool IsWallCheck();
 	bool IsLeftWallCheck();
 	bool IsRightWallCheck();
+	void DashOn();
+	void DashOff();
+
 	void StateUpdate(float _DeltaTime);
 	void StateChange(EPlayState _State);
 
@@ -40,6 +43,8 @@ protected:
 
 	void Idle(float _DeltaTime);
 	void Run(float _DeltaTime);
+	void Dash(float _DeltaTime);
+	void Break(float _DeltaTime);
 	void Jump(float _DeltaTime);
 	void Breakfall(float _DeltaTime);
 	void Fall(float _DeltaTime);
@@ -48,6 +53,8 @@ protected:
 
 	void IdleStart();
 	void RunStart();
+	void DashStart();
+	void BreakStart();
 	void JumpStart();
 	void BreakfallStart();
 	void FallStart();
@@ -60,19 +67,17 @@ private:
 	float AnimationTime = 0.0f;
 	int AnimationFrame = 0;
 
-	bool Dir = false;
-	float FreeMoveSpeed = 1000.0f;
-
 	FVector MoveVector = FVector::Zero;
-	FVector MoveAcc = FVector::Right * 800.0f;
-	float MoveMaxSpeed = 350.0f;
+	FVector MoveAcc = FVector::Right * 1000.0f;
+	float MoveMaxSpeed = 300.0f;
+	float FreeMoveSpeed = 1000.0f;
 
 	FVector GravityVector = FVector::Zero;
 	FVector GravityAcc = FVector::Down * 3000.0f;
 
 	FVector JumpVector = FVector::Zero;
-	FVector JumpPower = FVector::Up * 500.0f;
-	float JumpTimer = 0.0f;
+	FVector JumpPower = FVector::Up * 520.0f;
+	float JumpTimer = 0.3f;
 
 	FVector LastMoveVector = FVector::Zero;
 

@@ -31,6 +31,8 @@ enum class EPlayState
 	FreeMove,
 	Idle,
 	Run,
+	Dash,
+	Break,
 	Jump,
 	Breakfall,
 	Fall,
