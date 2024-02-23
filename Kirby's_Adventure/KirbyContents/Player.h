@@ -76,7 +76,7 @@ private:
 	FVector GravityAcc = FVector::Down * 3000.0f;
 
 	FVector JumpVector = FVector::Zero;
-	FVector JumpPower = FVector::Up * 520.0f;
+	FVector JumpPower = FVector::Up * 510.0f;
 	float JumpTimer = 0.3f;
 
 	FVector LastMoveVector = FVector::Zero;
@@ -89,5 +89,6 @@ private:
 	void CalLastMoveVector(float _DeltaTime);
 	void MoveLastMoveVector(float _DeltaTime);
 	void GroundUp();
-	void MoveUpdate(float _DeltaTime, bool _IsGravity = true, bool _IsGroundUp = true);
+	void GroundDown();
+	void MoveUpdate(float _DeltaTime, bool _IsGravity = true, bool _IsGroundUp = true, bool _IsGroundDown = false);
 };
