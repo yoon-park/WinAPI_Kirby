@@ -50,6 +50,8 @@ protected:
 	void Fall(float _DeltaTime);
 	void Crouch(float _DeltaTime);
 	void Squeeze(float _DeltaTime);
+	void Fly(float _DeltaTime);
+	void SpitFly(float _DeltaTime);
 
 	void IdleStart();
 	void RunStart();
@@ -60,6 +62,8 @@ protected:
 	void FallStart();
 	void CrouchStart();
 	void SqueezeStart();
+	void FlyStart();
+	void SpitFlyStart();
 
 private:
 	UCollision* BodyCollision = nullptr;
@@ -73,11 +77,12 @@ private:
 	float FreeMoveSpeed = 1000.0f;
 
 	FVector GravityVector = FVector::Zero;
-	FVector GravityAcc = FVector::Down * 3000.0f;
+	FVector GravityAcc = FVector::Down * 2500.0f;
+	float GravityMaxSpeed = 1500.0f;
 
 	FVector JumpVector = FVector::Zero;
 	FVector JumpPower = FVector::Up * 510.0f;
-	float JumpTimer = 0.3f;
+	float JumpTimer = 0.2f;
 
 	FVector LastMoveVector = FVector::Zero;
 

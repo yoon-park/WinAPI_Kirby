@@ -38,6 +38,8 @@ enum class EPlayState
 	Fall,
 	Crouch,
 	Squeeze,
+	Fly,
+	SpitFly,
 };
 
 enum class EGroundType
