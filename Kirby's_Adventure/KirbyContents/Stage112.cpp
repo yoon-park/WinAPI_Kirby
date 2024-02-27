@@ -1,34 +1,38 @@
-#include "PlayLevel.h"
+#include "Stage112.h"
 
 #include <EngineBase\EngineDirectory.h>
 #include <EngineBase\EngineFile.h>
 #include <EngineCore\EngineResourcesManager.h>
 #include "BackGroundMap.h"
 #include "HUD.h"
-#include "Player.h"
+#include "Kirby112.h"
 #include "Monster.h"
 
-UPlayLevel::UPlayLevel()
+#include "Stage113.h"
+
+UStage112::UStage112()
 {
 
 }
 
-UPlayLevel::~UPlayLevel()
+UStage112::~UStage112()
 {
 
 }
 
-void UPlayLevel::BeginPlay()
+void UStage112::BeginPlay()
 {
 	ULevel::BeginPlay();
+
+	GEngine->CreateLevel<UStage113>("PlayLevel2");
 }
 
-void UPlayLevel::Tick(float _DeltaTime)
+void UStage112::Tick(float _DeltaTime)
 {
 
 }
 
-void UPlayLevel::LevelStart(ULevel* _Level)
+void UStage112::LevelStart(ULevel* _Level)
 {
 	{
 		UEngineDirectory NewPath;
@@ -51,16 +55,19 @@ void UPlayLevel::LevelStart(ULevel* _Level)
 		{
 			UEngineResourcesManager::GetInst().LoadImg(File.GetFullPath());
 		}
-	}
 
-	UEngineResourcesManager::GetInst().CuttingImage("Kirby_Right.png", 8, 8);
-	UEngineResourcesManager::GetInst().CuttingImage("Kirby_Left.png", 8, 8);
+		UEngineResourcesManager::GetInst().CuttingImage("Kirby_Right.png", 8, 8);
+		UEngineResourcesManager::GetInst().CuttingImage("Kirby_Left.png", 8, 8);
+	}
 
 	{
 		ABackGroundMap* Map = SpawnActor<ABackGroundMap>();
+		Map->SetMapImage("Stage1-2.png");
+		Map->SetColMapImage("Stage1-2_Col.png");
+
 		AHUD* HUD = SpawnActor<AHUD>();
 
-		APlayer* Kirby = SpawnActor<APlayer>();
+		AKirby112* Kirby = SpawnActor<AKirby112>();
 		Kirby->SetName("Kirby");
 		Kirby->SetActorLocation({ 200, 200 });
 
@@ -70,7 +77,7 @@ void UPlayLevel::LevelStart(ULevel* _Level)
 	}
 }
 
-void UPlayLevel::LevelEnd(ULevel* _Level)
+void UStage112::LevelEnd(ULevel* _Level)
 {
 
 }

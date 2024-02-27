@@ -2,7 +2,7 @@
 
 #include <EnginePlatform\EngineInput.h>
 #include "TitleLevel.h"
-#include "PlayLevel.h"
+#include "Stage112.h"
 
 UContentsCore::UContentsCore()
 {
@@ -22,9 +22,9 @@ void UContentsCore::BeginPlay()
 	UEngineCore::BeginPlay();
 
 	CreateLevel<UTitleLevel>("TitleLevel");
-	CreateLevel<UPlayLevel>("PlayLevel");
+	CreateLevel<UStage112>("Stage112");
 
-	ChangeLevel("PlayLevel");
+	ChangeLevel("Stage112");
 }
 
 void UContentsCore::Tick(float _DeltaTime)

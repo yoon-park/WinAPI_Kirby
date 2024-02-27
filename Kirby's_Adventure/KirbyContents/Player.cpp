@@ -91,8 +91,6 @@ void APlayer::BeginPlay()
 		BodyCollision->SetColType(ECollisionType::Rect);
 		BodyCollision->SetTransform({ {0, -32}, { 64, 64 } });
 	}
-
-	StateChange(EPlayState::Idle);
 }
 
 void APlayer::Tick(float _DeltaTime)
@@ -288,6 +286,20 @@ bool APlayer::IsRightWallCheck()
 	return false;
 }
 
+bool APlayer::IsDoorCheck()
+{
+	FVector CheckPos = GetActorLocation();
+	CheckPos.Y -= 25;
+
+	Color8Bit Color = UContentsHelper::ColMapImage->GetColor(CheckPos.iX(), CheckPos.iY(), Color8Bit::MagentaA);
+	if (Color == Color8Bit::RedA)
+	{
+		return true;
+	}
+
+	return false;
+}
+
 void APlayer::DashOn()
 {
 	MoveMaxSpeed = 400.0f;
@@ -391,6 +403,11 @@ void APlayer::StateChange(EPlayState _State)
 	}
 
 	State = _State;
+}
+
+void APlayer::IntoDoor()
+{
+
 }
 
 void APlayer::CameraFreeMove(float _DeltaTime)
@@ -510,8 +527,16 @@ void APlayer::Idle(float _DeltaTime)
 
 	if (UEngineInput::IsDown(VK_UP))
 	{
-		StateChange(EPlayState::Fly);
-		return;
+		if (IsDoorCheck())
+		{
+			IntoDoor();
+			return;
+		}
+		else
+		{
+			StateChange(EPlayState::Fly);
+			return;
+		}
 	}
 
 	MoveUpdate(_DeltaTime, true, true, true);
@@ -615,10 +640,18 @@ void APlayer::Run(float _DeltaTime)
 		return;
 	}
 
-	if (UEngineInput::IsPress(VK_UP))
+	if (UEngineInput::IsDown(VK_UP))
 	{
-		StateChange(EPlayState::Fly);
-		return;
+		if (IsDoorCheck())
+		{
+			IntoDoor();
+			return;
+		}
+		else
+		{
+			StateChange(EPlayState::Fly);
+			return;
+		}
 	}
 
 	MoveUpdate(_DeltaTime, true, true, true);
@@ -693,10 +726,18 @@ void APlayer::Dash(float _DeltaTime)
 		return;
 	}
 
-	if (UEngineInput::IsPress(VK_UP))
+	if (UEngineInput::IsDown(VK_UP))
 	{
-		StateChange(EPlayState::Fly);
-		return;
+		if (IsDoorCheck())
+		{
+			IntoDoor();
+			return;
+		}
+		else
+		{
+			StateChange(EPlayState::Fly);
+			return;
+		}
 	}
 
 	if (UEngineInput::IsPress(VK_LEFT))
@@ -992,7 +1033,7 @@ void APlayer::Fly(float _DeltaTime)
 		}
 	}
 
-	MoveUpdate(_DeltaTime, false, false, false);
+	MoveUpdate(_DeltaTime, false, true, false);
 }
 
 void APlayer::SpitFly(float _DeltaTime)
@@ -1013,7 +1054,7 @@ void APlayer::SpitFly(float _DeltaTime)
 		return;
 	}
 
-	MoveUpdate(_DeltaTime, true, false, false);
+	MoveUpdate(_DeltaTime, true, true, false);
 }
 
 void APlayer::IdleStart()

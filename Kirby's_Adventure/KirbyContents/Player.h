@@ -32,11 +32,13 @@ protected:
 	bool IsWallCheck();
 	bool IsLeftWallCheck();
 	bool IsRightWallCheck();
+	bool IsDoorCheck();
 	void DashOn();
 	void DashOff();
 
 	void StateUpdate(float _DeltaTime);
 	void StateChange(EPlayState _State);
+	virtual void IntoDoor();
 
 	void CameraFreeMove(float _DeltaTime);
 	void FreeMove(float _DeltaTime);
@@ -65,7 +67,7 @@ protected:
 	void FlyStart();
 	void SpitFlyStart();
 
-private:
+protected:
 	UCollision* BodyCollision = nullptr;
 	UImageRenderer* Renderer = nullptr;
 	float AnimationTime = 0.0f;

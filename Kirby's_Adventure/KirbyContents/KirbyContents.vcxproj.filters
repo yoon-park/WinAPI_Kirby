@@ -3,74 +3,95 @@
   <ItemGroup>
     <ClInclude Include="ContentsCore.h" />
     <ClInclude Include="TitleLevel.h">
-      <Filter>Object\TitleLevel</Filter>
-    </ClInclude>
-    <ClInclude Include="Player.h">
-      <Filter>Object\PlayLevel\Actor</Filter>
-    </ClInclude>
-    <ClInclude Include="PlayLevel.h">
-      <Filter>Object\PlayLevel</Filter>
-    </ClInclude>
-    <ClInclude Include="TitleLogo.h">
-      <Filter>Object\TitleLevel\Actor</Filter>
+      <Filter>Object\0.Title</Filter>
     </ClInclude>
     <ClInclude Include="ContentsHelper.h" />
+    <ClInclude Include="Stage112.h">
+      <Filter>Object\1.VV\Stage1-2</Filter>
+    </ClInclude>
+    <ClInclude Include="Stage113.h">
+      <Filter>Object\1.VV\Stage1-3</Filter>
+    </ClInclude>
     <ClInclude Include="TitleKirby.h">
-      <Filter>Object\TitleLevel\Actor</Filter>
+      <Filter>Object\0.Title</Filter>
+    </ClInclude>
+    <ClInclude Include="TitleLogo.h">
+      <Filter>Object\0.Title</Filter>
     </ClInclude>
     <ClInclude Include="BackGroundMap.h">
-      <Filter>Object\PlayLevel\Actor</Filter>
+      <Filter>Object\1.VV\Common</Filter>
     </ClInclude>
     <ClInclude Include="HUD.h">
-      <Filter>Object\PlayLevel\Actor</Filter>
+      <Filter>Object\1.VV\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Object\1.VV\Common</Filter>
     </ClInclude>
     <ClInclude Include="Monster.h">
-      <Filter>Object\PlayLevel\Actor</Filter>
+      <Filter>Object\1.VV\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Kirby112.h">
+      <Filter>Object\1.VV\Stage1-2</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ContentsCore.cpp" />
     <ClCompile Include="TitleLevel.cpp">
-      <Filter>Object\TitleLevel</Filter>
-    </ClCompile>
-    <ClCompile Include="PlayLevel.cpp">
-      <Filter>Object\PlayLevel</Filter>
-    </ClCompile>
-    <ClCompile Include="Player.cpp">
-      <Filter>Object\PlayLevel\Actor</Filter>
-    </ClCompile>
-    <ClCompile Include="TitleLogo.cpp">
-      <Filter>Object\TitleLevel\Actor</Filter>
+      <Filter>Object\0.Title</Filter>
     </ClCompile>
     <ClCompile Include="ContentsHelper.cpp" />
+    <ClCompile Include="Stage112.cpp">
+      <Filter>Object\1.VV\Stage1-2</Filter>
+    </ClCompile>
+    <ClCompile Include="Stage113.cpp">
+      <Filter>Object\1.VV\Stage1-3</Filter>
+    </ClCompile>
     <ClCompile Include="TitleKirby.cpp">
-      <Filter>Object\TitleLevel\Actor</Filter>
+      <Filter>Object\0.Title</Filter>
+    </ClCompile>
+    <ClCompile Include="TitleLogo.cpp">
+      <Filter>Object\0.Title</Filter>
     </ClCompile>
     <ClCompile Include="BackGroundMap.cpp">
-      <Filter>Object\PlayLevel\Actor</Filter>
+      <Filter>Object\1.VV\Common</Filter>
     </ClCompile>
     <ClCompile Include="HUD.cpp">
-      <Filter>Object\PlayLevel\Actor</Filter>
+      <Filter>Object\1.VV\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Object\1.VV\Common</Filter>
     </ClCompile>
     <ClCompile Include="Monster.cpp">
-      <Filter>Object\PlayLevel\Actor</Filter>
+      <Filter>Object\1.VV\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="Kirby112.cpp">
+      <Filter>Object\1.VV\Stage1-2</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Object">
       <UniqueIdentifier>{03d5be10-9296-4491-91f9-877d9a0a7d9b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Object\TitleLevel">
+    <Filter Include="Object\0.Title">
       <UniqueIdentifier>{8f652d2c-24f5-40df-98f3-36f1bb61dc47}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Object\TitleLevel\Actor">
-      <UniqueIdentifier>{20da43ef-b9db-4619-975b-4304047ef31b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Object\PlayLevel">
+    <Filter Include="Object\1.VV">
       <UniqueIdentifier>{7cc9902d-d36f-42c7-a25e-be1208417ea1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Object\PlayLevel\Actor">
+    <Filter Include="Object\1.VV\Stage1-1">
+      <UniqueIdentifier>{7e69bd9a-8ff0-4958-9d03-c90ab2ccfb26}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\1.VV\Stage1-2">
       <UniqueIdentifier>{16e4b608-2182-46c1-9dda-ddf08a92324a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\1.VV\Stage1-3">
+      <UniqueIdentifier>{50e417e5-0c45-4b7a-8b9c-b5a838b0f3ee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\1.VV\Common">
+      <UniqueIdentifier>{11753c10-6b05-4d56-b38e-1da0f8d1ec36}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\1.VV\Hub">
+      <UniqueIdentifier>{65f0a611-1cae-4790-a1db-3994a32ec924}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

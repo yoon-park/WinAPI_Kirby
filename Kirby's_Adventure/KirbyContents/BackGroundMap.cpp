@@ -54,9 +54,6 @@ void ABackGroundMap::BeginPlay()
 	Renderer = CreateImageRenderer(KirbyRenderOrder::Map);
 	ColRenderer = CreateImageRenderer(KirbyRenderOrder::Map);
 	ColRenderer->ActiveOff();
-
-	SetMapImage("Stage1-2.png");
-	SetColMapImage("Stage1-2_Col.png");
 }
 
 void ABackGroundMap::Tick(float _DeltaTime)
