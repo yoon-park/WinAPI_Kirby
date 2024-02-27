@@ -764,7 +764,7 @@ void APlayer::Jump(float _DeltaTime)
 		MoveUpdate(_DeltaTime, false, false, false);
 	}
 
-	if (UEngineInput::IsPress(VK_UP) || UEngineInput::IsPress('X'))
+	if (UEngineInput::IsPress(VK_UP))
 	{
 		StateChange(EPlayState::Fly);
 		return;
@@ -819,7 +819,7 @@ void APlayer::Breakfall(float _DeltaTime)
 		AddMoveVector(FVector::Right * _DeltaTime);
 	}
 
-	if (UEngineInput::IsPress(VK_UP) || UEngineInput::IsPress('X'))
+	if (UEngineInput::IsPress(VK_UP))
 	{
 		StateChange(EPlayState::Fly);
 		return;
@@ -863,12 +863,6 @@ void APlayer::Fall(float _DeltaTime)
 	if (UEngineInput::IsPress(VK_RIGHT))
 	{
 		AddMoveVector(FVector::Right * _DeltaTime);
-	}
-
-	if (UEngineInput::IsPress(VK_UP) || UEngineInput::IsPress('X'))
-	{
-		StateChange(EPlayState::Fly);
-		return;
 	}
 
 	if (IsGroundCheck(Pos) == true)
@@ -1008,6 +1002,7 @@ void APlayer::SpitFly(float _DeltaTime)
 	if (Renderer->IsCurAnimationEnd())
 	{
 		MoveMaxSpeed = 300.0f;
+		JumpPower = FVector::Up * 510.0f;
 		StateChange(EPlayState::Fall);
 		return;
 	}
