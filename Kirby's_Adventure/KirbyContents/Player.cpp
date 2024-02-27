@@ -763,6 +763,12 @@ void APlayer::Jump(float _DeltaTime)
 		JumpTimer -= _DeltaTime;
 		MoveUpdate(_DeltaTime, false, false, false);
 	}
+
+	if (UEngineInput::IsPress(VK_UP) || UEngineInput::IsPress('X'))
+	{
+		StateChange(EPlayState::Fly);
+		return;
+	}
 }
 
 void APlayer::Breakfall(float _DeltaTime)
@@ -813,6 +819,12 @@ void APlayer::Breakfall(float _DeltaTime)
 		AddMoveVector(FVector::Right * _DeltaTime);
 	}
 
+	if (UEngineInput::IsPress(VK_UP) || UEngineInput::IsPress('X'))
+	{
+		StateChange(EPlayState::Fly);
+		return;
+	}
+
     MoveUpdate(_DeltaTime, true, false, false);
 }
 
@@ -853,7 +865,11 @@ void APlayer::Fall(float _DeltaTime)
 		AddMoveVector(FVector::Right * _DeltaTime);
 	}
 
-	MoveUpdate(_DeltaTime, true, false, false);
+	if (UEngineInput::IsPress(VK_UP) || UEngineInput::IsPress('X'))
+	{
+		StateChange(EPlayState::Fly);
+		return;
+	}
 
 	if (IsGroundCheck(Pos) == true)
 	{
@@ -866,6 +882,8 @@ void APlayer::Fall(float _DeltaTime)
 			return;
 		}
 	}
+
+	MoveUpdate(_DeltaTime, true, false, false);
 }
 
 void APlayer::Crouch(float _DeltaTime)
