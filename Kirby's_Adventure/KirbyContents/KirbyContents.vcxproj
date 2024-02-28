@@ -186,11 +186,11 @@
       <SubType>
       </SubType>
     </ClInclude>
-    <ClInclude Include="HUD.h">
+    <ClInclude Include="FadeOut.h">
       <SubType>
       </SubType>
     </ClInclude>
-    <ClInclude Include="Kirby112.h">
+    <ClInclude Include="HUD.h">
       <SubType>
       </SubType>
     </ClInclude>
@@ -233,11 +233,11 @@
       <SubType>
       </SubType>
     </ClCompile>
-    <ClCompile Include="HUD.cpp">
+    <ClCompile Include="FadeOut.cpp">
       <SubType>
       </SubType>
     </ClCompile>
-    <ClCompile Include="Kirby112.cpp">
+    <ClCompile Include="HUD.cpp">
       <SubType>
       </SubType>
     </ClCompile>

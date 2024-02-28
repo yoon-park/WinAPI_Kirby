@@ -1,6 +1,8 @@
 #pragma once
 #include <EngineCore\Level.h>
 
+class AFadeOut;
+
 class UStage112 : public ULevel
 {
 public:
@@ -13,6 +15,8 @@ public:
 	UStage112& operator=(UStage112&& _Other) noexcept = delete;
 
 protected:
+	AFadeOut* Fade;
+
 	void BeginPlay() override;
 	void Tick(float _DeltaTime) override;
 

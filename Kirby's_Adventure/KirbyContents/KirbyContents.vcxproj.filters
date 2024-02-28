@@ -30,8 +30,8 @@
     <ClInclude Include="Monster.h">
       <Filter>Object\1.VV\Common</Filter>
     </ClInclude>
-    <ClInclude Include="Kirby112.h">
-      <Filter>Object\1.VV\Stage1-2</Filter>
+    <ClInclude Include="FadeOut.h">
+      <Filter>Object\1.VV\Common</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -64,8 +64,8 @@
     <ClCompile Include="Monster.cpp">
       <Filter>Object\1.VV\Common</Filter>
     </ClCompile>
-    <ClCompile Include="Kirby112.cpp">
-      <Filter>Object\1.VV\Stage1-2</Filter>
+    <ClCompile Include="FadeOut.cpp">
+      <Filter>Object\1.VV\Common</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

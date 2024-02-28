@@ -38,7 +38,6 @@ protected:
 
 	void StateUpdate(float _DeltaTime);
 	void StateChange(EPlayState _State);
-	virtual void IntoDoor();
 
 	void CameraFreeMove(float _DeltaTime);
 	void FreeMove(float _DeltaTime);
@@ -54,6 +53,7 @@ protected:
 	void Squeeze(float _DeltaTime);
 	void Fly(float _DeltaTime);
 	void SpitFly(float _DeltaTime);
+	void Door(float _DeltaTime);
 
 	void IdleStart();
 	void RunStart();
@@ -66,6 +66,7 @@ protected:
 	void SqueezeStart();
 	void FlyStart();
 	void SpitFlyStart();
+	void DoorStart();
 
 protected:
 	UCollision* BodyCollision = nullptr;

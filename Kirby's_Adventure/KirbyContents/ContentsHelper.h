@@ -9,6 +9,7 @@ enum class KirbyRenderOrder
 	HUD,
 	Monster,
 	Player,
+	FadeOut,
 };
 
 enum class KirbyCollisionOrder
@@ -40,6 +41,7 @@ enum class EPlayState
 	Squeeze,
 	Fly,
 	SpitFly,
+	Door,
 };
 
 enum class EGroundType

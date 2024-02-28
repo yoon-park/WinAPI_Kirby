@@ -1,6 +1,8 @@
 #pragma once
 #include <EngineCore\Level.h>
 
+class AFadeOut;
+
 class UStage113 : public ULevel
 {
 public:
@@ -20,5 +22,5 @@ protected:
 	void LevelEnd(ULevel* _Level) override;
 
 private:
-
+	AFadeOut* Fade;
 };

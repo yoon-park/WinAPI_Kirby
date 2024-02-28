@@ -58,6 +58,7 @@ void APlayer::BeginPlay()
 		Renderer->CreateAnimation("Absorb_Fly_Right", "Kirby_Right.png", 29, 32, 0.1f, false);
 		Renderer->CreateAnimation("Fly_Right", "Kirby_Right.png", 33, 34, 0.5f, true);
 		Renderer->CreateAnimation("Spit_Fly_Right", "Kirby_Right.png", 35, 38, 0.1f, false);
+		Renderer->CreateAnimation("Door_Right", "Kirby_Right.png", 16, 18, 0.1f, false);
 
 		Renderer->CreateAnimation("Idle_Left", "Kirby_Left.png", 0, 1, 0.5f, true);
 		Renderer->CreateAnimation("Idle_SlopeUp_Left", "Kirby_Left.png", 10, 10, 0.1f, true);
@@ -84,6 +85,7 @@ void APlayer::BeginPlay()
 		Renderer->CreateAnimation("Absorb_Fly_Left", "Kirby_Left.png", 29, 32, 0.1f, false);
 		Renderer->CreateAnimation("Fly_Left", "Kirby_Left.png", 33, 34, 0.5f, true);
 		Renderer->CreateAnimation("Spit_Fly_Left", "Kirby_Left.png", 35, 38, 0.1f, false);
+		Renderer->CreateAnimation("Door_Left", "Kirby_Right.png", 16, 18, 0.1f, false);
 	}
 
 	{
@@ -91,6 +93,8 @@ void APlayer::BeginPlay()
 		BodyCollision->SetColType(ECollisionType::Rect);
 		BodyCollision->SetTransform({ {0, -32}, { 64, 64 } });
 	}
+
+	StateChange(EPlayState::Idle);
 }
 
 void APlayer::Tick(float _DeltaTime)
@@ -353,6 +357,9 @@ void APlayer::StateUpdate(float _DeltaTime)
 	case EPlayState::SpitFly:
 		SpitFly(_DeltaTime);
 		break;
+	case EPlayState::Door:
+		Door(_DeltaTime);
+		break;
 	default:
 		break;
 	}
@@ -397,17 +404,15 @@ void APlayer::StateChange(EPlayState _State)
 		case EPlayState::SpitFly:
 			SpitFlyStart();
 			break;
+		case EPlayState::Door:
+			DoorStart();
+			break;
 		default:
 			break;
 		}
 	}
 
 	State = _State;
-}
-
-void APlayer::IntoDoor()
-{
-
 }
 
 void APlayer::CameraFreeMove(float _DeltaTime)
@@ -529,7 +534,7 @@ void APlayer::Idle(float _DeltaTime)
 	{
 		if (IsDoorCheck())
 		{
-			IntoDoor();
+			StateChange(EPlayState::Door);
 			return;
 		}
 		else
@@ -644,7 +649,7 @@ void APlayer::Run(float _DeltaTime)
 	{
 		if (IsDoorCheck())
 		{
-			IntoDoor();
+			StateChange(EPlayState::Door);
 			return;
 		}
 		else
@@ -730,7 +735,7 @@ void APlayer::Dash(float _DeltaTime)
 	{
 		if (IsDoorCheck())
 		{
-			IntoDoor();
+			StateChange(EPlayState::Door);
 			return;
 		}
 		else
@@ -1057,6 +1062,15 @@ void APlayer::SpitFly(float _DeltaTime)
 	MoveUpdate(_DeltaTime, true, true, false);
 }
 
+void APlayer::Door(float _DeltaTime)
+{
+	if (Renderer->IsCurAnimationEnd())
+	{
+		GEngine->ChangeLevel("Stage113");
+		return;
+	}
+}
+
 void APlayer::IdleStart()
 {
 	GroundTypeCheck();
@@ -1214,6 +1228,12 @@ void APlayer::SpitFlyStart()
 	Renderer->ChangeAnimation(GetAnimationName("Spit_Fly"));
 	DashOff();
 	DirCheck();
+}
+
+void APlayer::DoorStart()
+{
+	Renderer->ChangeAnimation(GetAnimationName("Door"));
+	DashOff();
 }
 
 void APlayer::AddMoveVector(const FVector& _DirDelta)

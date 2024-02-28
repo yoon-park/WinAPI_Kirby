@@ -3,11 +3,12 @@
 #include <EngineBase\EngineDirectory.h>
 #include <EngineBase\EngineFile.h>
 #include <EngineCore\EngineResourcesManager.h>
+#include <EnginePlatform/EngineInput.h>
 #include "BackGroundMap.h"
 #include "HUD.h"
-#include "Kirby112.h"
+#include "Player.h"
 #include "Monster.h"
-
+#include "FadeOut.h"
 #include "Stage113.h"
 
 UStage112::UStage112()
@@ -24,16 +25,6 @@ void UStage112::BeginPlay()
 {
 	ULevel::BeginPlay();
 
-	GEngine->CreateLevel<UStage113>("PlayLevel2");
-}
-
-void UStage112::Tick(float _DeltaTime)
-{
-
-}
-
-void UStage112::LevelStart(ULevel* _Level)
-{
 	{
 		UEngineDirectory NewPath;
 
@@ -67,17 +58,34 @@ void UStage112::LevelStart(ULevel* _Level)
 
 		AHUD* HUD = SpawnActor<AHUD>();
 
-		AKirby112* Kirby = SpawnActor<AKirby112>();
+		APlayer* Kirby = SpawnActor<APlayer>();
 		Kirby->SetName("Kirby");
 		Kirby->SetActorLocation({ 200, 200 });
 
 		AMonster* Monster = SpawnActor<AMonster>();
 		Monster->SetName("Monster");
 		Monster->SetActorLocation({ 500, 200 });
+
+		Fade = SpawnActor<AFadeOut>();
+		Fade->SetActorLocation({ 400, 375 });
+		Fade->SetActive(true, 0.5f);
+		Fade->FadeStart(FadeOption::FadeIn);
 	}
+
+	GEngine->CreateLevel<UStage113>("Stage113");
+}
+
+void UStage112::Tick(float _DeltaTime)
+{
+
+}
+
+void UStage112::LevelStart(ULevel* _Level)
+{
+
 }
 
 void UStage112::LevelEnd(ULevel* _Level)
 {
-
+	Fade->FadeStart(FadeOption::FadeOut);
 }
