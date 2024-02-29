@@ -34,7 +34,7 @@ void AMonster::Tick(float _DeltaTime)
 	AActor::Tick(_DeltaTime);
 
 	std::vector<UCollision*> Result;
-	if (BodyCollision->CollisionCheck(KirbyCollisionOrder::Player, Result) == true)
+	if (BodyCollision->CollisionCheck(KirbyCollisionOrder::PlayerAbility, Result) == true)
 	{
 		UCollision* Collision = Result[0];
 		AActor* Ptr = Collision->GetOwner();

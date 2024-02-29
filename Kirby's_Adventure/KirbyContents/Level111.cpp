@@ -1,4 +1,4 @@
-#include "Stage112.h"
+#include "Level111.h"
 
 #include <EngineBase\EngineDirectory.h>
 #include <EngineBase\EngineFile.h>
@@ -9,18 +9,19 @@
 #include "Player.h"
 #include "Monster.h"
 #include "FadeOut.h"
+#include "Level112.h"
 
-UStage112::UStage112()
+ULevel111::ULevel111()
 {
 
 }
 
-UStage112::~UStage112()
+ULevel111::~ULevel111()
 {
 
 }
 
-void UStage112::BeginPlay()
+void ULevel111::BeginPlay()
 {
 	ULevel::BeginPlay();
 
@@ -50,39 +51,39 @@ void UStage112::BeginPlay()
 		UEngineResourcesManager::GetInst().CuttingImage("Kirby_Left.png", 8, 8);
 	}
 
-	{
-		ABackGroundMap* Map = SpawnActor<ABackGroundMap>();
-		Map->SetMapImage("Stage1-2.png");
-		Map->SetColMapImage("Stage1-2_Col.png");
-
-		AHUD* HUD = SpawnActor<AHUD>();
-
-		APlayer* Kirby = SpawnActor<APlayer>();
-		Kirby->SetName("Kirby");
-		Kirby->SetActorLocation({ 200, 200 });
-
-		AMonster* Monster = SpawnActor<AMonster>();
-		Monster->SetName("Monster");
-		Monster->SetActorLocation({ 500, 200 });
-
-		Fade = SpawnActor<AFadeOut>();
-		Fade->SetActorLocation({ 400, 375 });
-		Fade->SetActive(true, 0.5f);
-		Fade->FadeStart(FadeOption::FadeIn);
-	}
+	GEngine->CreateLevel<ULevel112>("Level112");
 }
 
-void UStage112::Tick(float _DeltaTime)
+void ULevel111::Tick(float _DeltaTime)
 {
 
 }
 
-void UStage112::LevelStart(ULevel* _Level)
+void ULevel111::LevelStart(ULevel* _Level)
 {
+	ABackGroundMap* Map = SpawnActor<ABackGroundMap>();
+	Map->SetMapImage("Stage1-1.png");
+	Map->SetColMapImage("Stage1-1_Col.png");
 
+	AHUD* HUD = SpawnActor<AHUD>();
+
+	APlayer* Kirby = SpawnActor<APlayer>();
+	Kirby->SetName("Kirby");
+	Kirby->SetActorLocation({ 200, 200 });
+
+	AMonster* Monster = SpawnActor<AMonster>();
+	Monster->SetName("Monster");
+	Monster->SetActorLocation({ 500, 200 });
+
+	Fade = SpawnActor<AFadeOut>();
+	Fade->SetActorLocation({ 400, 375 });
+	Fade->SetActive(true, 0.5f);
+	Fade->FadeStart(FadeOption::FadeIn);
 }
 
-void UStage112::LevelEnd(ULevel* _Level)
+void ULevel111::LevelEnd(ULevel* _Level)
 {
 	Fade->FadeStart(FadeOption::FadeOut);
+	
+	GEngine->DestroyLevel("Level111");
 }

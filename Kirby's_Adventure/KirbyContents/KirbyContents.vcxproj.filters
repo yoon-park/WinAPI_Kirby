@@ -6,10 +6,10 @@
       <Filter>Object\0.Title</Filter>
     </ClInclude>
     <ClInclude Include="ContentsHelper.h" />
-    <ClInclude Include="Stage112.h">
+    <ClInclude Include="Level112.h">
       <Filter>Object\1.VV\Stage1-2</Filter>
     </ClInclude>
-    <ClInclude Include="Stage113.h">
+    <ClInclude Include="Level113.h">
       <Filter>Object\1.VV\Stage1-3</Filter>
     </ClInclude>
     <ClInclude Include="TitleKirby.h">
@@ -33,6 +33,9 @@
     <ClInclude Include="FadeOut.h">
       <Filter>Object\1.VV\Common</Filter>
     </ClInclude>
+    <ClInclude Include="Level111.h">
+      <Filter>Object\1.VV\Stage1-1</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ContentsCore.cpp" />
@@ -40,10 +43,10 @@
       <Filter>Object\0.Title</Filter>
     </ClCompile>
     <ClCompile Include="ContentsHelper.cpp" />
-    <ClCompile Include="Stage112.cpp">
+    <ClCompile Include="Level112.cpp">
       <Filter>Object\1.VV\Stage1-2</Filter>
     </ClCompile>
-    <ClCompile Include="Stage113.cpp">
+    <ClCompile Include="Level113.cpp">
       <Filter>Object\1.VV\Stage1-3</Filter>
     </ClCompile>
     <ClCompile Include="TitleKirby.cpp">
@@ -66,6 +69,9 @@
     </ClCompile>
     <ClCompile Include="FadeOut.cpp">
       <Filter>Object\1.VV\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="Level111.cpp">
+      <Filter>Object\1.VV\Stage1-1</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -1,4 +1,4 @@
-#include "Stage113.h"
+#include "Level113.h"
 
 #include <EngineBase\EngineDirectory.h>
 #include <EngineBase\EngineFile.h>
@@ -9,27 +9,27 @@
 #include "Monster.h"
 #include "FadeOut.h"
 
-UStage113::UStage113()
+ULevel113::ULevel113()
 {
 
 }
 
-UStage113::~UStage113()
+ULevel113::~ULevel113()
 {
 
 }
 
-void UStage113::BeginPlay()
+void ULevel113::BeginPlay()
 {
 	ULevel::BeginPlay();
 }
 
-void UStage113::Tick(float _DeltaTime)
+void ULevel113::Tick(float _DeltaTime)
 {
 
 }
 
-void UStage113::LevelStart(ULevel* _Level)
+void ULevel113::LevelStart(ULevel* _Level)
 {
 	{
 		ABackGroundMap* Map = SpawnActor<ABackGroundMap>();
@@ -49,7 +49,9 @@ void UStage113::LevelStart(ULevel* _Level)
 	}
 }
 
-void UStage113::LevelEnd(ULevel* _Level)
+void ULevel113::LevelEnd(ULevel* _Level)
 {
+	Fade->FadeStart(FadeOption::FadeOut);
 
+	GEngine->DestroyLevel("Level113");
 }

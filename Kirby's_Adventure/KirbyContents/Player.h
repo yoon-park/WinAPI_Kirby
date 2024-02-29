@@ -19,6 +19,7 @@ protected:
 	EPlayState State = EPlayState::None;
 	EActorDir DirState = EActorDir::Right;
 	EGroundType GroundType = EGroundType::None;
+	bool IsAbsorb = false;
 	std::string CurAnimationName = "None";
 
 	void BeginPlay() override;
@@ -29,6 +30,7 @@ protected:
 	void DirCheck();
 	void GroundTypeCheck();
 	bool IsGroundCheck(FVector _Pos);
+	bool IsCeilingCheck(FVector _Pos);
 	bool IsWallCheck();
 	bool IsLeftWallCheck();
 	bool IsRightWallCheck();
@@ -53,6 +55,9 @@ protected:
 	void Squeeze(float _DeltaTime);
 	void Fly(float _DeltaTime);
 	void SpitFly(float _DeltaTime);
+	void Absorb(float _DeltaTime);
+	void Digest(float _DeltaTime);
+	void Spit(float _DeltaTime);
 	void Door(float _DeltaTime);
 
 	void IdleStart();
@@ -66,10 +71,14 @@ protected:
 	void SqueezeStart();
 	void FlyStart();
 	void SpitFlyStart();
+	void AbsorbStart();
+	void DigestStart();
+	void SpitStart();
 	void DoorStart();
 
-protected:
+private:
 	UCollision* BodyCollision = nullptr;
+	UCollision* AbsorbCollision = nullptr;
 	UImageRenderer* Renderer = nullptr;
 	float AnimationTime = 0.0f;
 	int AnimationFrame = 0;

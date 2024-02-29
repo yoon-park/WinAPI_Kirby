@@ -41,6 +41,9 @@ enum class EPlayState
 	Squeeze,
 	Fly,
 	SpitFly,
+	Absorb,
+	Digest,
+	Spit,
 	Door,
 };
 

@@ -42,8 +42,8 @@ void APlayer::BeginPlay()
 		Renderer->CreateAnimation("Run_ScarpUp_Right", "Kirby_Right.png", 16, 19, 0.1f, true);
 		Renderer->CreateAnimation("Run_ScarpDown_Right", "Kirby_Right.png", 20, 20, 0.1f, true);
 		Renderer->CreateAnimation("Dash_Right", "Kirby_Right.png", 2, 5, 0.07f, true);
-		Renderer->CreateAnimation("Dash_ScarpUp_Right", "Kirby_Right.png", 16, 19, 0.07f, true);
-		Renderer->CreateAnimation("Dash_ScarpDown_Right", "Kirby_Right.png", 20, 20, 0.07f, true);
+		Renderer->CreateAnimation("Dash_ScarpUp_Right", "Kirby_Right.png", 16, 19, 0.05f, true);
+		Renderer->CreateAnimation("Dash_ScarpDown_Right", "Kirby_Right.png", 20, 20, 0.05f, true);
 		Renderer->CreateAnimation("Break_Left", "Kirby_Right.png", 6, 6, 0.15f, false);
 		Renderer->CreateAnimation("Jump_Right", "Kirby_Right.png", 23, 23, 0.1f, true);
 		Renderer->CreateAnimation("Breakfall_Right", "Kirby_Right.png", 24, 27, 0.07f, false);
@@ -58,6 +58,19 @@ void APlayer::BeginPlay()
 		Renderer->CreateAnimation("Absorb_Fly_Right", "Kirby_Right.png", 29, 32, 0.1f, false);
 		Renderer->CreateAnimation("Fly_Right", "Kirby_Right.png", 33, 34, 0.5f, true);
 		Renderer->CreateAnimation("Spit_Fly_Right", "Kirby_Right.png", 35, 38, 0.1f, false);
+		Renderer->CreateAnimation("Absorb_Right", "Kirby_Right.png", 39, 40, 0.1f, false);
+		Renderer->CreateAnimation("AbsorbFail_Right", "Kirby_Right.png", 50, 51, 0.1f, false);
+		Renderer->CreateAnimation("Idle_Absorb_Right", "Kirby_Right.png", 41, 41, 0.1f, true);
+		//Renderer->CreateAnimation("Idle_Absorb_SlopeUp_Right", "Kirby_Right.png", 41, 41, 0.1f, true);
+		//Renderer->CreateAnimation("Idle_Absorb_SlopeDown_Right", "Kirby_Right.png", 41, 41, 0.1f, true);
+		//Renderer->CreateAnimation("Idle_Absorb_ScarpUp_Right", "Kirby_Right.png", 41, 41, 0.1f, true);
+		//Renderer->CreateAnimation("Idle_Absorb_ScarpDown_Right", "Kirby_Right.png", 41, 41, 0.1f, true);
+		Renderer->CreateAnimation("Run_Absorb_Right", "Kirby_Right.png", 42, 44, 0.1f, true);
+		Renderer->CreateAnimation("Dash_Absorb_Right", "Kirby_Right.png", 42, 44, 0.05f, true);
+		//Renderer->CreateAnimation("Jump_Absorb_Right", "Kirby_Right.png", 23, 23, 0.1f, true);
+		//Renderer->CreateAnimation("Fall_Absorb_Right", "Kirby_Right.png", 27, 27, 0.1f, false);
+		Renderer->CreateAnimation("Digest_Right", "Kirby_Right.png", 45, 47, 0.1f, false);
+		Renderer->CreateAnimation("Spit_Right", "Kirby_Right.png", 48, 51, 0.1f, true);
 		Renderer->CreateAnimation("Door_Right", "Kirby_Right.png", 16, 18, 0.1f, false);
 
 		Renderer->CreateAnimation("Idle_Left", "Kirby_Left.png", 0, 1, 0.5f, true);
@@ -69,8 +82,8 @@ void APlayer::BeginPlay()
 		Renderer->CreateAnimation("Run_ScarpUp_Left", "Kirby_Left.png", 16, 19, 0.1f, true);
 		Renderer->CreateAnimation("Run_ScarpDown_Left", "Kirby_Left.png", 20, 20, 0.1f, true);
 		Renderer->CreateAnimation("Dash_Left", "Kirby_Left.png", 2, 5, 0.07f, true);
-		Renderer->CreateAnimation("Dash_ScarpUp_Left", "Kirby_Left.png", 16, 19, 0.07f, true);
-		Renderer->CreateAnimation("Dash_ScarpDown_Left", "Kirby_Left.png", 20, 20, 0.07f, true);
+		Renderer->CreateAnimation("Dash_ScarpUp_Left", "Kirby_Left.png", 16, 19, 0.05f, true);
+		Renderer->CreateAnimation("Dash_ScarpDown_Left", "Kirby_Left.png", 20, 20, 0.05f, true);
 		Renderer->CreateAnimation("Break_Right", "Kirby_Left.png", 6, 6, 0.15f, false);
 		Renderer->CreateAnimation("Jump_Left", "Kirby_Left.png", 23, 23, 0.1f, true);
 		Renderer->CreateAnimation("Breakfall_Left", "Kirby_Left.png", 24, 27, 0.07f, false);
@@ -85,13 +98,30 @@ void APlayer::BeginPlay()
 		Renderer->CreateAnimation("Absorb_Fly_Left", "Kirby_Left.png", 29, 32, 0.1f, false);
 		Renderer->CreateAnimation("Fly_Left", "Kirby_Left.png", 33, 34, 0.5f, true);
 		Renderer->CreateAnimation("Spit_Fly_Left", "Kirby_Left.png", 35, 38, 0.1f, false);
+		Renderer->CreateAnimation("Absorb_Left", "Kirby_Left.png", 39, 40, 0.1f, false);
+		Renderer->CreateAnimation("AbsorbFail_Left", "Kirby_Left.png", 50, 51, 0.1f, false);
+		Renderer->CreateAnimation("Idle_Absorb_Left", "Kirby_Left.png", 41, 41, 0.1f, true);
+		//Renderer->CreateAnimation("Idle_Absorb_SlopeUp_Right", "Kirby_Right.png", 41, 41, 0.1f, true);
+		//Renderer->CreateAnimation("Idle_Absorb_SlopeDown_Right", "Kirby_Right.png", 41, 41, 0.1f, true);
+		//Renderer->CreateAnimation("Idle_Absorb_ScarpUp_Right", "Kirby_Right.png", 41, 41, 0.1f, true);
+		//Renderer->CreateAnimation("Idle_Absorb_ScarpDown_Right", "Kirby_Right.png", 41, 41, 0.1f, true);
+		Renderer->CreateAnimation("Run_Absorb_Left", "Kirby_Left.png", 42, 44, 0.1f, true);
+		Renderer->CreateAnimation("Dash_Absorb_Left", "Kirby_Left.png", 42, 44, 0.05f, true);
+		//Renderer->CreateAnimation("Jump_Absorb_Right", "Kirby_Right.png", 23, 23, 0.1f, true);
+		//Renderer->CreateAnimation("Fall_Absorb_Right", "Kirby_Right.png", 27, 27, 0.1f, false);
+		Renderer->CreateAnimation("Digest_Left", "Kirby_Left.png", 45, 47, 0.1f, false);
+		Renderer->CreateAnimation("Spit_Left", "Kirby_Left.png", 48, 51, 0.1f, true);
 		Renderer->CreateAnimation("Door_Left", "Kirby_Right.png", 16, 18, 0.1f, false);
 	}
-
 	{
 		BodyCollision = CreateCollision(KirbyCollisionOrder::Player);
 		BodyCollision->SetColType(ECollisionType::Rect);
-		BodyCollision->SetTransform({ {0, -32}, { 64, 64 } });
+		BodyCollision->SetTransform({ {0, -25}, { 50, 50 } });
+
+		AbsorbCollision = CreateCollision(KirbyCollisionOrder::PlayerAbility);
+		AbsorbCollision->SetColType(ECollisionType::Rect);
+		AbsorbCollision->SetScale({ 100, 60 });
+		AbsorbCollision->ActiveOff();
 	}
 
 	StateChange(EPlayState::Idle);
@@ -219,7 +249,7 @@ void APlayer::GroundTypeCheck()
 
 bool APlayer::IsGroundCheck(FVector _Pos)
 {
-	Color8Bit Color = UContentsHelper::ColMapImage->GetColor(_Pos.iX(), _Pos.iY(), Color8Bit::MagentaA);
+	Color8Bit Color = UContentsHelper::ColMapImage->GetColor(_Pos.iX(), _Pos.iY(), Color8Bit::WhiteA);
 	if (
 		Color == Color8Bit(255, 0, 255, 0) ||
 		Color == Color8Bit(0, 255, 255, 0) ||
@@ -232,6 +262,17 @@ bool APlayer::IsGroundCheck(FVector _Pos)
 	{
 		return false;
 	}
+}
+
+bool APlayer::IsCeilingCheck(FVector _Pos)
+{
+	Color8Bit Color = UContentsHelper::ColMapImage->GetColor(_Pos.iX(), _Pos.iY(), Color8Bit::WhiteA);
+	if (Color == Color8Bit::WhiteA)
+	{
+		return true;
+	}
+
+	return false;
 }
 
 bool APlayer::IsWallCheck()
@@ -357,6 +398,15 @@ void APlayer::StateUpdate(float _DeltaTime)
 	case EPlayState::SpitFly:
 		SpitFly(_DeltaTime);
 		break;
+	case EPlayState::Absorb:
+		Absorb(_DeltaTime);
+		break;
+	case EPlayState::Digest:
+		Digest(_DeltaTime);
+		break;
+	case EPlayState::Spit:
+		Spit(_DeltaTime);
+		break;
 	case EPlayState::Door:
 		Door(_DeltaTime);
 		break;
@@ -403,6 +453,15 @@ void APlayer::StateChange(EPlayState _State)
 			break;
 		case EPlayState::SpitFly:
 			SpitFlyStart();
+			break;
+		case EPlayState::Absorb:
+			AbsorbStart();
+			break;
+		case EPlayState::Digest:
+			DigestStart();
+			break;
+		case EPlayState::Spit:
+			SpitStart();
 			break;
 		case EPlayState::Door:
 			DoorStart();
@@ -518,6 +577,12 @@ void APlayer::Idle(float _DeltaTime)
 		}
 	}
 
+	if (UEngineInput::IsDown('Z'))
+	{
+		StateChange(EPlayState::Absorb);
+		return;
+	}
+
 	if (UEngineInput::IsDown('X'))
 	{
 		StateChange(EPlayState::Jump);
@@ -602,6 +667,12 @@ void APlayer::Run(float _DeltaTime)
 	if (UEngineInput::IsDoubleClick(VK_LEFT, 1.0f) || UEngineInput::IsDoubleClick(VK_RIGHT, 1.0f))
 	{
 		StateChange(EPlayState::Dash);
+		return;
+	}
+
+	if (UEngineInput::IsDown('Z'))
+	{
+		StateChange(EPlayState::Absorb);
 		return;
 	}
 
@@ -719,6 +790,12 @@ void APlayer::Dash(float _DeltaTime)
 		}
 	}
 
+	if (UEngineInput::IsDown('Z'))
+	{
+		StateChange(EPlayState::Absorb);
+		return;
+	}
+
 	if (UEngineInput::IsDown('X'))
 	{
 		StateChange(EPlayState::Jump);
@@ -782,6 +859,15 @@ void APlayer::Jump(float _DeltaTime)
 {
 	DirCheck();
 
+	FVector CheckPos = { GetActorLocation().iX(), GetActorLocation().iY() - 30 };
+
+	if (IsCeilingCheck(CheckPos) == true)
+	{
+		JumpTimer = 0.3f;
+		StateChange(EPlayState::Fall);
+		return;
+	}
+
 	if ((JumpVector.Y + GravityVector.Y > 0.0f) || (JumpTimer < 0.0f))
 	{
 		JumpTimer = 0.3f;
@@ -797,6 +883,12 @@ void APlayer::Jump(float _DeltaTime)
 	if (UEngineInput::IsPress(VK_RIGHT))
 	{
 		AddMoveVector(FVector::Right * _DeltaTime);
+	}
+
+	if (UEngineInput::IsDown('Z'))
+	{
+		StateChange(EPlayState::Absorb);
+		return;
 	}
 
 	if (UEngineInput::IsFree('X'))
@@ -861,6 +953,12 @@ void APlayer::Breakfall(float _DeltaTime)
 			StateChange(EPlayState::Run);
 			return;
 		}
+	}
+
+	if (UEngineInput::IsDown('Z'))
+	{
+		StateChange(EPlayState::Absorb);
+		return;
 	}
 
 	if (UEngineInput::IsPress(VK_LEFT))
@@ -958,14 +1056,9 @@ void APlayer::Crouch(float _DeltaTime)
 		return;
 	}
 
-	if (UEngineInput::IsDown('X'))
+	if (UEngineInput::IsDown('X') || UEngineInput::IsDown('Z'))
 	{
 
-	}
-
-	if (UEngineInput::IsDown('Z'))
-	{
-		
 	}
 
 	MoveUpdate(_DeltaTime);
@@ -1012,6 +1105,13 @@ void APlayer::Squeeze(float _DeltaTime)
 void APlayer::Fly(float _DeltaTime)
 {
 	DirCheck();
+
+	FVector CheckPos = { GetActorLocation().iX(), GetActorLocation().iY() - 70 };
+	if (IsCeilingCheck(CheckPos))
+	{
+		JumpVector = FVector::Zero;
+		GravityVector = FVector::Zero;
+	}
 
 	if (UEngineInput::IsDown('Z'))
 	{
@@ -1102,11 +1202,65 @@ void APlayer::SpitFly(float _DeltaTime)
 	MoveUpdate(_DeltaTime, true, true, false);
 }
 
+void APlayer::Absorb(float _DeltaTime)
+{
+	FVector Pos = { GetActorLocation().iX(), GetActorLocation().iY() };
+
+	std::vector<UCollision*> Result;
+	if (AbsorbCollision->CollisionCheck(KirbyCollisionOrder::Monster, Result) == true)
+	{
+		UCollision* Collision = Result[0];
+		AActor* Ptr = Collision->GetOwner();
+		APlayer* Player = dynamic_cast<APlayer*>(Ptr);
+
+		IsAbsorb = true;
+		StateChange(EPlayState::Idle);
+		return;
+	}
+
+	if (UEngineInput::IsFree('Z'))
+	{
+		AbsorbCollision->ActiveOff();
+		Renderer->ChangeAnimation(GetAnimationName("AbsorbFail"));
+		if (Renderer->IsCurAnimationEnd())
+		{
+			if (IsGroundCheck(Pos) == true)
+			{
+				StateChange(EPlayState::Idle);
+				return;
+			}
+			else
+			{
+				StateChange(EPlayState::Breakfall);
+				return;
+			}
+		}
+	}
+
+	if (IsGroundCheck(Pos) == true)
+	{
+		JumpVector = FVector::Zero;
+		GravityVector = FVector::Zero;
+	}
+
+	MoveUpdate(_DeltaTime, true, true, false);
+}
+
+void APlayer::Digest(float _DeltaTime)
+{
+
+}
+
+void APlayer::Spit(float _DeltaTime)
+{
+
+}
+
 void APlayer::Door(float _DeltaTime)
 {
 	if (Renderer->IsCurAnimationEnd())
 	{
-		GEngine->ChangeLevel("Stage113");
+		GEngine->ChangeLevel("Level112");
 		return;
 	}
 }
@@ -1115,25 +1269,51 @@ void APlayer::IdleStart()
 {
 	GroundTypeCheck();
 
-	if (GroundType == EGroundType::Flat)
+	if (IsAbsorb = false)
 	{
-		Renderer->ChangeAnimation(GetAnimationName("Idle"));
+		if (GroundType == EGroundType::Flat)
+		{
+			Renderer->ChangeAnimation(GetAnimationName("Idle"));
+		}
+		else if (GroundType == EGroundType::SlopeUp)
+		{
+			Renderer->ChangeAnimation(GetAnimationName("Idle_SlopeUp"));
+		}
+		else if (GroundType == EGroundType::SlopeDown)
+		{
+			Renderer->ChangeAnimation(GetAnimationName("Idle_SlopeDown"));
+		}
+		else if (GroundType == EGroundType::ScarpUp)
+		{
+			Renderer->ChangeAnimation(GetAnimationName("Idle_ScarpUp"));
+		}
+		else if (GroundType == EGroundType::ScarpDown)
+		{
+			Renderer->ChangeAnimation(GetAnimationName("Idle_ScarpDown"));
+		}
 	}
-	else if (GroundType == EGroundType::SlopeUp)
+	else
 	{
-		Renderer->ChangeAnimation(GetAnimationName("Idle_SlopeUp"));
-	}
-	else if (GroundType == EGroundType::SlopeDown)
-	{
-		Renderer->ChangeAnimation(GetAnimationName("Idle_SlopeDown"));
-	}
-	else if (GroundType == EGroundType::ScarpUp)
-	{
-		Renderer->ChangeAnimation(GetAnimationName("Idle_ScarpUp"));
-	}
-	else if (GroundType == EGroundType::ScarpDown)
-	{
-		Renderer->ChangeAnimation(GetAnimationName("Idle_ScarpDown"));
+		if (GroundType == EGroundType::Flat)
+		{
+			Renderer->ChangeAnimation(GetAnimationName("Idle_Absorb"));
+		}
+		else if (GroundType == EGroundType::SlopeUp)
+		{
+			//Renderer->ChangeAnimation(GetAnimationName("Idle_SlopeUp"));
+		}
+		else if (GroundType == EGroundType::SlopeDown)
+		{
+			//Renderer->ChangeAnimation(GetAnimationName("Idle_SlopeDown"));
+		}
+		else if (GroundType == EGroundType::ScarpUp)
+		{
+			//Renderer->ChangeAnimation(GetAnimationName("Idle_ScarpUp"));
+		}
+		else if (GroundType == EGroundType::ScarpDown)
+		{
+			//Renderer->ChangeAnimation(GetAnimationName("Idle_ScarpDown"));
+		}
 	}
 
 	DashOff();
@@ -1270,6 +1450,46 @@ void APlayer::SpitFlyStart()
 	DirCheck();
 }
 
+void APlayer::AbsorbStart()
+{
+	Renderer->ChangeAnimation(GetAnimationName("Absorb"));
+	DashOff();
+
+	FVector AddPos;
+
+	DirCheck();
+	switch (DirState)
+	{
+	case EActorDir::Left:
+		AddPos.X = -65;
+		break;
+	case EActorDir::Right:
+		AddPos.X = 65;
+		break;
+	default:
+		break;
+	}
+	AddPos.Y = -30;
+
+	AbsorbCollision->SetPosition(AddPos);
+	AbsorbCollision->GetActorBaseTransform();
+	AbsorbCollision->ActiveOn();
+}
+
+void APlayer::DigestStart()
+{
+	Renderer->ChangeAnimation(GetAnimationName("Digest"));
+	DashOff();
+	DirCheck();
+}
+
+void APlayer::SpitStart()
+{
+	Renderer->ChangeAnimation(GetAnimationName("Spit"));
+	DashOff();
+	DirCheck();
+}
+
 void APlayer::DoorStart()
 {
 	Renderer->ChangeAnimation(GetAnimationName("Door"));
@@ -1288,7 +1508,10 @@ void APlayer::CalMoveVector(float _DeltaTime)
 		MoveVector = FVector::Zero;
 	}
 
-	if (UEngineInput::IsFree(VK_LEFT) == true && UEngineInput::IsFree(VK_RIGHT) == true)
+	if (
+		State == EPlayState::Absorb ||
+		(UEngineInput::IsFree(VK_LEFT) == true && UEngineInput::IsFree(VK_RIGHT) == true)
+		)
 	{
 		if (MoveVector.Size2D() >= 0.001)
 		{

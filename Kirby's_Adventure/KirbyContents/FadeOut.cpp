@@ -18,7 +18,7 @@ void AFadeOut::BeginPlay()
 
 	Renderer = CreateImageRenderer(KirbyRenderOrder::FadeOut);
 	Renderer->SetImage("FadeOut.png");
-	Renderer->SetTransform({ {0,0}, {800, 750} });
+	Renderer->SetTransform({ {0,0}, {1600, 1500} });
 }
 
 void AFadeOut::Tick(float _DeltaTime)

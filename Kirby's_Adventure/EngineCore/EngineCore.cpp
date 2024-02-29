@@ -133,6 +133,18 @@ void UEngineCore::ChangeLevel(std::string_view _Name)
 	NextLevel = AllLevel[UpperName];
 }
 
+void UEngineCore::DestroyLevel(std::string_view _Name)
+{
+	std::string UpperName = UEngineString::ToUpper(_Name);
+
+	if (AllLevel.contains(UpperName) == false)
+	{
+		MsgBoxAssert(std::string(_Name) + "존재하지 않는 레벨을 파괴할수는 없습니다");
+	}
+
+	DestroyLevelName.push_back(UpperName);
+}
+
 void UEngineCore::BeginPlay()
 {
 

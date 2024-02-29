@@ -1,4 +1,5 @@
 #pragma once
+#include <vector>
 #include <map>
 
 #include <EngineBase\EngineDebug.h>
@@ -47,6 +48,7 @@ public:
 	}
 
 	void ChangeLevel(std::string_view _Name);
+	void DestroyLevel(std::string_view _Name);
 
 	virtual void BeginPlay();
 	virtual void Tick(float _DeltaTime);
@@ -73,6 +75,7 @@ private:
 	float CurFrameTime = 0.0f;
 	ULevel* CurLevel = nullptr;
 	ULevel* NextLevel = nullptr;
+	std::vector<std::string> DestroyLevelName;
 	std::map<std::string, ULevel*> AllLevel;
 
 	void CoreTick();
