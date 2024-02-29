@@ -810,10 +810,18 @@ void APlayer::Jump(float _DeltaTime)
 		MoveUpdate(_DeltaTime, false, false, false);
 	}
 
-	if (UEngineInput::IsPress(VK_UP))
+	if (UEngineInput::IsDown(VK_UP))
 	{
-		StateChange(EPlayState::Fly);
-		return;
+		if (IsDoorCheck())
+		{
+			StateChange(EPlayState::Door);
+			return;
+		}
+		else
+		{
+			StateChange(EPlayState::Fly);
+			return;
+		}
 	}
 }
 
@@ -865,10 +873,18 @@ void APlayer::Breakfall(float _DeltaTime)
 		AddMoveVector(FVector::Right * _DeltaTime);
 	}
 
-	if (UEngineInput::IsPress(VK_UP))
+	if (UEngineInput::IsDown(VK_UP))
 	{
-		StateChange(EPlayState::Fly);
-		return;
+		if (IsDoorCheck())
+		{
+			StateChange(EPlayState::Door);
+			return;
+		}
+		else
+		{
+			StateChange(EPlayState::Fly);
+			return;
+		}
 	}
 
     MoveUpdate(_DeltaTime, true, false, false);
@@ -878,10 +894,18 @@ void APlayer::Fall(float _DeltaTime)
 {
 	DirCheck();
 
-	if (UEngineInput::IsPress(VK_UP))
+	if (UEngineInput::IsDown(VK_UP))
 	{
-		StateChange(EPlayState::Fly);
-		return;
+		if (IsDoorCheck())
+		{
+			StateChange(EPlayState::Door);
+			return;
+		}
+		else
+		{
+			StateChange(EPlayState::Fly);
+			return;
+		}
 	}
 
 	GroundTypeCheck();
@@ -1012,8 +1036,16 @@ void APlayer::Fly(float _DeltaTime)
 
 	if (UEngineInput::IsDown(VK_UP))
 	{
-		JumpVector = FVector::Up * 300.0f;
-		GravityVector = FVector::Zero;
+		if (IsDoorCheck())
+		{
+			StateChange(EPlayState::SpitFly);
+			return;
+		}
+		else
+		{
+			JumpVector = FVector::Up * 300.0f;
+			GravityVector = FVector::Zero;
+		}
 	}
 
 	if (UEngineInput::IsFree(VK_UP))
@@ -1055,8 +1087,16 @@ void APlayer::SpitFly(float _DeltaTime)
 
 	if (UEngineInput::IsDown(VK_UP))
 	{
-		StateChange(EPlayState::Fly);
-		return;
+		if (IsDoorCheck())
+		{
+			StateChange(EPlayState::Door);
+			return;
+		}
+		else
+		{
+			StateChange(EPlayState::Fly);
+			return;
+		}
 	}
 
 	MoveUpdate(_DeltaTime, true, true, false);

@@ -38,6 +38,10 @@ void UStage113::LevelStart(ULevel* _Level)
 
 		AHUD* HUD = SpawnActor<AHUD>();
 
+		APlayer* Kirby = SpawnActor<APlayer>();
+		Kirby->SetName("Kirby");
+		Kirby->SetActorLocation({ 200, 200 });
+
 		Fade = SpawnActor<AFadeOut>();
 		Fade->SetActorLocation({ 400, 375 });
 	}
