@@ -9,7 +9,6 @@
 #include "Player.h"
 #include "Monster.h"
 #include "FadeOut.h"
-#include "Stage113.h"
 
 UStage112::UStage112()
 {
@@ -71,8 +70,6 @@ void UStage112::BeginPlay()
 		Fade->SetActive(true, 0.5f);
 		Fade->FadeStart(FadeOption::FadeIn);
 	}
-
-	GEngine->CreateLevel<UStage113>("Stage113");
 }
 
 void UStage112::Tick(float _DeltaTime)

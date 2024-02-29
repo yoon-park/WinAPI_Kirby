@@ -3,6 +3,7 @@
 #include <EnginePlatform\EngineInput.h>
 #include "TitleLevel.h"
 #include "Stage112.h"
+#include "Stage113.h"
 
 UContentsCore::UContentsCore()
 {
@@ -23,6 +24,7 @@ void UContentsCore::BeginPlay()
 
 	CreateLevel<UTitleLevel>("TitleLevel");
 	CreateLevel<UStage112>("Stage112");
+	CreateLevel<UStage113>("Stage113");
 
 	ChangeLevel("Stage112");
 }

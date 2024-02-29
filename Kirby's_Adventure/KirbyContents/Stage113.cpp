@@ -22,7 +22,15 @@ UStage113::~UStage113()
 void UStage113::BeginPlay()
 {
 	ULevel::BeginPlay();
+}
 
+void UStage113::Tick(float _DeltaTime)
+{
+
+}
+
+void UStage113::LevelStart(ULevel* _Level)
+{
 	{
 		ABackGroundMap* Map = SpawnActor<ABackGroundMap>();
 		Map->SetMapImage("Stage1-3.png");
@@ -33,16 +41,6 @@ void UStage113::BeginPlay()
 		Fade = SpawnActor<AFadeOut>();
 		Fade->SetActorLocation({ 400, 375 });
 	}
-}
-
-void UStage113::Tick(float _DeltaTime)
-{
-
-}
-
-void UStage113::LevelStart(ULevel* _Level)
-{
-
 }
 
 void UStage113::LevelEnd(ULevel* _Level)
