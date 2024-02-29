@@ -44,6 +44,8 @@ void UStage113::LevelStart(ULevel* _Level)
 
 		Fade = SpawnActor<AFadeOut>();
 		Fade->SetActorLocation({ 400, 375 });
+		Fade->SetActive(true, 0.5f);
+		Fade->FadeStart(FadeOption::FadeIn);
 	}
 }
 
