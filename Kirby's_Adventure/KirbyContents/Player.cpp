@@ -65,9 +65,9 @@ void APlayer::BeginPlay()
 		//Renderer->CreateAnimation("Idle_Absorb_SlopeDown_Right", "Kirby_Right.png", 41, 41, 0.1f, true);
 		//Renderer->CreateAnimation("Idle_Absorb_ScarpUp_Right", "Kirby_Right.png", 41, 41, 0.1f, true);
 		//Renderer->CreateAnimation("Idle_Absorb_ScarpDown_Right", "Kirby_Right.png", 41, 41, 0.1f, true);
-		Renderer->CreateAnimation("Run_Absorb_Right", "Kirby_Right.png", 42, 44, 0.1f, true);
-		Renderer->CreateAnimation("Dash_Absorb_Right", "Kirby_Right.png", 42, 44, 0.05f, true);
-		//Renderer->CreateAnimation("Jump_Absorb_Right", "Kirby_Right.png", 23, 23, 0.1f, true);
+		Renderer->CreateAnimation("Run_Absorb_Right", "Kirby_Right.png", 42, 44, 0.15f, true);
+		Renderer->CreateAnimation("Dash_Absorb_Right", "Kirby_Right.png", 42, 44, 0.1f, true);
+		Renderer->CreateAnimation("Breakfall_Absorb_Right", "Kirby_Right.png", 42, 42, 0.07f, false);
 		//Renderer->CreateAnimation("Fall_Absorb_Right", "Kirby_Right.png", 27, 27, 0.1f, false);
 		Renderer->CreateAnimation("Digest_Right", "Kirby_Right.png", 45, 47, 0.1f, false);
 		Renderer->CreateAnimation("Spit_Right", "Kirby_Right.png", 48, 51, 0.1f, true);
@@ -105,9 +105,9 @@ void APlayer::BeginPlay()
 		//Renderer->CreateAnimation("Idle_Absorb_SlopeDown_Right", "Kirby_Right.png", 41, 41, 0.1f, true);
 		//Renderer->CreateAnimation("Idle_Absorb_ScarpUp_Right", "Kirby_Right.png", 41, 41, 0.1f, true);
 		//Renderer->CreateAnimation("Idle_Absorb_ScarpDown_Right", "Kirby_Right.png", 41, 41, 0.1f, true);
-		Renderer->CreateAnimation("Run_Absorb_Left", "Kirby_Left.png", 42, 44, 0.1f, true);
-		Renderer->CreateAnimation("Dash_Absorb_Left", "Kirby_Left.png", 42, 44, 0.05f, true);
-		//Renderer->CreateAnimation("Jump_Absorb_Right", "Kirby_Right.png", 23, 23, 0.1f, true);
+		Renderer->CreateAnimation("Run_Absorb_Left", "Kirby_Left.png", 42, 44, 0.15f, true);
+		Renderer->CreateAnimation("Dash_Absorb_Left", "Kirby_Left.png", 42, 44, 0.1f, true);
+		Renderer->CreateAnimation("Breakfall_Absorb_Left", "Kirby_Left.png", 42, 42, 0.07f, false);
 		//Renderer->CreateAnimation("Fall_Absorb_Right", "Kirby_Right.png", 27, 27, 0.1f, false);
 		Renderer->CreateAnimation("Digest_Left", "Kirby_Left.png", 45, 47, 0.1f, false);
 		Renderer->CreateAnimation("Spit_Left", "Kirby_Left.png", 48, 51, 0.1f, true);
@@ -577,34 +577,57 @@ void APlayer::Idle(float _DeltaTime)
 		}
 	}
 
-	if (UEngineInput::IsDown('Z'))
-	{
-		StateChange(EPlayState::Absorb);
-		return;
-	}
-
 	if (UEngineInput::IsDown('X'))
 	{
 		StateChange(EPlayState::Jump);
 		return;
 	}
 
-	if (UEngineInput::IsPress(VK_DOWN))
+	if (IsAbsorb == false)
 	{
-		StateChange(EPlayState::Crouch);
-		return;
-	}
-
-	if (UEngineInput::IsDown(VK_UP))
-	{
-		if (IsDoorCheck())
+		if (UEngineInput::IsDown('Z'))
 		{
-			StateChange(EPlayState::Door);
+			StateChange(EPlayState::Absorb);
 			return;
 		}
-		else
+
+		if (UEngineInput::IsPress(VK_DOWN))
 		{
-			StateChange(EPlayState::Fly);
+			StateChange(EPlayState::Crouch);
+			return;
+		}
+
+		if (UEngineInput::IsDown(VK_UP))
+		{
+			if (IsDoorCheck())
+			{
+				StateChange(EPlayState::Door);
+				return;
+			}
+			else
+			{
+				StateChange(EPlayState::Fly);
+				return;
+			}
+		}
+	}
+	else
+	{
+		if (UEngineInput::IsDown('Z'))
+		{
+			StateChange(EPlayState::Spit);
+			return;
+		}
+
+		if (UEngineInput::IsDown(VK_DOWN))
+		{
+			StateChange(EPlayState::Digest);
+			return;
+		}
+
+		if (UEngineInput::IsDown(VK_UP) && IsDoorCheck())
+		{
+			StateChange(EPlayState::Spit);
 			return;
 		}
 	}
@@ -624,27 +647,62 @@ void APlayer::Run(float _DeltaTime)
 		if (GroundType == EGroundType::Flat)
 		{
 			MoveMaxSpeed = 300.0f;
-			Renderer->ChangeAnimation(GetAnimationName("Run"));
+			if (IsAbsorb == false)
+			{
+				Renderer->ChangeAnimation(GetAnimationName("Run"));
+			}
+			else
+			{
+				Renderer->ChangeAnimation(GetAnimationName("Run_Absorb"));
+			}
 		}
 		else if (GroundType == EGroundType::SlopeUp)
 		{
 			MoveMaxSpeed = 200.0f;
-			Renderer->ChangeAnimation(GetAnimationName("Run"));
+			if (IsAbsorb == false)
+			{
+				Renderer->ChangeAnimation(GetAnimationName("Run"));
+			}
+			else
+			{
+				Renderer->ChangeAnimation(GetAnimationName("Run_Absorb"));
+			}
 		}
 		else if (GroundType == EGroundType::SlopeDown)
 		{
 			MoveMaxSpeed = 350.0f;
-			Renderer->ChangeAnimation(GetAnimationName("Run"));
+			if (IsAbsorb == false)
+			{
+				Renderer->ChangeAnimation(GetAnimationName("Run"));
+			}
+			else
+			{
+				Renderer->ChangeAnimation(GetAnimationName("Run_Absorb"));
+			}
 		}
 		else if (GroundType == EGroundType::ScarpUp)
 		{
 			MoveMaxSpeed = 100.0f;
-			Renderer->ChangeAnimation(GetAnimationName("Run_ScarpUp"));
+			if (IsAbsorb == false)
+			{
+				Renderer->ChangeAnimation(GetAnimationName("Run_ScarpUp"));
+			}
+			else
+			{
+				Renderer->ChangeAnimation(GetAnimationName("Run_Absorb"));
+			}
 		}
 		else if (GroundType == EGroundType::ScarpDown)
 		{
 			MoveMaxSpeed = 400.0f;
-			Renderer->ChangeAnimation(GetAnimationName("Run_ScarpDown"));
+			if (IsAbsorb == false)
+			{
+				Renderer->ChangeAnimation(GetAnimationName("Run_ScarpDown"));
+			}
+			else
+			{
+				Renderer->ChangeAnimation(GetAnimationName("Idle_Absorb_ScarpDown"));
+			}
 		}
 	}
 	
@@ -656,7 +714,7 @@ void APlayer::Run(float _DeltaTime)
 
 	if (UEngineInput::IsFree(VK_LEFT) && UEngineInput::IsFree(VK_RIGHT))
 	{
-		if (MoveVector.Size2D() <= 0.05f)
+		if (MoveVector.Size2D() <= 0.07f)
 		{
 			Renderer->ChangeAnimation(GetAnimationName("Idle"));
 			StateChange(EPlayState::Idle);
@@ -670,64 +728,79 @@ void APlayer::Run(float _DeltaTime)
 		return;
 	}
 
-	if (UEngineInput::IsDown('Z'))
-	{
-		StateChange(EPlayState::Absorb);
-		return;
-	}
-
 	if (UEngineInput::IsDown('X'))
 	{
 		StateChange(EPlayState::Jump);
 		return;
 	}
 
-	if (UEngineInput::IsPress(VK_LEFT))
+	if (UEngineInput::IsDown(VK_LEFT) || UEngineInput::IsDown(VK_RIGHT))
 	{
-		if (DirState == PrevDir)
-		{
-			AddMoveVector(FVector::Left * _DeltaTime);
-		}
-		else
+		if (DirState != PrevDir)
 		{
 			MoveVector = FVector::Zero;
 			StateChange(EPlayState::Break);
 			return;
 		}
+	}
+
+	if (IsAbsorb == false)
+	{
+		if (UEngineInput::IsDown('Z'))
+		{
+			StateChange(EPlayState::Absorb);
+			return;
+		}
+
+		if (UEngineInput::IsPress(VK_DOWN))
+		{
+			StateChange(EPlayState::Crouch);
+			return;
+		}
+
+		if (UEngineInput::IsDown(VK_UP))
+		{
+			if (IsDoorCheck())
+			{
+				StateChange(EPlayState::Door);
+				return;
+			}
+			else
+			{
+				StateChange(EPlayState::Fly);
+				return;
+			}
+		}
+	}
+	else
+	{
+		if (UEngineInput::IsDown('Z'))
+		{
+			StateChange(EPlayState::Spit);
+			return;
+		}
+
+		if (UEngineInput::IsDown(VK_DOWN))
+		{
+			StateChange(EPlayState::Digest);
+			return;
+		}
+
+		if (UEngineInput::IsDown(VK_UP) && IsDoorCheck())
+		{
+			StateChange(EPlayState::Spit);
+			return;
+		}
+	}
+
+	if (UEngineInput::IsPress(VK_LEFT))
+	{
+		AddMoveVector(FVector::Left * _DeltaTime);
 	}
 
 	if (UEngineInput::IsPress(VK_RIGHT))
 	{
-		if (DirState == PrevDir)
-		{
-			AddMoveVector(FVector::Right * _DeltaTime);
-		}
-		else
-		{
-			MoveVector = FVector::Zero;
-			StateChange(EPlayState::Break);
-			return;
-		}
-	}
-
-	if (UEngineInput::IsPress(VK_DOWN))
-	{
-		StateChange(EPlayState::Crouch);
-		return;
-	}
-
-	if (UEngineInput::IsDown(VK_UP))
-	{
-		if (IsDoorCheck())
-		{
-			StateChange(EPlayState::Door);
-			return;
-		}
-		else
-		{
-			StateChange(EPlayState::Fly);
-			return;
-		}
+		AddMoveVector(FVector::Right * _DeltaTime);
 	}
 
 	MoveUpdate(_DeltaTime, true, true, true);
@@ -742,27 +815,63 @@ void APlayer::Dash(float _DeltaTime)
 	if (GroundType == EGroundType::Flat)
 	{
 		MoveMaxSpeed = 400.0f;
-		Renderer->ChangeAnimation(GetAnimationName("Dash"));
+		if (IsAbsorb == false)
+		{
+			Renderer->ChangeAnimation(GetAnimationName("Dash"));
+		}
+		else
+		{
+			Renderer->ChangeAnimation(GetAnimationName("Dash_Absorb"));
+		}
 	}
 	else if (GroundType == EGroundType::SlopeUp)
 	{
 		MoveMaxSpeed = 300.0f;
-		Renderer->ChangeAnimation(GetAnimationName("Dash"));
+		if (IsAbsorb == false)
+		{
+			Renderer->ChangeAnimation(GetAnimationName("Dash"));
+		}
+		else
+		{
+			Renderer->ChangeAnimation(GetAnimationName("Dash_Absorb"));
+		}
 	}
 	else if (GroundType == EGroundType::SlopeDown)
 	{
 		MoveMaxSpeed = 450.0f;
-		Renderer->ChangeAnimation(GetAnimationName("Dash"));
+		if (IsAbsorb == false)
+		{
+			Renderer->ChangeAnimation(GetAnimationName("Dash"));
+		}
+		else
+		{
+			Renderer->ChangeAnimation(GetAnimationName("Dash_Absorb"));
+		}
 	}
 	else if (GroundType == EGroundType::ScarpUp)
 	{
 		MoveMaxSpeed = 200.0f;
-		Renderer->ChangeAnimation(GetAnimationName("Dash_ScarpUp"));
+		if (IsAbsorb == false)
+		{
+			Renderer->ChangeAnimation(GetAnimationName("Dash_ScarpUp"));
+		}
+		else
+		{
+			Renderer->ChangeAnimation(GetAnimationName("Dash_Absorb"));
+		}
 	}
 	else if (GroundType == EGroundType::ScarpDown)
 	{
 		MoveMaxSpeed = 500.0f;
-		Renderer->ChangeAnimation(GetAnimationName("Dash_ScarpDown"));
+		if (IsAbsorb == false)
+		{
+			Renderer->ChangeAnimation(GetAnimationName("Dash_ScarpDown"));
+		}
+		else
+		{
+			Renderer->ChangeAnimation(GetAnimationName("Dash_Absorb"));
+			// Renderer->ChangeAnimation(GetAnimationName("Idle_Absorb_ScarpDown"));
+		}
 	}
 
 	if (IsWallCheck() == true)
@@ -790,34 +899,57 @@ void APlayer::Dash(float _DeltaTime)
 		}
 	}
 
-	if (UEngineInput::IsDown('Z'))
-	{
-		StateChange(EPlayState::Absorb);
-		return;
-	}
-
 	if (UEngineInput::IsDown('X'))
 	{
 		StateChange(EPlayState::Jump);
 		return;
 	}
 
-	if (UEngineInput::IsPress(VK_DOWN))
+	if (IsAbsorb == false)
 	{
-		StateChange(EPlayState::Crouch);
-		return;
-	}
-
-	if (UEngineInput::IsDown(VK_UP))
-	{
-		if (IsDoorCheck())
+		if (UEngineInput::IsDown('Z'))
 		{
-			StateChange(EPlayState::Door);
+			StateChange(EPlayState::Absorb);
 			return;
 		}
-		else
+
+		if (UEngineInput::IsPress(VK_DOWN))
 		{
-			StateChange(EPlayState::Fly);
+			StateChange(EPlayState::Crouch);
+			return;
+		}
+
+		if (UEngineInput::IsDown(VK_UP))
+		{
+			if (IsDoorCheck())
+			{
+				StateChange(EPlayState::Door);
+				return;
+			}
+			else
+			{
+				StateChange(EPlayState::Fly);
+				return;
+			}
+		}
+	}
+	else
+	{
+		if (UEngineInput::IsDown('Z'))
+		{
+			StateChange(EPlayState::Spit);
+			return;
+		}
+
+		if (UEngineInput::IsDown(VK_DOWN))
+		{
+			StateChange(EPlayState::Digest);
+			return;
+		}
+
+		if (UEngineInput::IsDown(VK_UP) && IsDoorCheck())
+		{
+			StateChange(EPlayState::Spit);
 			return;
 		}
 	}
@@ -885,10 +1017,41 @@ void APlayer::Jump(float _DeltaTime)
 		AddMoveVector(FVector::Right * _DeltaTime);
 	}
 
-	if (UEngineInput::IsDown('Z'))
+	if (IsAbsorb == false)
 	{
-		StateChange(EPlayState::Absorb);
-		return;
+		if (UEngineInput::IsDown('Z'))
+		{
+			StateChange(EPlayState::Absorb);
+			return;
+		}
+
+		if (UEngineInput::IsDown(VK_UP))
+		{
+			if (IsDoorCheck())
+			{
+				StateChange(EPlayState::Door);
+				return;
+			}
+			else
+			{
+				StateChange(EPlayState::Fly);
+				return;
+			}
+		}
+	}
+	else
+	{
+		if (UEngineInput::IsDown('Z'))
+		{
+			StateChange(EPlayState::Spit);
+			return;
+		}
+
+		if (UEngineInput::IsDown(VK_UP) && IsDoorCheck())
+		{
+			StateChange(EPlayState::Spit);
+			return;
+		}
 	}
 
 	if (UEngineInput::IsFree('X'))
@@ -900,20 +1063,6 @@ void APlayer::Jump(float _DeltaTime)
 	{
 		JumpTimer -= _DeltaTime;
 		MoveUpdate(_DeltaTime, false, false, false);
-	}
-
-	if (UEngineInput::IsDown(VK_UP))
-	{
-		if (IsDoorCheck())
-		{
-			StateChange(EPlayState::Door);
-			return;
-		}
-		else
-		{
-			StateChange(EPlayState::Fly);
-			return;
-		}
 	}
 }
 
@@ -937,28 +1086,67 @@ void APlayer::Breakfall(float _DeltaTime)
 		Pos = { GetActorLocation().iX() , GetActorLocation().iY() + 5 };
 	}
 
-	if (IsGroundCheck(Pos) == true)
+	if (IsAbsorb == false)
 	{
-		JumpVector = FVector::Zero;
-		Renderer->ChangeAnimation(GetAnimationName("Crouch"));
-		
-		if (UEngineInput::IsDown('X'))
+		if (IsGroundCheck(Pos) == true)
 		{
-			StateChange(EPlayState::Jump);
+			JumpVector = FVector::Zero;
+
+			Renderer->ChangeAnimation(GetAnimationName("Crouch"));
+
+			if (Renderer->IsCurAnimationEnd() == true)
+			{
+				StateChange(EPlayState::Idle);
+				return;
+			}
+
+			if (UEngineInput::IsDown('X'))
+			{
+				StateChange(EPlayState::Jump);
+				return;
+			}
+		}
+
+		if (UEngineInput::IsDown('Z'))
+		{
+			StateChange(EPlayState::Absorb);
 			return;
 		}
 
-		if (Renderer->IsCurAnimationEnd() == true)
+		if (UEngineInput::IsDown(VK_UP))
 		{
-			StateChange(EPlayState::Run);
-			return;
+			if (IsDoorCheck())
+			{
+				StateChange(EPlayState::Door);
+				return;
+			}
+			else
+			{
+				StateChange(EPlayState::Fly);
+				return;
+			}
 		}
 	}
-
-	if (UEngineInput::IsDown('Z'))
+	else
 	{
-		StateChange(EPlayState::Absorb);
-		return;
+		if (IsGroundCheck(Pos) == true)
+		{
+			JumpVector = FVector::Zero;
+			StateChange(EPlayState::Idle);
+			return;
+		}
+
+		if (UEngineInput::IsDown('Z'))
+		{
+			StateChange(EPlayState::Spit);
+			return;
+		}
+
+		if (UEngineInput::IsDown(VK_UP) && IsDoorCheck())
+		{
+			StateChange(EPlayState::Spit);
+			return;
+		}
 	}
 
 	if (UEngineInput::IsPress(VK_LEFT))
@@ -971,41 +1159,12 @@ void APlayer::Breakfall(float _DeltaTime)
 		AddMoveVector(FVector::Right * _DeltaTime);
 	}
 
-	if (UEngineInput::IsDown(VK_UP))
-	{
-		if (IsDoorCheck())
-		{
-			StateChange(EPlayState::Door);
-			return;
-		}
-		else
-		{
-			StateChange(EPlayState::Fly);
-			return;
-		}
-	}
-
     MoveUpdate(_DeltaTime, true, false, false);
 }
 
 void APlayer::Fall(float _DeltaTime)
 {
 	DirCheck();
-
-	if (UEngineInput::IsDown(VK_UP))
-	{
-		if (IsDoorCheck())
-		{
-			StateChange(EPlayState::Door);
-			return;
-		}
-		else
-		{
-			StateChange(EPlayState::Fly);
-			return;
-		}
-	}
-
 	GroundTypeCheck();
 	FVector Pos;
 
@@ -1023,6 +1182,51 @@ void APlayer::Fall(float _DeltaTime)
 		Pos = { GetActorLocation().iX() , GetActorLocation().iY() + 5 };
 	}
 
+	if (IsAbsorb == false)
+	{
+		if (IsGroundCheck(Pos) == true)
+		{
+			JumpVector = FVector::Zero;
+			Renderer->ChangeAnimation(GetAnimationName("Crashland"));
+
+			if (Renderer->IsCurAnimationEnd() == true)
+			{
+				StateChange(EPlayState::Idle);
+				return;
+			}
+		}
+
+		if (UEngineInput::IsDown(VK_UP))
+		{
+			if (IsDoorCheck())
+			{
+				StateChange(EPlayState::Door);
+				return;
+			}
+			else
+			{
+				StateChange(EPlayState::Fly);
+				return;
+			}
+		}
+	}
+	else
+	{
+		if (IsGroundCheck(Pos) == true)
+		{
+			JumpVector = FVector::Zero;
+
+			StateChange(EPlayState::Idle);
+			return;
+		}
+
+		if (UEngineInput::IsDown(VK_UP) && IsDoorCheck())
+		{
+			StateChange(EPlayState::Door);
+			return;
+		}
+	}
+
 	if (UEngineInput::IsPress(VK_LEFT))
 	{
 		AddMoveVector(FVector::Left * _DeltaTime);
@@ -1031,18 +1235,6 @@ void APlayer::Fall(float _DeltaTime)
 	if (UEngineInput::IsPress(VK_RIGHT))
 	{
 		AddMoveVector(FVector::Right * _DeltaTime);
-	}
-
-	if (IsGroundCheck(Pos) == true)
-	{
-		JumpVector = FVector::Zero;
-		Renderer->ChangeAnimation(GetAnimationName("Crashland"));
-
-		if (Renderer->IsCurAnimationEnd() == true)
-		{
-			StateChange(EPlayState::Run);
-			return;
-		}
 	}
 
 	MoveUpdate(_DeltaTime, true, false, false);
@@ -1066,22 +1258,16 @@ void APlayer::Crouch(float _DeltaTime)
 
 void APlayer::Squeeze(float _DeltaTime)
 {
-	if (Renderer->IsCurAnimationEnd() == true)
-	{
-		Renderer->ChangeAnimation(GetAnimationName("Idle"));
-	}
+	DirCheck();
 
-	if (UEngineInput::IsPress(VK_LEFT))
+	if (IsAbsorb == false)
 	{
-		AddMoveVector(FVector::Left * _DeltaTime);
+		if (Renderer->IsCurAnimationEnd() == true)
+		{
+			StateChange(EPlayState::Idle);
+		}
 	}
-
-	if (UEngineInput::IsPress(VK_RIGHT))
-	{
-		AddMoveVector(FVector::Right * _DeltaTime);
-	}
-
-	if (UEngineInput::IsFree(VK_LEFT) && UEngineInput::IsFree(VK_RIGHT))
+	else
 	{
 		StateChange(EPlayState::Idle);
 		return;
@@ -1090,12 +1276,6 @@ void APlayer::Squeeze(float _DeltaTime)
 	if (UEngineInput::IsDown('X'))
 	{
 		StateChange(EPlayState::Jump);
-		return;
-	}
-
-	if (UEngineInput::IsPress(VK_DOWN))
-	{
-		StateChange(EPlayState::Crouch);
 		return;
 	}
 
@@ -1269,7 +1449,7 @@ void APlayer::IdleStart()
 {
 	GroundTypeCheck();
 
-	if (IsAbsorb = false)
+	if (IsAbsorb == false)
 	{
 		if (GroundType == EGroundType::Flat)
 		{
@@ -1300,19 +1480,23 @@ void APlayer::IdleStart()
 		}
 		else if (GroundType == EGroundType::SlopeUp)
 		{
-			//Renderer->ChangeAnimation(GetAnimationName("Idle_SlopeUp"));
+			Renderer->ChangeAnimation(GetAnimationName("Idle_Absorb"));
+			//Renderer->ChangeAnimation(GetAnimationName("Idle_Absorb_SlopeUp"));
 		}
 		else if (GroundType == EGroundType::SlopeDown)
 		{
-			//Renderer->ChangeAnimation(GetAnimationName("Idle_SlopeDown"));
+			Renderer->ChangeAnimation(GetAnimationName("Idle_Absorb"));
+			//Renderer->ChangeAnimation(GetAnimationName("Idle_Absorb_SlopeDown"));
 		}
 		else if (GroundType == EGroundType::ScarpUp)
 		{
-			//Renderer->ChangeAnimation(GetAnimationName("Idle_ScarpUp"));
+			Renderer->ChangeAnimation(GetAnimationName("Idle_Absorb"));
+			//Renderer->ChangeAnimation(GetAnimationName("Idle_Absorb_ScarpUp"));
 		}
 		else if (GroundType == EGroundType::ScarpDown)
 		{
-			//Renderer->ChangeAnimation(GetAnimationName("Idle_ScarpDown"));
+			Renderer->ChangeAnimation(GetAnimationName("Idle_Absorb"));
+			//Renderer->ChangeAnimation(GetAnimationName("Idle_Absorb_ScarpDown"));
 		}
 	}
 
@@ -1323,45 +1507,87 @@ void APlayer::IdleStart()
 void APlayer::RunStart()
 {
 	GroundTypeCheck();
-	if (
-		GroundType == EGroundType::Flat ||
-		GroundType == EGroundType::SlopeUp ||
-		GroundType == EGroundType::SlopeDown
-		)
+
+	if (IsAbsorb == false)
 	{
-		Renderer->ChangeAnimation(GetAnimationName("Run"));
+		if (
+			GroundType == EGroundType::Flat ||
+			GroundType == EGroundType::SlopeUp ||
+			GroundType == EGroundType::SlopeDown
+			)
+		{
+			Renderer->ChangeAnimation(GetAnimationName("Run"));
+		}
+		else if (GroundType == EGroundType::ScarpUp)
+		{
+			Renderer->ChangeAnimation(GetAnimationName("Run_ScarpUp"));
+		}
+		else if (GroundType == EGroundType::ScarpDown)
+		{
+			Renderer->ChangeAnimation(GetAnimationName("Run_ScarpDown"));
+		}
 	}
-	else if (GroundType == EGroundType::ScarpUp)
+	else
 	{
-		Renderer->ChangeAnimation(GetAnimationName("Run_ScarpUp"));
-	}
-	else if (GroundType == EGroundType::ScarpDown)
-	{
-		Renderer->ChangeAnimation(GetAnimationName("Run_ScarpDown"));
+		if (
+			GroundType == EGroundType::Flat ||
+			GroundType == EGroundType::SlopeUp ||
+			GroundType == EGroundType::SlopeDown ||
+			GroundType == EGroundType::ScarpUp
+			)
+		{
+			Renderer->ChangeAnimation(GetAnimationName("Run_Absorb"));
+		}
+		else if (GroundType == EGroundType::ScarpDown)
+		{
+			Renderer->ChangeAnimation(GetAnimationName("Run_Absorb"));
+			// Renderer->ChangeAnimation(GetAnimationName("Idle_Absorb_ScarpDown"));
+		}
 	}
 
-	DashOff();
 	DirCheck();
+	DashOff();
 }
 
 void APlayer::DashStart()
 {
 	GroundTypeCheck();
-	if (
-		GroundType == EGroundType::Flat ||
-		GroundType == EGroundType::SlopeUp ||
-		GroundType == EGroundType::SlopeDown
-		)
+
+	if (IsAbsorb == false)
 	{
-		Renderer->ChangeAnimation(GetAnimationName("Dash"));
+		if (
+			GroundType == EGroundType::Flat ||
+			GroundType == EGroundType::SlopeUp ||
+			GroundType == EGroundType::SlopeDown
+			)
+		{
+			Renderer->ChangeAnimation(GetAnimationName("Dash"));
+		}
+		else if (GroundType == EGroundType::ScarpUp)
+		{
+			Renderer->ChangeAnimation(GetAnimationName("Dash_ScarpUp"));
+		}
+		else if (GroundType == EGroundType::ScarpDown)
+		{
+			Renderer->ChangeAnimation(GetAnimationName("Dash_ScarpDown"));
+		}
 	}
-	else if (GroundType == EGroundType::ScarpUp)
+	else
 	{
-		Renderer->ChangeAnimation(GetAnimationName("Dash_ScarpUp"));
-	}
-	else if (GroundType == EGroundType::ScarpDown)
-	{
-		Renderer->ChangeAnimation(GetAnimationName("Dash_ScarpDown"));
+		if (
+			GroundType == EGroundType::Flat ||
+			GroundType == EGroundType::SlopeUp ||
+			GroundType == EGroundType::SlopeDown ||
+			GroundType == EGroundType::ScarpUp
+			)
+		{
+			Renderer->ChangeAnimation(GetAnimationName("Dash_Absorb"));
+		}
+		else if (GroundType == EGroundType::ScarpDown)
+		{
+			Renderer->ChangeAnimation(GetAnimationName("Dash_Absorb_ScarpDown"));
+			// Renderer->ChangeAnimation(GetAnimationName("Idle_Absorb_ScarpDown"));
+		}
 	}
 
 	DashOn();
@@ -1370,27 +1596,55 @@ void APlayer::DashStart()
 
 void APlayer::BreakStart()
 {
-	Renderer->ChangeAnimation(GetAnimationName("Break"));
+	if (IsAbsorb == false)
+	{
+		Renderer->ChangeAnimation(GetAnimationName("Break"));
+	}
+	else
+	{
+		Renderer->ChangeAnimation(GetAnimationName("Dash_Absorb"));
+	}
 	DashOff();
-	DirCheck();
 }
 
 void APlayer::JumpStart()
 {
 	JumpVector = JumpPower;
-	Renderer->ChangeAnimation(GetAnimationName("Jump"));
+
+	if (IsAbsorb == false)
+	{
+		Renderer->ChangeAnimation(GetAnimationName("Jump"));
+	}
+	else
+	{
+		Renderer->ChangeAnimation(GetAnimationName("Run_Absorb"));
+	}
 	DirCheck();
 }
 
 void APlayer::BreakfallStart()
 {
-	Renderer->ChangeAnimation(GetAnimationName("Breakfall"));
+	if (IsAbsorb == false)
+	{
+		Renderer->ChangeAnimation(GetAnimationName("Breakfall"));
+	}
+	else
+	{
+		Renderer->ChangeAnimation(GetAnimationName("Breakfall_Absorb"));
+	}
 	DirCheck();
 }
 
 void APlayer::FallStart()
 {
-	Renderer->ChangeAnimation(GetAnimationName("Fall"));
+	if (IsAbsorb == false)
+	{
+		Renderer->ChangeAnimation(GetAnimationName("Fall"));
+	}
+	else
+	{
+		Renderer->ChangeAnimation(GetAnimationName("Brakfall_Absorb"));
+	}
 	DashOff();
 	DirCheck();
 }
@@ -1426,7 +1680,10 @@ void APlayer::CrouchStart()
 
 void APlayer::SqueezeStart()
 {
-	Renderer->ChangeAnimation(GetAnimationName("Squeeze"));
+	if (IsAbsorb == false)
+	{
+		Renderer->ChangeAnimation(GetAnimationName("Squeeze"));
+	}
 	DashOff();
 	DirCheck();
 }
