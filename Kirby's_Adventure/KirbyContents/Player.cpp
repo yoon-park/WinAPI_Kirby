@@ -577,15 +577,20 @@ void APlayer::Idle(float _DeltaTime)
 		}
 	}
 
+	FVector Ground = { GetActorLocation().iX(), GetActorLocation().iY() };
 	FVector LeftGround = { GetActorLocation().iX() - 25, GetActorLocation().iY() };
 	FVector RightGround = { GetActorLocation().iX() + 25, GetActorLocation().iY() };
 
-	if (
-		(DirState == EActorDir::Left && IsGroundCheck(RightGround) == false) ||
-		(DirState == EActorDir::Right && IsGroundCheck(LeftGround) == false)
-		)
+	if (IsGroundCheck(Ground) == false)
 	{
-		StateChange(EPlayState::Fall);
+		if (
+			(DirState == EActorDir::Left && IsGroundCheck(RightGround) == false) ||
+			(DirState == EActorDir::Right && IsGroundCheck(LeftGround) == false)
+			)
+		{
+			StateChange(EPlayState::Fall);
+			return;
+		}
 	}
 
 	if (UEngineInput::IsDown('X'))
@@ -717,16 +722,20 @@ void APlayer::Run(float _DeltaTime)
 		}
 	}
 
+	FVector Ground = { GetActorLocation().iX(), GetActorLocation().iY() };
 	FVector LeftGround = { GetActorLocation().iX() - 25, GetActorLocation().iY() };
 	FVector RightGround = { GetActorLocation().iX() + 25, GetActorLocation().iY() };
 
-	if (
-		(DirState == EActorDir::Left && IsGroundCheck(RightGround) == false) ||
-		(DirState == EActorDir::Right && IsGroundCheck(LeftGround) == false)
-		)
+	if (IsGroundCheck(Ground) == false)
 	{
-		StateChange(EPlayState::Fall);
-		return;
+		if (
+			(DirState == EActorDir::Left && IsGroundCheck(RightGround) == false) ||
+			(DirState == EActorDir::Right && IsGroundCheck(LeftGround) == false)
+			)
+		{
+			StateChange(EPlayState::Fall);
+			return;
+		}
 	}
 	
 	if (IsWallCheck() == true)
@@ -907,15 +916,20 @@ void APlayer::Dash(float _DeltaTime)
 		}
 	}
 
+	FVector Ground = { GetActorLocation().iX(), GetActorLocation().iY() };
 	FVector LeftGround = { GetActorLocation().iX() - 25, GetActorLocation().iY() };
 	FVector RightGround = { GetActorLocation().iX() + 25, GetActorLocation().iY() };
 
-	if (
-		(DirState == EActorDir::Left && IsGroundCheck(RightGround) == false) ||
-		(DirState == EActorDir::Right && IsGroundCheck(LeftGround) == false)
-		)
+	if (IsGroundCheck(Ground) == false)
 	{
-		StateChange(EPlayState::Fall);
+		if (
+			(DirState == EActorDir::Left && IsGroundCheck(RightGround) == false) ||
+			(DirState == EActorDir::Right && IsGroundCheck(LeftGround) == false)
+			)
+		{
+			StateChange(EPlayState::Fall);
+			return;
+		}
 	}
 
 	if (IsWallCheck() == true)
@@ -1742,9 +1756,13 @@ void APlayer::FallStart()
 	}
 
 	FVector Ground = { GetActorLocation().iX(), GetActorLocation().iY() + 100 };
-	if (IsGroundCheck(Ground))
+	if (IsGroundCheck(Ground) == false)
 	{
 		IsCrashland = true;
+	}
+	else
+	{
+		IsCrashland = false;
 	}
 
 	DashOff();
