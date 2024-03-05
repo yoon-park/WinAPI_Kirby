@@ -1253,7 +1253,7 @@ void APlayer::Fall(float _DeltaTime)
 
 			if (Renderer->IsCurAnimationEnd() == true)
 			{
-				StateChange(EPlayState::Idle);
+				StateChange(EPlayState::Run);
 				return;
 			}
 		}
