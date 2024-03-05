@@ -71,9 +71,13 @@ void ULevel111::LevelStart(ULevel* _Level)
 	Kirby->SetName("Kirby");
 	Kirby->SetActorLocation({ 200, 200 });
 
-	AMonster* Monster = SpawnActor<AMonster>();
-	Monster->SetName("Monster");
-	Monster->SetActorLocation({ 500, 200 });
+	AMonster* Monster0 = SpawnActor<AMonster>();
+	Monster0->SetName("Monster");
+	Monster0->SetActorLocation({ 500, 200 });
+
+	AMonster* Monster1 = SpawnActor<AMonster>();
+	Monster1->SetName("Monster");
+	Monster1->SetActorLocation({ 2000, 200 });
 
 	Fade = SpawnActor<AFadeOut>();
 	Fade->SetActorLocation({ 400, 375 });

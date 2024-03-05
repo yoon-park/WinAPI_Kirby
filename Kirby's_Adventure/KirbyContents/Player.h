@@ -20,6 +20,7 @@ protected:
 	EActorDir DirState = EActorDir::Right;
 	EGroundType GroundType = EGroundType::None;
 	bool IsAbsorb = false;
+	bool IsCrashland = false;
 	std::string CurAnimationName = "None";
 
 	void BeginPlay() override;

@@ -577,6 +577,17 @@ void APlayer::Idle(float _DeltaTime)
 		}
 	}
 
+	FVector LeftGround = { GetActorLocation().iX() - 25, GetActorLocation().iY() };
+	FVector RightGround = { GetActorLocation().iX() + 25, GetActorLocation().iY() };
+
+	if (
+		(DirState == EActorDir::Left && IsGroundCheck(RightGround) == false) ||
+		(DirState == EActorDir::Right && IsGroundCheck(LeftGround) == false)
+		)
+	{
+		StateChange(EPlayState::Fall);
+	}
+
 	if (UEngineInput::IsDown('X'))
 	{
 		StateChange(EPlayState::Jump);
@@ -705,6 +716,18 @@ void APlayer::Run(float _DeltaTime)
 			}
 		}
 	}
+
+	FVector LeftGround = { GetActorLocation().iX() - 25, GetActorLocation().iY() };
+	FVector RightGround = { GetActorLocation().iX() + 25, GetActorLocation().iY() };
+
+	if (
+		(DirState == EActorDir::Left && IsGroundCheck(RightGround) == false) ||
+		(DirState == EActorDir::Right && IsGroundCheck(LeftGround) == false)
+		)
+	{
+		StateChange(EPlayState::Fall);
+		return;
+	}
 	
 	if (IsWallCheck() == true)
 	{
@@ -803,7 +826,17 @@ void APlayer::Run(float _DeltaTime)
 		AddMoveVector(FVector::Right * _DeltaTime);
 	}
 
-	MoveUpdate(_DeltaTime, true, true, true);
+	if (
+		(DirState == EActorDir::Left && IsGroundCheck(RightGround) == true) ||
+		(DirState == EActorDir::Right && IsGroundCheck(LeftGround) == true)
+		)
+	{
+		MoveUpdate(_DeltaTime, true, false, false);
+	}
+	else
+	{
+		MoveUpdate(_DeltaTime, true, true, true);
+	}
 }
 
 void APlayer::Dash(float _DeltaTime)
@@ -872,6 +905,17 @@ void APlayer::Dash(float _DeltaTime)
 			Renderer->ChangeAnimation(GetAnimationName("Dash_Absorb"));
 			// Renderer->ChangeAnimation(GetAnimationName("Idle_Absorb_ScarpDown"));
 		}
+	}
+
+	FVector LeftGround = { GetActorLocation().iX() - 25, GetActorLocation().iY() };
+	FVector RightGround = { GetActorLocation().iX() + 25, GetActorLocation().iY() };
+
+	if (
+		(DirState == EActorDir::Left && IsGroundCheck(RightGround) == false) ||
+		(DirState == EActorDir::Right && IsGroundCheck(LeftGround) == false)
+		)
+	{
+		StateChange(EPlayState::Fall);
 	}
 
 	if (IsWallCheck() == true)
@@ -1187,7 +1231,11 @@ void APlayer::Fall(float _DeltaTime)
 		if (IsGroundCheck(Pos) == true)
 		{
 			JumpVector = FVector::Zero;
-			Renderer->ChangeAnimation(GetAnimationName("Crashland"));
+			if (IsCrashland == true)
+			{
+				Renderer->ChangeAnimation(GetAnimationName("Crashland"));
+				IsCrashland = false;
+			}
 
 			if (Renderer->IsCurAnimationEnd() == true)
 			{
@@ -1217,6 +1265,12 @@ void APlayer::Fall(float _DeltaTime)
 			JumpVector = FVector::Zero;
 
 			StateChange(EPlayState::Idle);
+			return;
+		}
+
+		if (UEngineInput::IsDown('Z'))
+		{
+			StateChange(EPlayState::Spit);
 			return;
 		}
 
@@ -1417,23 +1471,64 @@ void APlayer::Absorb(float _DeltaTime)
 		}
 	}
 
+	if (UEngineInput::IsDown('Z'))
+	{
+		StateChange(EPlayState::Spit);
+		return;
+	}
+
+	if (UEngineInput::IsDown(VK_DOWN))
+	{
+		StateChange(EPlayState::Digest);
+		return;
+	}
+
 	if (IsGroundCheck(Pos) == true)
 	{
 		JumpVector = FVector::Zero;
 		GravityVector = FVector::Zero;
 	}
 
-	MoveUpdate(_DeltaTime, true, true, false);
+	MoveUpdate(_DeltaTime, true, false, false);
 }
 
 void APlayer::Digest(float _DeltaTime)
 {
+	if (Renderer->IsCurAnimationEnd() == true)
+	{
+		StateChange(EPlayState::Idle);
+	}
 
+	MoveUpdate(_DeltaTime, true, true, false);
 }
 
 void APlayer::Spit(float _DeltaTime)
 {
+	FVector Pos = { GetActorLocation().iX(), GetActorLocation().iY() };
 
+	if (Renderer->IsCurAnimationEnd() == true)
+	{
+		if (IsGroundCheck(Pos))
+		{
+			StateChange(EPlayState::Idle);
+		}
+		else
+		{
+			StateChange(EPlayState::Breakfall);
+		}
+	}
+
+	if (UEngineInput::IsPress(VK_LEFT))
+	{
+		AddMoveVector(FVector::Left * _DeltaTime);
+	}
+
+	if (UEngineInput::IsPress(VK_RIGHT))
+	{
+		AddMoveVector(FVector::Right * _DeltaTime);
+	}
+
+	MoveUpdate(_DeltaTime, true, false, false);
 }
 
 void APlayer::Door(float _DeltaTime)
@@ -1643,8 +1738,15 @@ void APlayer::FallStart()
 	}
 	else
 	{
-		Renderer->ChangeAnimation(GetAnimationName("Brakfall_Absorb"));
+		// Renderer->ChangeAnimation(GetAnimationName("Brakfall_Absorb"));
 	}
+
+	FVector Ground = { GetActorLocation().iX(), GetActorLocation().iY() + 100 };
+	if (IsGroundCheck(Ground))
+	{
+		IsCrashland = true;
+	}
+
 	DashOff();
 	DirCheck();
 }
@@ -1736,6 +1838,7 @@ void APlayer::AbsorbStart()
 void APlayer::DigestStart()
 {
 	Renderer->ChangeAnimation(GetAnimationName("Digest"));
+	IsAbsorb = false;
 	DashOff();
 	DirCheck();
 }
@@ -1743,6 +1846,7 @@ void APlayer::DigestStart()
 void APlayer::SpitStart()
 {
 	Renderer->ChangeAnimation(GetAnimationName("Spit"));
+	IsAbsorb = false;
 	DashOff();
 	DirCheck();
 }
