@@ -1,9 +1,8 @@
 #pragma once
-#include <EngineCore\Level.h>
-
+#include "KirbyLevel.h"
 class AFadeOut;
 
-class ULevel112 : public ULevel
+class ULevel112 : public UKirbyLevel
 {
 public:
 	ULevel112();

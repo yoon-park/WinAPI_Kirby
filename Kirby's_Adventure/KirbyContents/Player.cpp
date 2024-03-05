@@ -1,9 +1,11 @@
 #include "Player.h"
 
+#include <EngineBase/EngineDebug.h>
 #include <EngineBase\EngineTime.h>
 #include <EnginePlatform\EngineInput.h>
 #include <EngineCore\EngineCore.h>
 #include "ContentsHelper.h"
+#include "KirbyLevel.h"
 
 APlayer* APlayer::MainPlayer = nullptr;
 
@@ -47,9 +49,9 @@ void APlayer::BeginPlay()
 		Renderer->CreateAnimation("Break_Left", "Kirby_Right.png", 6, 6, 0.15f, false);
 		Renderer->CreateAnimation("Jump_Right", "Kirby_Right.png", 23, 23, 0.1f, true);
 		Renderer->CreateAnimation("Breakfall_Right", "Kirby_Right.png", 24, 27, 0.07f, false);
-		Renderer->CreateAnimation("Fall_Right", "Kirby_Right.png", 27, 27, 0.1f, false);
-		Renderer->CreateAnimation("Crashland_Right", "Kirby_Right.png", 28, 28, 0.1f, false);
-		Renderer->CreateAnimation("Crouch_Right", "Kirby_Right.png", 8, 8, 0.07f, true);
+		Renderer->CreateAnimation("Fall_Right", "Kirby_Right.png", 27, 27, 0.05f, false);
+		Renderer->CreateAnimation("Crashland_Right", "Kirby_Right.png", 28, 28, 0.07f, false);
+		Renderer->CreateAnimation("Crouch_Right", "Kirby_Right.png", 8, 8, 0.05f, true);
 		Renderer->CreateAnimation("Crouch_SlopeUp_Right", "Kirby_Right.png", 12, 12, 0.07f, true);
 		Renderer->CreateAnimation("Crouch_SlopeDown_Right", "Kirby_Right.png", 13, 13, 0.07f, true);
 		Renderer->CreateAnimation("Crouch_ScarpUp_Right", "Kirby_Right.png", 21, 21, 0.07f, true);
@@ -87,9 +89,9 @@ void APlayer::BeginPlay()
 		Renderer->CreateAnimation("Break_Right", "Kirby_Left.png", 6, 6, 0.15f, false);
 		Renderer->CreateAnimation("Jump_Left", "Kirby_Left.png", 23, 23, 0.1f, true);
 		Renderer->CreateAnimation("Breakfall_Left", "Kirby_Left.png", 24, 27, 0.07f, false);
-		Renderer->CreateAnimation("Fall_Left", "Kirby_Left.png", 27, 27, 0.1f, false);
-		Renderer->CreateAnimation("Crashland_Left", "Kirby_Left.png", 28, 28, 0.1f, false);
-		Renderer->CreateAnimation("Crouch_Left", "Kirby_Left.png", 8, 8, 0.07f, true);
+		Renderer->CreateAnimation("Fall_Left", "Kirby_Left.png", 27, 27, 0.05f, false);
+		Renderer->CreateAnimation("Crashland_Left", "Kirby_Left.png", 28, 28, 0.07f, false);
+		Renderer->CreateAnimation("Crouch_Left", "Kirby_Left.png", 8, 8, 0.05f, true);
 		Renderer->CreateAnimation("Crouch_SlopeUp_Left", "Kirby_Left.png", 12, 12, 0.07f, true);
 		Renderer->CreateAnimation("Crouch_SlopeDown_Left", "Kirby_Left.png", 13, 13, 0.07f, true);
 		Renderer->CreateAnimation("Crouch_ScarpUp_Left", "Kirby_Left.png", 21, 21, 0.07f, true);
@@ -722,7 +724,7 @@ void APlayer::Run(float _DeltaTime)
 		}
 	}
 
-	FVector Ground = { GetActorLocation().iX(), GetActorLocation().iY() };
+	FVector Ground = { GetActorLocation().iX(), GetActorLocation().iY() + 5 };
 	FVector LeftGround = { GetActorLocation().iX() - 25, GetActorLocation().iY() };
 	FVector RightGround = { GetActorLocation().iX() + 25, GetActorLocation().iY() };
 
@@ -835,10 +837,7 @@ void APlayer::Run(float _DeltaTime)
 		AddMoveVector(FVector::Right * _DeltaTime);
 	}
 
-	if (
-		(DirState == EActorDir::Left && IsGroundCheck(RightGround) == true) ||
-		(DirState == EActorDir::Right && IsGroundCheck(LeftGround) == true)
-		)
+	if (IsGroundCheck(Ground) == false)
 	{
 		MoveUpdate(_DeltaTime, true, false, false);
 	}
@@ -1549,7 +1548,15 @@ void APlayer::Door(float _DeltaTime)
 {
 	if (Renderer->IsCurAnimationEnd())
 	{
-		GEngine->ChangeLevel("Level112");
+		ULevel* CurLevel = GetWorld();
+		UKirbyLevel* KCurLevel = dynamic_cast<UKirbyLevel*>(CurLevel);
+
+		if (KCurLevel == nullptr)
+		{
+			MsgBoxAssert("현재 레벨이 nullptr입니다.");
+		}
+
+		GEngine->ChangeLevel(KCurLevel->GetNextLevel());
 		return;
 	}
 }

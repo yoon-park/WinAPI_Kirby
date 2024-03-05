@@ -7,10 +7,10 @@
     </ClInclude>
     <ClInclude Include="ContentsHelper.h" />
     <ClInclude Include="Level112.h">
-      <Filter>Object\1.VV\Stage1-2</Filter>
+      <Filter>Object\1.VV\Stage\Stage1-2</Filter>
     </ClInclude>
     <ClInclude Include="Level113.h">
-      <Filter>Object\1.VV\Stage1-3</Filter>
+      <Filter>Object\1.VV\Stage\Stage1-3</Filter>
     </ClInclude>
     <ClInclude Include="TitleKirby.h">
       <Filter>Object\0.Title</Filter>
@@ -34,7 +34,10 @@
       <Filter>Object\1.VV\Common</Filter>
     </ClInclude>
     <ClInclude Include="Level111.h">
-      <Filter>Object\1.VV\Stage1-1</Filter>
+      <Filter>Object\1.VV\Stage\Stage1-1</Filter>
+    </ClInclude>
+    <ClInclude Include="KirbyLevel.h">
+      <Filter>Object\1.VV\Stage</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -44,10 +47,10 @@
     </ClCompile>
     <ClCompile Include="ContentsHelper.cpp" />
     <ClCompile Include="Level112.cpp">
-      <Filter>Object\1.VV\Stage1-2</Filter>
+      <Filter>Object\1.VV\Stage\Stage1-2</Filter>
     </ClCompile>
     <ClCompile Include="Level113.cpp">
-      <Filter>Object\1.VV\Stage1-3</Filter>
+      <Filter>Object\1.VV\Stage\Stage1-3</Filter>
     </ClCompile>
     <ClCompile Include="TitleKirby.cpp">
       <Filter>Object\0.Title</Filter>
@@ -71,7 +74,10 @@
       <Filter>Object\1.VV\Common</Filter>
     </ClCompile>
     <ClCompile Include="Level111.cpp">
-      <Filter>Object\1.VV\Stage1-1</Filter>
+      <Filter>Object\1.VV\Stage\Stage1-1</Filter>
+    </ClCompile>
+    <ClCompile Include="KirbyLevel.cpp">
+      <Filter>Object\1.VV\Stage</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -84,20 +90,23 @@
     <Filter Include="Object\1.VV">
       <UniqueIdentifier>{7cc9902d-d36f-42c7-a25e-be1208417ea1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Object\1.VV\Stage1-1">
-      <UniqueIdentifier>{7e69bd9a-8ff0-4958-9d03-c90ab2ccfb26}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Object\1.VV\Stage1-2">
-      <UniqueIdentifier>{16e4b608-2182-46c1-9dda-ddf08a92324a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Object\1.VV\Stage1-3">
-      <UniqueIdentifier>{50e417e5-0c45-4b7a-8b9c-b5a838b0f3ee}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Object\1.VV\Common">
       <UniqueIdentifier>{11753c10-6b05-4d56-b38e-1da0f8d1ec36}</UniqueIdentifier>
     </Filter>
     <Filter Include="Object\1.VV\Hub">
       <UniqueIdentifier>{65f0a611-1cae-4790-a1db-3994a32ec924}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\1.VV\Stage">
+      <UniqueIdentifier>{6294efb0-c323-4b98-872a-38d4a602f1a4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\1.VV\Stage\Stage1-1">
+      <UniqueIdentifier>{7e69bd9a-8ff0-4958-9d03-c90ab2ccfb26}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\1.VV\Stage\Stage1-2">
+      <UniqueIdentifier>{16e4b608-2182-46c1-9dda-ddf08a92324a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\1.VV\Stage\Stage1-3">
+      <UniqueIdentifier>{50e417e5-0c45-4b7a-8b9c-b5a838b0f3ee}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

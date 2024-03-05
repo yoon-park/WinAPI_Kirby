@@ -52,6 +52,7 @@ void ULevel111::BeginPlay()
 	}
 
 	GEngine->CreateLevel<ULevel112>("Level112");
+	SetNextLevel("Level112");
 }
 
 void ULevel111::Tick(float _DeltaTime)
