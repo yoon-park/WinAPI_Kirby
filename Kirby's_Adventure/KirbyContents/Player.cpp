@@ -32,88 +32,88 @@ void APlayer::BeginPlay()
 
 	{
 		Renderer = CreateImageRenderer(KirbyRenderOrder::Player);
-		Renderer->SetImage("Kirby_Right.png");
+		Renderer->SetImage("Kirby1_Right.png");
 		Renderer->SetTransform({ {0,0}, {256, 256} });
 
-		Renderer->CreateAnimation("Idle_Right", "Kirby_Right.png", 0, 1, 0.5f, true);
-		Renderer->CreateAnimation("Idle_SlopeUp_Right", "Kirby_Right.png", 10, 10, 0.1f, true);
-		Renderer->CreateAnimation("Idle_SlopeDown_Right", "Kirby_Right.png", 11, 11, 0.1f, true);
-		Renderer->CreateAnimation("Idle_ScarpUp_Right", "Kirby_Right.png", 14, 14, 0.1f, true);
-		Renderer->CreateAnimation("Idle_ScarpDown_Right", "Kirby_Right.png", 15, 15, 0.1f, true);
-		Renderer->CreateAnimation("Run_Right", "Kirby_Right.png", 2, 5, 0.1f, true);
-		Renderer->CreateAnimation("Run_ScarpUp_Right", "Kirby_Right.png", 16, 19, 0.1f, true);
-		Renderer->CreateAnimation("Run_ScarpDown_Right", "Kirby_Right.png", 20, 20, 0.1f, true);
-		Renderer->CreateAnimation("Dash_Right", "Kirby_Right.png", 2, 5, 0.07f, true);
-		Renderer->CreateAnimation("Dash_ScarpUp_Right", "Kirby_Right.png", 16, 19, 0.05f, true);
-		Renderer->CreateAnimation("Dash_ScarpDown_Right", "Kirby_Right.png", 20, 20, 0.05f, true);
-		Renderer->CreateAnimation("Break_Left", "Kirby_Right.png", 6, 6, 0.15f, false);
-		Renderer->CreateAnimation("Jump_Right", "Kirby_Right.png", 23, 23, 0.1f, true);
-		Renderer->CreateAnimation("Breakfall_Right", "Kirby_Right.png", 24, 27, 0.07f, false);
-		Renderer->CreateAnimation("Fall_Right", "Kirby_Right.png", 27, 27, 0.05f, false);
-		Renderer->CreateAnimation("Crashland_Right", "Kirby_Right.png", 28, 28, 0.07f, false);
-		Renderer->CreateAnimation("Crouch_Right", "Kirby_Right.png", 8, 8, 0.05f, true);
-		Renderer->CreateAnimation("Crouch_SlopeUp_Right", "Kirby_Right.png", 12, 12, 0.07f, true);
-		Renderer->CreateAnimation("Crouch_SlopeDown_Right", "Kirby_Right.png", 13, 13, 0.07f, true);
-		Renderer->CreateAnimation("Crouch_ScarpUp_Right", "Kirby_Right.png", 21, 21, 0.07f, true);
-		Renderer->CreateAnimation("Crouch_ScarpDown_Right", "Kirby_Right.png", 22, 22, 0.07f, true);
-		Renderer->CreateAnimation("Squeeze_Right", "Kirby_Right.png", 7, 7, 0.1f, false);
-		Renderer->CreateAnimation("Absorb_Fly_Right", "Kirby_Right.png", 29, 32, 0.1f, false);
-		Renderer->CreateAnimation("Fly_Right", "Kirby_Right.png", 33, 34, 0.5f, true);
-		Renderer->CreateAnimation("Spit_Fly_Right", "Kirby_Right.png", 35, 38, 0.1f, false);
-		Renderer->CreateAnimation("Absorb_Right", "Kirby_Right.png", 39, 40, 0.1f, false);
-		Renderer->CreateAnimation("AbsorbFail_Right", "Kirby_Right.png", 50, 51, 0.1f, false);
-		Renderer->CreateAnimation("Idle_Absorb_Right", "Kirby_Right.png", 41, 41, 0.1f, true);
-		//Renderer->CreateAnimation("Idle_Absorb_SlopeUp_Right", "Kirby_Right.png", 41, 41, 0.1f, true);
-		//Renderer->CreateAnimation("Idle_Absorb_SlopeDown_Right", "Kirby_Right.png", 41, 41, 0.1f, true);
-		//Renderer->CreateAnimation("Idle_Absorb_ScarpUp_Right", "Kirby_Right.png", 41, 41, 0.1f, true);
-		//Renderer->CreateAnimation("Idle_Absorb_ScarpDown_Right", "Kirby_Right.png", 41, 41, 0.1f, true);
-		Renderer->CreateAnimation("Run_Absorb_Right", "Kirby_Right.png", 42, 44, 0.15f, true);
-		Renderer->CreateAnimation("Dash_Absorb_Right", "Kirby_Right.png", 42, 44, 0.1f, true);
-		Renderer->CreateAnimation("Breakfall_Absorb_Right", "Kirby_Right.png", 42, 42, 0.07f, false);
-		//Renderer->CreateAnimation("Fall_Absorb_Right", "Kirby_Right.png", 27, 27, 0.1f, false);
-		Renderer->CreateAnimation("Digest_Right", "Kirby_Right.png", 45, 47, 0.1f, false);
-		Renderer->CreateAnimation("Spit_Right", "Kirby_Right.png", 48, 51, 0.1f, true);
-		Renderer->CreateAnimation("Door_Right", "Kirby_Right.png", 16, 18, 0.1f, false);
+		Renderer->CreateAnimation("Idle_Right", "Kirby1_Right.png", 0, 1, 0.5f, true);
+		Renderer->CreateAnimation("Idle_SlopeUp_Right", "Kirby1_Right.png", 10, 10, 0.1f, true);
+		Renderer->CreateAnimation("Idle_SlopeDown_Right", "Kirby1_Right.png", 11, 11, 0.1f, true);
+		Renderer->CreateAnimation("Idle_ScarpUp_Right", "Kirby1_Right.png", 14, 14, 0.1f, true);
+		Renderer->CreateAnimation("Idle_ScarpDown_Right", "Kirby1_Right.png", 15, 15, 0.1f, true);
+		Renderer->CreateAnimation("Run_Right", "Kirby1_Right.png", 2, 5, 0.1f, true);
+		Renderer->CreateAnimation("Run_ScarpUp_Right", "Kirby1_Right.png", 16, 19, 0.1f, true);
+		Renderer->CreateAnimation("Run_ScarpDown_Right", "Kirby1_Right.png", 20, 20, 0.1f, true);
+		Renderer->CreateAnimation("Dash_Right", "Kirby1_Right.png", 2, 5, 0.07f, true);
+		Renderer->CreateAnimation("Dash_ScarpUp_Right", "Kirby1_Right.png", 16, 19, 0.05f, true);
+		Renderer->CreateAnimation("Dash_ScarpDown_Right", "Kirby1_Right.png", 20, 20, 0.05f, true);
+		Renderer->CreateAnimation("Break_Left", "Kirby1_Right.png", 6, 6, 0.15f, false);
+		Renderer->CreateAnimation("Jump_Right", "Kirby1_Right.png", 23, 23, 0.1f, true);
+		Renderer->CreateAnimation("Breakfall_Right", "Kirby1_Right.png", 24, 27, 0.07f, false);
+		Renderer->CreateAnimation("Fall_Right", "Kirby1_Right.png", 27, 27, 0.05f, false);
+		Renderer->CreateAnimation("Crashland_Right", "Kirby1_Right.png", 28, 28, 0.07f, false);
+		Renderer->CreateAnimation("Crouch_Right", "Kirby1_Right.png", 8, 8, 0.05f, true);
+		Renderer->CreateAnimation("Crouch_SlopeUp_Right", "Kirby1_Right.png", 12, 12, 0.07f, true);
+		Renderer->CreateAnimation("Crouch_SlopeDown_Right", "Kirby1_Right.png", 13, 13, 0.07f, true);
+		Renderer->CreateAnimation("Crouch_ScarpUp_Right", "Kirby1_Right.png", 21, 21, 0.07f, true);
+		Renderer->CreateAnimation("Crouch_ScarpDown_Right", "Kirby1_Right.png", 22, 22, 0.07f, true);
+		Renderer->CreateAnimation("Squeeze_Right", "Kirby1_Right.png", 7, 7, 0.1f, false);
+		Renderer->CreateAnimation("Absorb_Fly_Right", "Kirby1_Right.png", 29, 32, 0.1f, false);
+		Renderer->CreateAnimation("Fly_Right", "Kirby1_Right.png", 33, 34, 0.5f, true);
+		Renderer->CreateAnimation("Spit_Fly_Right", "Kirby1_Right.png", 35, 38, 0.1f, false);
+		Renderer->CreateAnimation("Absorb_Right", "Kirby1_Right.png", 39, 40, 0.1f, false);
+		Renderer->CreateAnimation("AbsorbFail_Right", "Kirby1_Right.png", 50, 51, 0.1f, false);
+		Renderer->CreateAnimation("Idle_Absorb_Right", "Kirby1_Right.png", 41, 41, 0.1f, true);
+		//Renderer->CreateAnimation("Idle_Absorb_SlopeUp_Right", "Kirby1_Right.png", 41, 41, 0.1f, true);
+		//Renderer->CreateAnimation("Idle_Absorb_SlopeDown_Right", "Kirby1_Right.png", 41, 41, 0.1f, true);
+		//Renderer->CreateAnimation("Idle_Absorb_ScarpUp_Right", "Kirby1_Right.png", 41, 41, 0.1f, true);
+		//Renderer->CreateAnimation("Idle_Absorb_ScarpDown_Right", "Kirby1_Right.png", 41, 41, 0.1f, true);
+		Renderer->CreateAnimation("Run_Absorb_Right", "Kirby1_Right.png", 42, 44, 0.15f, true);
+		Renderer->CreateAnimation("Dash_Absorb_Right", "Kirby1_Right.png", 42, 44, 0.1f, true);
+		Renderer->CreateAnimation("Breakfall_Absorb_Right", "Kirby1_Right.png", 42, 42, 0.07f, false);
+		//Renderer->CreateAnimation("Fall_Absorb_Right", "Kirby1_Right.png", 27, 27, 0.1f, false);
+		Renderer->CreateAnimation("Digest_Right", "Kirby1_Right.png", 45, 47, 0.1f, false);
+		Renderer->CreateAnimation("Spit_Right", "Kirby1_Right.png", 48, 51, 0.1f, true);
+		Renderer->CreateAnimation("Door_Right", "Kirby2_Right.png", 4, 5, 0.1f, false);
 
-		Renderer->CreateAnimation("Idle_Left", "Kirby_Left.png", 0, 1, 0.5f, true);
-		Renderer->CreateAnimation("Idle_SlopeUp_Left", "Kirby_Left.png", 10, 10, 0.1f, true);
-		Renderer->CreateAnimation("Idle_SlopeDown_Left", "Kirby_Left.png", 11, 11, 0.1f, true);
-		Renderer->CreateAnimation("Idle_ScarpUp_Left", "Kirby_Left.png", 14, 14, 0.1f, true);
-		Renderer->CreateAnimation("Idle_ScarpDown_Left", "Kirby_Left.png", 15, 15, 0.1f, true);
-		Renderer->CreateAnimation("Run_Left", "Kirby_Left.png", 2, 5, 0.1f, true);
-		Renderer->CreateAnimation("Run_ScarpUp_Left", "Kirby_Left.png", 16, 19, 0.1f, true);
-		Renderer->CreateAnimation("Run_ScarpDown_Left", "Kirby_Left.png", 20, 20, 0.1f, true);
-		Renderer->CreateAnimation("Dash_Left", "Kirby_Left.png", 2, 5, 0.07f, true);
-		Renderer->CreateAnimation("Dash_ScarpUp_Left", "Kirby_Left.png", 16, 19, 0.05f, true);
-		Renderer->CreateAnimation("Dash_ScarpDown_Left", "Kirby_Left.png", 20, 20, 0.05f, true);
-		Renderer->CreateAnimation("Break_Right", "Kirby_Left.png", 6, 6, 0.15f, false);
-		Renderer->CreateAnimation("Jump_Left", "Kirby_Left.png", 23, 23, 0.1f, true);
-		Renderer->CreateAnimation("Breakfall_Left", "Kirby_Left.png", 24, 27, 0.07f, false);
-		Renderer->CreateAnimation("Fall_Left", "Kirby_Left.png", 27, 27, 0.05f, false);
-		Renderer->CreateAnimation("Crashland_Left", "Kirby_Left.png", 28, 28, 0.07f, false);
-		Renderer->CreateAnimation("Crouch_Left", "Kirby_Left.png", 8, 8, 0.05f, true);
-		Renderer->CreateAnimation("Crouch_SlopeUp_Left", "Kirby_Left.png", 12, 12, 0.07f, true);
-		Renderer->CreateAnimation("Crouch_SlopeDown_Left", "Kirby_Left.png", 13, 13, 0.07f, true);
-		Renderer->CreateAnimation("Crouch_ScarpUp_Left", "Kirby_Left.png", 21, 21, 0.07f, true);
-		Renderer->CreateAnimation("Crouch_ScarpDown_Left", "Kirby_Left.png", 22, 22, 0.07f, true);
-		Renderer->CreateAnimation("Squeeze_Left", "Kirby_Left.png", 7, 7, 0.1f, false);
-		Renderer->CreateAnimation("Absorb_Fly_Left", "Kirby_Left.png", 29, 32, 0.1f, false);
-		Renderer->CreateAnimation("Fly_Left", "Kirby_Left.png", 33, 34, 0.5f, true);
-		Renderer->CreateAnimation("Spit_Fly_Left", "Kirby_Left.png", 35, 38, 0.1f, false);
-		Renderer->CreateAnimation("Absorb_Left", "Kirby_Left.png", 39, 40, 0.1f, false);
-		Renderer->CreateAnimation("AbsorbFail_Left", "Kirby_Left.png", 50, 51, 0.1f, false);
-		Renderer->CreateAnimation("Idle_Absorb_Left", "Kirby_Left.png", 41, 41, 0.1f, true);
-		//Renderer->CreateAnimation("Idle_Absorb_SlopeUp_Right", "Kirby_Right.png", 41, 41, 0.1f, true);
-		//Renderer->CreateAnimation("Idle_Absorb_SlopeDown_Right", "Kirby_Right.png", 41, 41, 0.1f, true);
-		//Renderer->CreateAnimation("Idle_Absorb_ScarpUp_Right", "Kirby_Right.png", 41, 41, 0.1f, true);
-		//Renderer->CreateAnimation("Idle_Absorb_ScarpDown_Right", "Kirby_Right.png", 41, 41, 0.1f, true);
-		Renderer->CreateAnimation("Run_Absorb_Left", "Kirby_Left.png", 42, 44, 0.15f, true);
-		Renderer->CreateAnimation("Dash_Absorb_Left", "Kirby_Left.png", 42, 44, 0.1f, true);
-		Renderer->CreateAnimation("Breakfall_Absorb_Left", "Kirby_Left.png", 42, 42, 0.07f, false);
-		//Renderer->CreateAnimation("Fall_Absorb_Right", "Kirby_Right.png", 27, 27, 0.1f, false);
-		Renderer->CreateAnimation("Digest_Left", "Kirby_Left.png", 45, 47, 0.1f, false);
-		Renderer->CreateAnimation("Spit_Left", "Kirby_Left.png", 48, 51, 0.1f, true);
-		Renderer->CreateAnimation("Door_Left", "Kirby_Right.png", 16, 18, 0.1f, false);
+		Renderer->CreateAnimation("Idle_Left", "Kirby1_Left.png", 0, 1, 0.5f, true);
+		Renderer->CreateAnimation("Idle_SlopeUp_Left", "Kirby1_Left.png", 10, 10, 0.1f, true);
+		Renderer->CreateAnimation("Idle_SlopeDown_Left", "Kirby1_Left.png", 11, 11, 0.1f, true);
+		Renderer->CreateAnimation("Idle_ScarpUp_Left", "Kirby1_Left.png", 14, 14, 0.1f, true);
+		Renderer->CreateAnimation("Idle_ScarpDown_Left", "Kirby1_Left.png", 15, 15, 0.1f, true);
+		Renderer->CreateAnimation("Run_Left", "Kirby1_Left.png", 2, 5, 0.1f, true);
+		Renderer->CreateAnimation("Run_ScarpUp_Left", "Kirby1_Left.png", 16, 19, 0.1f, true);
+		Renderer->CreateAnimation("Run_ScarpDown_Left", "Kirby1_Left.png", 20, 20, 0.1f, true);
+		Renderer->CreateAnimation("Dash_Left", "Kirby1_Left.png", 2, 5, 0.07f, true);
+		Renderer->CreateAnimation("Dash_ScarpUp_Left", "Kirby1_Left.png", 16, 19, 0.05f, true);
+		Renderer->CreateAnimation("Dash_ScarpDown_Left", "Kirby1_Left.png", 20, 20, 0.05f, true);
+		Renderer->CreateAnimation("Break_Right", "Kirby1_Left.png", 6, 6, 0.15f, false);
+		Renderer->CreateAnimation("Jump_Left", "Kirby1_Left.png", 23, 23, 0.1f, true);
+		Renderer->CreateAnimation("Breakfall_Left", "Kirby1_Left.png", 24, 27, 0.07f, false);
+		Renderer->CreateAnimation("Fall_Left", "Kirby1_Left.png", 27, 27, 0.05f, false);
+		Renderer->CreateAnimation("Crashland_Left", "Kirby1_Left.png", 28, 28, 0.07f, false);
+		Renderer->CreateAnimation("Crouch_Left", "Kirby1_Left.png", 8, 8, 0.05f, true);
+		Renderer->CreateAnimation("Crouch_SlopeUp_Left", "Kirby1_Left.png", 12, 12, 0.07f, true);
+		Renderer->CreateAnimation("Crouch_SlopeDown_Left", "Kirby1_Left.png", 13, 13, 0.07f, true);
+		Renderer->CreateAnimation("Crouch_ScarpUp_Left", "Kirby1_Left.png", 21, 21, 0.07f, true);
+		Renderer->CreateAnimation("Crouch_ScarpDown_Left", "Kirby1_Left.png", 22, 22, 0.07f, true);
+		Renderer->CreateAnimation("Squeeze_Left", "Kirby1_Left.png", 7, 7, 0.1f, false);
+		Renderer->CreateAnimation("Absorb_Fly_Left", "Kirby1_Left.png", 29, 32, 0.1f, false);
+		Renderer->CreateAnimation("Fly_Left", "Kirby1_Left.png", 33, 34, 0.5f, true);
+		Renderer->CreateAnimation("Spit_Fly_Left", "Kirby1_Left.png", 35, 38, 0.1f, false);
+		Renderer->CreateAnimation("Absorb_Left", "Kirby1_Left.png", 39, 40, 0.1f, false);
+		Renderer->CreateAnimation("AbsorbFail_Left", "Kirby1_Left.png", 50, 51, 0.1f, false);
+		Renderer->CreateAnimation("Idle_Absorb_Left", "Kirby1_Left.png", 41, 41, 0.1f, true);
+		//Renderer->CreateAnimation("Idle_Absorb_SlopeUp_Right", "Kirby1_Right.png", 41, 41, 0.1f, true);
+		//Renderer->CreateAnimation("Idle_Absorb_SlopeDown_Right", "Kirby1_Right.png", 41, 41, 0.1f, true);
+		//Renderer->CreateAnimation("Idle_Absorb_ScarpUp_Right", "Kirby1_Right.png", 41, 41, 0.1f, true);
+		//Renderer->CreateAnimation("Idle_Absorb_ScarpDown_Right", "Kirby1_Right.png", 41, 41, 0.1f, true);
+		Renderer->CreateAnimation("Run_Absorb_Left", "Kirby1_Left.png", 42, 44, 0.15f, true);
+		Renderer->CreateAnimation("Dash_Absorb_Left", "Kirby1_Left.png", 42, 44, 0.1f, true);
+		Renderer->CreateAnimation("Breakfall_Absorb_Left", "Kirby1_Left.png", 42, 42, 0.07f, false);
+		//Renderer->CreateAnimation("Fall_Absorb_Right", "Kirby1_Right.png", 27, 27, 0.1f, false);
+		Renderer->CreateAnimation("Digest_Left", "Kirby1_Left.png", 45, 47, 0.1f, false);
+		Renderer->CreateAnimation("Spit_Left", "Kirby1_Left.png", 48, 51, 0.1f, true);
+		Renderer->CreateAnimation("Door_Left", "Kirby2_Right.png", 4, 5, 0.1f, false);
 	}
 	{
 		BodyCollision = CreateCollision(KirbyCollisionOrder::Player);
@@ -134,27 +134,6 @@ void APlayer::Tick(float _DeltaTime)
 	AActor::Tick(_DeltaTime);
 
 	StateUpdate(_DeltaTime);
-}
-
-std::string APlayer::GetAnimationName(std::string _Name)
-{
-	std::string DirName = "";
-
-	switch (DirState)
-	{
-	case EActorDir::Left:
-		DirName = "_Left";
-		break;
-	case EActorDir::Right:
-		DirName = "_Right";
-		break;
-	default:
-		break;
-	}
-
-	CurAnimationName = _Name;
-
-	return _Name + DirName;
 }
 
 void APlayer::DirCheck()
@@ -355,6 +334,27 @@ void APlayer::DashOn()
 void APlayer::DashOff()
 {
 	MoveMaxSpeed = 300.0f;
+}
+
+std::string APlayer::GetAnimationName(std::string _Name)
+{
+	std::string DirName = "";
+
+	switch (DirState)
+	{
+	case EActorDir::Left:
+		DirName = "_Left";
+		break;
+	case EActorDir::Right:
+		DirName = "_Right";
+		break;
+	default:
+		break;
+	}
+
+	CurAnimationName = _Name;
+
+	return _Name + DirName;
 }
 
 void APlayer::StateUpdate(float _DeltaTime)
@@ -1127,25 +1127,27 @@ void APlayer::Breakfall(float _DeltaTime)
 {
 	DirCheck();
 	GroundTypeCheck();
-	FVector Pos;
+	FVector Ground = { GetActorLocation().iX(), GetActorLocation().iY() };
+	FVector LeftGround = { GetActorLocation().iX() - 25, GetActorLocation().iY() };
+	FVector RightGround = { GetActorLocation().iX() + 25, GetActorLocation().iY() };
 
-	if (GroundType == EGroundType::Flat)
-	{
-		Pos = { GetActorLocation().iX() , GetActorLocation().iY() };
-	}
-	else if (
+	if (
 		GroundType == EGroundType::SlopeUp ||
 		GroundType == EGroundType::SlopeDown ||
 		GroundType == EGroundType::ScarpUp ||
 		GroundType == EGroundType::ScarpDown
 		)
 	{
-		Pos = { GetActorLocation().iX() , GetActorLocation().iY() + 5 };
+		Ground = { GetActorLocation().iX() , GetActorLocation().iY() + 5 };
 	}
 
 	if (IsAbsorb == false)
 	{
-		if (IsGroundCheck(Pos) == true)
+		if (
+			IsGroundCheck(Ground) == true ||
+			(DirState == EActorDir::Left && IsGroundCheck(RightGround) == true) ||
+			(DirState == EActorDir::Right && IsGroundCheck(LeftGround) == true)
+			)
 		{
 			JumpVector = FVector::Zero;
 
@@ -1186,7 +1188,11 @@ void APlayer::Breakfall(float _DeltaTime)
 	}
 	else
 	{
-		if (IsGroundCheck(Pos) == true)
+		if (
+			IsGroundCheck(Ground) == true ||
+			(DirState == EActorDir::Left && IsGroundCheck(RightGround) == true) ||
+			(DirState == EActorDir::Right && IsGroundCheck(LeftGround) == true)
+			)
 		{
 			JumpVector = FVector::Zero;
 			StateChange(EPlayState::Idle);

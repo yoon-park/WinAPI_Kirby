@@ -16,8 +16,9 @@ public:
 	static APlayer* GetMainPlayer();
 
 protected:
-	EPlayState State = EPlayState::None;
 	EActorDir DirState = EActorDir::Right;
+	EPlayState State = EPlayState::None;
+	EAbiltyType Ability = EAbiltyType::None;
 	EGroundType GroundType = EGroundType::None;
 	bool IsAbsorb = false;
 	bool IsCrashland = false;
@@ -25,8 +26,6 @@ protected:
 
 	void BeginPlay() override;
 	void Tick(float _DeltaTime) override;
-
-	std::string GetAnimationName(std::string _Name);
 
 	void DirCheck();
 	void GroundTypeCheck();
@@ -38,6 +37,7 @@ protected:
 	bool IsDoorCheck();
 	void DashOn();
 	void DashOff();
+	std::string GetAnimationName(std::string _Name);
 
 	void StateUpdate(float _DeltaTime);
 	void StateChange(EPlayState _State);

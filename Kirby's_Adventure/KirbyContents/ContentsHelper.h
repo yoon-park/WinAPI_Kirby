@@ -47,6 +47,18 @@ enum class EPlayState
 	Door,
 };
 
+enum class EMonsterState
+{
+	None,
+	Move,
+	Attack,
+};
+
+enum class EAbiltyType
+{
+	None,
+};
+
 enum class EGroundType
 {
 	None,

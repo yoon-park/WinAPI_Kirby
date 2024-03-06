@@ -174,7 +174,19 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Ability.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="BackGroundMap.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="BrontoBurt.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="Burp.h">
       <SubType>
       </SubType>
     </ClInclude>
@@ -227,9 +239,25 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="TitleLogo.h" />
+    <ClInclude Include="WaddleDee.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Ability.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="BackGroundMap.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="BrontoBurt.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="Burp.cpp">
       <SubType>
       </SubType>
     </ClCompile>
@@ -282,6 +310,10 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="TitleLogo.cpp" />
+    <ClCompile Include="WaddleDee.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

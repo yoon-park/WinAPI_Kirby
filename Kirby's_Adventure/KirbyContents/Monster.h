@@ -1,7 +1,6 @@
 #pragma once
 #include <EngineCore\Actor.h>
 #include "ContentsHelper.h"
-#include "Player.h"
 
 class AMonster : public AActor
 {
@@ -15,9 +14,22 @@ public:
 	AMonster& operator=(AMonster&& _Other) noexcept = delete;
 
 protected:
+	EActorDir DirState = EActorDir::Right;
+	EMonsterState State = EMonsterState::None;
+	EAbiltyType Ability = EAbiltyType::None;
+	std::string CurAnimationName = "None";
+
+	UImageRenderer* Renderer = nullptr;
+	UCollision* BodyCollision = nullptr;
+
 	void BeginPlay() override;
 	void Tick(float _DeltaTime) override;
 
+	std::string GetAnimationName(std::string _Name);
+	void DirCheck();
+	void StateUpdate(float _DeltaTime);
+	void StateChange(EPlayState _State);
+
 private:
-	UCollision* BodyCollision;
+
 };
