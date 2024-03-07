@@ -16,6 +16,10 @@ protected:
 	void BeginPlay() override;
 	void Tick(float _DeltaTime) override;
 
-private:
+	bool IsWallCheck() override;
 
+private:
+	FVector MoveVector = FVector::Zero;
+	FVector MovePower = FVector::Right * 1000.0f;
+	FVector MoveAcc = FVector::Left * 2500.0f;
 };

@@ -1,6 +1,7 @@
 #include "BrontoBurt.h"
 
 #include "Player.h"
+#include "Ability.h"
 
 ABrontoBurt::ABrontoBurt()
 {
@@ -39,27 +40,40 @@ void ABrontoBurt::Tick(float _DeltaTime)
 	AMonster::Tick(_DeltaTime);
 
 	std::vector<UCollision*> Result;
-	if (BodyCollision->CollisionCheck(KirbyCollisionOrder::PlayerAbility, Result) == true)
+
+	if (BodyCollision->CollisionCheck(KirbyCollisionOrder::PlayerAbsorb, Result) == true)
 	{
 		UCollision* Collision = Result[0];
 		AActor* Ptr = Collision->GetOwner();
-		APlayer* Player = dynamic_cast<APlayer*>(Ptr);
+		APlayer* PlayerAbsorb = dynamic_cast<APlayer*>(Ptr);
 
-		if (Player == nullptr)
+		if (PlayerAbsorb == nullptr)
 		{
-			MsgBoxAssert("플레이어가 존재하지 않습니다.");
+			MsgBoxAssert("PlayerAbsorb가 존재하지 않습니다.");
 		}
 
 		Destroy();
 	}
 
-	
+	if (BodyCollision->CollisionCheck(KirbyCollisionOrder::PlayerAbility, Result) == true)
+	{
+		UCollision* Collision = Result[0];
+		AActor* Ptr = Collision->GetOwner();
+		AAbility* PlayerAbility = dynamic_cast<AAbility*>(Ptr);
+
+		if (PlayerAbility == nullptr)
+		{
+			MsgBoxAssert("PlayerAbility가 존재하지 않습니다.");
+		}
+
+		Destroy();
+	}
 
 	APlayer* Player = APlayer::GetMainPlayer();
 
 	if (Player == nullptr)
 	{
-		MsgBoxAssert("플레이어가 존재하지 않습니다.");
+		MsgBoxAssert("Player가 존재하지 않습니다.");
 	}
 
 	FVector PlayerPos = Player->GetActorLocation();

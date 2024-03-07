@@ -9,13 +9,15 @@ enum class KirbyRenderOrder
 	HUD,
 	Monster,
 	Player,
+	Ability,
 	FadeOut,
 };
 
 enum class KirbyCollisionOrder
 {
-	PlayerAbility,
 	Monster,
+	PlayerAbsorb,
+	PlayerAbility,
 	Player,
 };
 

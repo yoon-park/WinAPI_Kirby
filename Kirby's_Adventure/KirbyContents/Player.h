@@ -15,6 +15,8 @@ public:
 
 	static APlayer* GetMainPlayer();
 
+	EActorDir GetDirState();
+
 protected:
 	EActorDir DirState = EActorDir::Right;
 	EPlayState State = EPlayState::None;

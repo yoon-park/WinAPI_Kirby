@@ -1,30 +1,30 @@
-#include "Burp.h"
+#include "SpitStar.h"
 
 #include "Monster.h"
 
-ABurp::ABurp()
+ASpitStar::ASpitStar()
 {
 
 }
 
-ABurp::~ABurp()
+ASpitStar::~ASpitStar()
 {
 
 }
 
-void ABurp::BeginPlay()
+void ASpitStar::BeginPlay()
 {
 	AAbility::BeginPlay();
-	
+
 	{
 		Renderer = CreateImageRenderer(KirbyRenderOrder::Ability);
 		Renderer->SetImage("EffectAbility_Right.png");
 		Renderer->SetTransform({ {0,0}, {256, 256} });
 
-		Renderer->CreateAnimation("Burp_Right", "EffectAbility_Right.png", 2, 2, 0.1f, false);
-		Renderer->CreateAnimation("Burp_Left", "EffectAbility_Left.png", 2, 2, 0.1f, false);
+		Renderer->CreateAnimation("SpitStar_Right", "EffectAbility_Right.png", 4, 7, 0.1f, true);
+		Renderer->CreateAnimation("SpitStar_Left", "EffectAbility_Left.png", 4, 7, 0.1f, true);
 
-		Renderer->ChangeAnimation(GetAnimationName("Burp"));
+		Renderer->ChangeAnimation(GetAnimationName("SpitStar"));
 	}
 	{
 		AttackCollision = CreateCollision(KirbyCollisionOrder::PlayerAbility);
@@ -45,7 +45,7 @@ void ABurp::BeginPlay()
 	}
 }
 
-void ABurp::Tick(float _DeltaTime)
+void ASpitStar::Tick(float _DeltaTime)
 {
 	AAbility::Tick(_DeltaTime);
 
@@ -65,7 +65,7 @@ void ABurp::Tick(float _DeltaTime)
 	}
 
 	if (
-		DirState == EActorDir::Left && MoveVector.X > 0.0f || 
+		DirState == EActorDir::Left && MoveVector.X > 0.0f ||
 		DirState == EActorDir::Right && MoveVector.X < 0.0f ||
 		IsWallCheck() == true
 		)
@@ -77,11 +77,11 @@ void ABurp::Tick(float _DeltaTime)
 	AddActorLocation(MoveVector * _DeltaTime);
 }
 
-bool ABurp::IsWallCheck()
+bool ASpitStar::IsWallCheck()
 {
-	FVector CheckPosTop = { GetActorLocation().X, GetActorLocation().Y - 47};
-	FVector CheckPosCenter = { GetActorLocation().X, GetActorLocation().Y - 24};
-	FVector CheckPosBottom = { GetActorLocation().X, GetActorLocation().Y - 1};
+	FVector CheckPosTop = { GetActorLocation().X, GetActorLocation().Y - 47 };
+	FVector CheckPosCenter = { GetActorLocation().X, GetActorLocation().Y - 24 };
+	FVector CheckPosBottom = { GetActorLocation().X, GetActorLocation().Y - 1 };
 
 	switch (DirState)
 	{
@@ -103,7 +103,7 @@ bool ABurp::IsWallCheck()
 	Color8Bit ColorCenter = UContentsHelper::ColMapImage->GetColor(CheckPosCenter.iX(), CheckPosCenter.iY(), Color8Bit::MagentaA);
 	Color8Bit ColorBottom = UContentsHelper::ColMapImage->GetColor(CheckPosBottom.iX(), CheckPosBottom.iY(), Color8Bit::MagentaA);
 	if (
-		ColorTop == Color8Bit(255, 0, 255, 0) || 
+		ColorTop == Color8Bit(255, 0, 255, 0) ||
 		ColorCenter == Color8Bit(255, 0, 255, 0) ||
 		ColorBottom == Color8Bit(255, 0, 255, 0)
 		)

@@ -6,6 +6,9 @@
 #include <EngineCore\EngineCore.h>
 #include "ContentsHelper.h"
 #include "KirbyLevel.h"
+#include "Monster.h"
+#include "Burp.h"
+#include "SpitStar.h"
 
 APlayer* APlayer::MainPlayer = nullptr;
 
@@ -120,7 +123,7 @@ void APlayer::BeginPlay()
 		BodyCollision->SetColType(ECollisionType::Rect);
 		BodyCollision->SetTransform({ {0, -25}, { 50, 50 } });
 
-		AbsorbCollision = CreateCollision(KirbyCollisionOrder::PlayerAbility);
+		AbsorbCollision = CreateCollision(KirbyCollisionOrder::PlayerAbsorb);
 		AbsorbCollision->SetColType(ECollisionType::Rect);
 		AbsorbCollision->SetScale({ 100, 60 });
 		AbsorbCollision->ActiveOff();
@@ -134,6 +137,11 @@ void APlayer::Tick(float _DeltaTime)
 	AActor::Tick(_DeltaTime);
 
 	StateUpdate(_DeltaTime);
+}
+
+EActorDir APlayer::GetDirState()
+{
+	return DirState;
 }
 
 void APlayer::DirCheck()
@@ -258,23 +266,34 @@ bool APlayer::IsCeilingCheck(FVector _Pos)
 
 bool APlayer::IsWallCheck()
 {
-	FVector CheckPos = GetActorLocation();
+	FVector CheckPosTop = { GetActorLocation().X, GetActorLocation().Y - 50 };
+	FVector CheckPosCenter = { GetActorLocation().X, GetActorLocation().Y - 26 };
+	FVector CheckPosBottom = { GetActorLocation().X, GetActorLocation().Y - 2};
 
 	switch (DirState)
 	{
 	case EActorDir::Left:
-		CheckPos.X -= 26;
+		CheckPosTop.X -= 25;
+		CheckPosCenter.X -= 25;
+		CheckPosBottom.X -= 25;
 		break;
 	case EActorDir::Right:
-		CheckPos.X += 26;
+		CheckPosTop.X += 25;
+		CheckPosCenter.X += 25;
+		CheckPosBottom.X += 25;
 		break;
 	default:
 		break;
 	}
-	CheckPos.Y -= 32;
 
-	Color8Bit Color = UContentsHelper::ColMapImage->GetColor(CheckPos.iX(), CheckPos.iY(), Color8Bit::MagentaA);
-	if (Color == Color8Bit(255, 0, 255, 0))
+	Color8Bit ColorTop = UContentsHelper::ColMapImage->GetColor(CheckPosTop.iX(), CheckPosTop.iY(), Color8Bit::MagentaA);
+	Color8Bit ColorCenter = UContentsHelper::ColMapImage->GetColor(CheckPosCenter.iX(), CheckPosCenter.iY(), Color8Bit::MagentaA);
+	Color8Bit ColorBottom = UContentsHelper::ColMapImage->GetColor(CheckPosBottom.iX(), CheckPosBottom.iY(), Color8Bit::MagentaA);
+	if (
+		ColorTop == Color8Bit(255, 0, 255, 0) ||
+		ColorCenter == Color8Bit(255, 0, 255, 0) ||
+		ColorBottom == Color8Bit(255, 0, 255, 0)
+		)
 	{
 		return true;
 	}
@@ -1464,7 +1483,12 @@ void APlayer::Absorb(float _DeltaTime)
 	{
 		UCollision* Collision = Result[0];
 		AActor* Ptr = Collision->GetOwner();
-		APlayer* Player = dynamic_cast<APlayer*>(Ptr);
+		AMonster* Monster = dynamic_cast<AMonster*>(Ptr);
+
+		if (Monster == nullptr)
+		{
+			MsgBoxAssert("Monster가 존재하지 않습니다.");
+		}
 
 		IsAbsorb = true;
 		StateChange(EPlayState::Idle);
@@ -1838,6 +1862,9 @@ void APlayer::SpitFlyStart()
 	Renderer->ChangeAnimation(GetAnimationName("Spit_Fly"));
 	DashOff();
 	DirCheck();
+
+	ABurp* Burp = GetWorld()->SpawnActor<ABurp>();
+	Burp->SetActorLocation(GetActorLocation());
 }
 
 void APlayer::AbsorbStart()
@@ -1880,6 +1907,9 @@ void APlayer::SpitStart()
 	IsAbsorb = false;
 	DashOff();
 	DirCheck();
+
+	ASpitStar* SpitStar = GetWorld()->SpawnActor<ASpitStar>();
+	SpitStar->SetActorLocation(GetActorLocation());
 }
 
 void APlayer::DoorStart()
