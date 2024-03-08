@@ -29,19 +29,17 @@ void ASpitStar::BeginPlay()
 	{
 		AttackCollision = CreateCollision(KirbyCollisionOrder::PlayerAbility);
 		AttackCollision->SetColType(ECollisionType::Rect);
-		AttackCollision->SetTransform({ {0, -24}, { 50, 47 } });
+		AttackCollision->SetTransform({ {0, -25}, { 50, 50 } });
 	}
 
 	DirCheck();
 	if (DirState == EActorDir::Left)
 	{
-		MoveVector = FVector::Left * 1000.0f;
-		MoveAcc = FVector::Right * 2500.0f;
+		MoveVector = FVector::Left * 650.0f;
 	}
 	else if (DirState == EActorDir::Right)
 	{
-		MoveVector = FVector::Right * 1000.0f;
-		MoveAcc = FVector::Left * 2500.0f;
+		MoveVector = FVector::Right * 650.0f;
 	}
 }
 
@@ -61,27 +59,23 @@ void ASpitStar::Tick(float _DeltaTime)
 			MsgBoxAssert("Monster가 존재하지 않습니다.");
 		}
 
+		Monster->Destroy();
 		Destroy();
 	}
 
-	if (
-		DirState == EActorDir::Left && MoveVector.X > 0.0f ||
-		DirState == EActorDir::Right && MoveVector.X < 0.0f ||
-		IsWallCheck() == true
-		)
+	if (IsWallCheck() == true)
 	{
 		Destroy();
 	}
 
-	MoveVector += MoveAcc * _DeltaTime;
 	AddActorLocation(MoveVector * _DeltaTime);
 }
 
 bool ASpitStar::IsWallCheck()
 {
-	FVector CheckPosTop = { GetActorLocation().X, GetActorLocation().Y - 47 };
-	FVector CheckPosCenter = { GetActorLocation().X, GetActorLocation().Y - 24 };
-	FVector CheckPosBottom = { GetActorLocation().X, GetActorLocation().Y - 1 };
+	FVector CheckPosTop = { GetActorLocation().X, GetActorLocation().Y - 50 };
+	FVector CheckPosCenter = { GetActorLocation().X, GetActorLocation().Y - 26 };
+	FVector CheckPosBottom = { GetActorLocation().X, GetActorLocation().Y - 2 };
 
 	switch (DirState)
 	{

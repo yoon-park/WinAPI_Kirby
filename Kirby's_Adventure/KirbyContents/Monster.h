@@ -14,7 +14,7 @@ public:
 	AMonster& operator=(AMonster&& _Other) noexcept = delete;
 
 protected:
-	EActorDir DirState = EActorDir::Right;
+	EActorDir DirState = EActorDir::Left;
 	EMonsterState State = EMonsterState::None;
 	EAbiltyType Ability = EAbiltyType::None;
 	std::string CurAnimationName = "None";
@@ -22,13 +22,28 @@ protected:
 	UImageRenderer* Renderer = nullptr;
 	UCollision* BodyCollision = nullptr;
 
+	FVector MoveVector = FVector::Zero;
+	FVector MovePower = FVector::Zero;
+	FVector MoveAcc = FVector::Zero;
+	FVector JumpPower = FVector::Zero;
+	FVector GravityAcc = FVector::Zero;
+
 	void BeginPlay() override;
 	void Tick(float _DeltaTime) override;
-
-	std::string GetAnimationName(std::string _Name);
-	void DirCheck();
+	void StateChange(EMonsterState _State);
 	void StateUpdate(float _DeltaTime);
-	void StateChange(EPlayState _State);
+
+	virtual void MoveStart();
+	virtual void AttackStart();
+	virtual void AbsorbStart();
+
+	virtual void Move(float _DeltaTime);
+	virtual void Attack(float _DeltaTime);
+	virtual void Absorb(float _DeltaTime);
+
+	void DirCheck();
+	bool AbsorbCheck();
+	std::string GetAnimationName(std::string _Name);
 
 private:
 

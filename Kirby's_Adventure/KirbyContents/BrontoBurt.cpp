@@ -27,7 +27,6 @@ void ABrontoBurt::BeginPlay()
 
 		Renderer->ChangeAnimation("Run_Left");
 	}
-
 	{
 		BodyCollision = CreateCollision(KirbyCollisionOrder::Monster);
 		BodyCollision->SetColType(ECollisionType::Rect);
@@ -39,37 +38,7 @@ void ABrontoBurt::Tick(float _DeltaTime)
 {
 	AMonster::Tick(_DeltaTime);
 
-	std::vector<UCollision*> Result;
-
-	if (BodyCollision->CollisionCheck(KirbyCollisionOrder::PlayerAbsorb, Result) == true)
-	{
-		UCollision* Collision = Result[0];
-		AActor* Ptr = Collision->GetOwner();
-		APlayer* PlayerAbsorb = dynamic_cast<APlayer*>(Ptr);
-
-		if (PlayerAbsorb == nullptr)
-		{
-			MsgBoxAssert("PlayerAbsorb가 존재하지 않습니다.");
-		}
-
-		Destroy();
-	}
-
-	if (BodyCollision->CollisionCheck(KirbyCollisionOrder::PlayerAbility, Result) == true)
-	{
-		UCollision* Collision = Result[0];
-		AActor* Ptr = Collision->GetOwner();
-		AAbility* PlayerAbility = dynamic_cast<AAbility*>(Ptr);
-
-		if (PlayerAbility == nullptr)
-		{
-			MsgBoxAssert("PlayerAbility가 존재하지 않습니다.");
-		}
-
-		Destroy();
-	}
-
-	APlayer* Player = APlayer::GetMainPlayer();
+	/*APlayer* Player = APlayer::GetMainPlayer();
 
 	if (Player == nullptr)
 	{
@@ -82,5 +51,5 @@ void ABrontoBurt::Tick(float _DeltaTime)
 	FVector MonsterDir = PlayerPos - MonsterPos;
 	FVector MonsterDirNormal = MonsterDir.Normalize2DReturn();
 
-	AddActorLocation(MonsterDirNormal * _DeltaTime * 100.0f);
+	AddActorLocation(MonsterDirNormal * _DeltaTime * 100.0f);*/
 }

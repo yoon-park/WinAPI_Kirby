@@ -81,7 +81,10 @@ protected:
 
 private:
 	UCollision* BodyCollision = nullptr;
-	UCollision* AbsorbCollision = nullptr;
+	UCollision* AbsorbCollision0 = nullptr;
+	UCollision* AbsorbCollision1 = nullptr;
+	UCollision* AbsorbCollision2 = nullptr;
+	UCollision* AbsorbCollision3 = nullptr;
 	UImageRenderer* Renderer = nullptr;
 	float AnimationTime = 0.0f;
 	int AnimationFrame = 0;

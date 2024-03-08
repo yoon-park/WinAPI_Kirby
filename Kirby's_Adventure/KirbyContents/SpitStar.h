@@ -20,7 +20,6 @@ protected:
 
 private:
 	FVector MoveVector = FVector::Zero;
-	FVector MovePower = FVector::Right * 1000.0f;
-	FVector MoveAcc = FVector::Left * 2500.0f;
+	FVector MovePower = FVector::Zero;
 	float Timer = 0.2f;
 };

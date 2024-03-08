@@ -83,7 +83,7 @@ void ULevel111::LevelStart(ULevel* _Level)
 
 	AWaddleDee* WaddleDee = SpawnActor<AWaddleDee>();
 	WaddleDee->SetName("WaddleDee");
-	WaddleDee->SetActorLocation({ 500, 200 });
+	WaddleDee->SetActorLocation({ 500, 350 });
 
 	ABrontoBurt* BrontoBurt = SpawnActor<ABrontoBurt>();
 	BrontoBurt->SetName("BrontoBurt");

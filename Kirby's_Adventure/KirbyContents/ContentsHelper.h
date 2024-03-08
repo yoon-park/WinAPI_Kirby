@@ -54,6 +54,7 @@ enum class EMonsterState
 	None,
 	Move,
 	Attack,
+	Absorb,
 };
 
 enum class EAbiltyType

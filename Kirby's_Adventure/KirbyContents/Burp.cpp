@@ -61,6 +61,7 @@ void ABurp::Tick(float _DeltaTime)
 			MsgBoxAssert("Monster가 존재하지 않습니다.");
 		}
 
+		Monster->Destroy();
 		Destroy();
 	}
 
