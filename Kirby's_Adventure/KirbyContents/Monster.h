@@ -24,7 +24,9 @@ protected:
 	std::string CurAnimationName = "None";
 
 	UImageRenderer* Renderer = nullptr;
+	UImageRenderer* AttackRenderer = nullptr;
 	UCollision* BodyCollision = nullptr;
+	UCollision* AttackCollision = nullptr;
 
 	float MoveTimer = 0.0f;
 	FVector MoveAcc = FVector::Right * 1000.0f;

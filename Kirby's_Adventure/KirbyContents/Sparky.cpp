@@ -1,18 +1,18 @@
-#include "WaddleDee.h"
+#include "Sparky.h"
 
 #include "Player.h"
 
-AWaddleDee::AWaddleDee()
+ASparky::ASparky()
 {
 
 }
 
-AWaddleDee::~AWaddleDee()
+ASparky::~ASparky()
 {
 
 }
 
-void AWaddleDee::BeginPlay()
+void ASparky::BeginPlay()
 {
 	AMonster::BeginPlay();
 
@@ -30,17 +30,18 @@ void AWaddleDee::BeginPlay()
 		BodyCollision->SetTransform({ {0, -25}, {50, 50} });
 	}
 
+	SetAbility(EAbiltyType::Spark);
 	SetMoveMaxSpeed(100.0f);
 
 	StateChange(EMonsterState::Move);
 }
 
-void AWaddleDee::Tick(float _DeltaTime)
+void ASparky::Tick(float _DeltaTime)
 {
 	AMonster::Tick(_DeltaTime);
 }
 
-void AWaddleDee::MoveStart()
+void ASparky::MoveStart()
 {
 	AMonster::MoveStart();
 
@@ -48,7 +49,7 @@ void AWaddleDee::MoveStart()
 	DirCheck();
 }
 
-void AWaddleDee::Move(float _DeltaTime)
+void ASparky::Move(float _DeltaTime)
 {
 	AMonster::Move(_DeltaTime);
 
@@ -73,7 +74,7 @@ void AWaddleDee::Move(float _DeltaTime)
 	{
 		AddMoveVector(FVector::Right * _DeltaTime);
 	}
-	
+
 	FVector Ground = { GetActorLocation().iX(), GetActorLocation().iY() + 5 };
 
 	if (IsGroundCheck(Ground) == false)

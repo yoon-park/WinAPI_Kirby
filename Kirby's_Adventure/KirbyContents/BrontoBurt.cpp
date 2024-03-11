@@ -1,7 +1,6 @@
 #include "BrontoBurt.h"
 
 #include "Player.h"
-#include "Ability.h"
 
 ABrontoBurt::ABrontoBurt()
 {

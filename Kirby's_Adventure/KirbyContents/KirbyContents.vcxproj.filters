@@ -54,6 +54,9 @@
     <ClInclude Include="SpitStar.h">
       <Filter>Object\1.VV\Ability</Filter>
     </ClInclude>
+    <ClInclude Include="Sparky.h">
+      <Filter>Object\1.VV\Monster</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ContentsCore.cpp" />
@@ -108,6 +111,9 @@
     </ClCompile>
     <ClCompile Include="SpitStar.cpp">
       <Filter>Object\1.VV\Ability</Filter>
+    </ClCompile>
+    <ClCompile Include="Sparky.cpp">
+      <Filter>Object\1.VV\Monster</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
