@@ -280,8 +280,8 @@ bool APlayer::IsCeilingCheck(FVector _Pos)
 bool APlayer::IsWallCheck()
 {
 	FVector CheckPosTop = { GetActorLocation().X, GetActorLocation().Y - 50 };
-	FVector CheckPosCenter = { GetActorLocation().X, GetActorLocation().Y - 26 };
-	FVector CheckPosBottom = { GetActorLocation().X, GetActorLocation().Y - 2};
+	FVector CheckPosCenter = { GetActorLocation().X, GetActorLocation().Y - 30 };
+	FVector CheckPosBottom = { GetActorLocation().X, GetActorLocation().Y - 5};
 
 	switch (DirState)
 	{
@@ -1226,6 +1226,7 @@ void APlayer::Breakfall(float _DeltaTime)
 			)
 		{
 			JumpVector = FVector::Zero;
+			GravityVector = FVector::Zero;
 			StateChange(EPlayState::Idle);
 			return;
 		}
@@ -1253,7 +1254,7 @@ void APlayer::Breakfall(float _DeltaTime)
 		AddMoveVector(FVector::Right * _DeltaTime);
 	}
 
-    MoveUpdate(_DeltaTime, true, false, false);
+    MoveUpdate(_DeltaTime, true, true, false);
 }
 
 void APlayer::Fall(float _DeltaTime)
@@ -1502,13 +1503,15 @@ void APlayer::Absorb(float _DeltaTime)
 			MsgBoxAssert("Monster가 존재하지 않습니다.");
 		}
 
+		IsAbsorb = true;
+		Ability = Monster->GetAbility();
+		
 		Monster->Destroy();
 		AbsorbCollision0->ActiveOff();
 		AbsorbCollision1->ActiveOff();
 		AbsorbCollision2->ActiveOff();
 		AbsorbCollision3->ActiveOff();
 
-		IsAbsorb = true;
 		StateChange(EPlayState::Idle);
 		return;
 	}
@@ -1802,7 +1805,7 @@ void APlayer::FallStart()
 	}
 	else
 	{
-		Renderer->ChangeAnimation(GetAnimationName("Brakfall_Absorb"));
+		Renderer->ChangeAnimation(GetAnimationName("Breakfall_Absorb"));
 	}
 
 	FVector Ground = { GetActorLocation().iX(), GetActorLocation().iY() + 100 };
@@ -1963,24 +1966,24 @@ void APlayer::CalMoveVector(float _DeltaTime)
 		MoveVector = FVector::Zero;
 	}
 
+	if (MoveVector.Size2D() >= MoveMaxSpeed)
+	{
+		MoveVector = MoveVector.Normalize2DReturn() * MoveMaxSpeed;
+	}
+
 	if (
 		State == EPlayState::Absorb ||
 		(UEngineInput::IsFree(VK_LEFT) == true && UEngineInput::IsFree(VK_RIGHT) == true)
 		)
 	{
-		if (MoveVector.Size2D() >= 0.001)
+		if (MoveVector.Size2D() <= 0.0f)
 		{
-			MoveVector += (-MoveVector.Normalize2DReturn()) * _DeltaTime * MoveAcc;
+			MoveVector = FVector::Zero;
 		}
 		else
 		{
-			MoveVector = float4::Zero;
+			MoveVector += (-MoveVector.Normalize2DReturn()) * _DeltaTime * MoveAcc;
 		}
-	}
-
-	if (MoveVector.Size2D() >= MoveMaxSpeed)
-	{
-		MoveVector = MoveVector.Normalize2DReturn() * MoveMaxSpeed;
 	}
 }
 
@@ -2090,8 +2093,6 @@ void APlayer::GroundDown()
 
 		if (IsGroundCheck(LeftPos) == false  && IsGroundCheck(RightPos) == false)
 		{
-			bool b1 = IsGroundCheck(LeftPos); 
-			bool b2 = IsGroundCheck(RightPos);
 			AddActorLocation(FVector::Down);
 		}
 		else

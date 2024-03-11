@@ -24,7 +24,9 @@ enum class KirbyCollisionOrder
 enum class EActorDir
 {
 	Left,
-	Right
+	Right,
+	Up,
+	Down
 };
 
 enum class EPlayState
@@ -60,6 +62,7 @@ enum class EMonsterState
 enum class EAbiltyType
 {
 	None,
+	Fire
 };
 
 enum class EGroundType

@@ -1,6 +1,29 @@
 #pragma once
 #include <cmath>
 #include <string>
+#include <Windows.h>
+
+class UEngineMath
+{
+public:
+	UEngineMath();
+	~UEngineMath();
+
+	UEngineMath(const UEngineMath& _Other) = delete;
+	UEngineMath(UEngineMath&& _Other) noexcept = delete;
+	UEngineMath& operator=(const UEngineMath& _Other) = delete;
+	UEngineMath& operator=(UEngineMath&& _Other) noexcept = delete;
+
+	static const float PI;
+	static const float PI2;
+	static const float DToR;
+	static const float RToD;
+
+protected:
+
+private:
+
+};
 
 struct float4
 {
@@ -183,6 +206,16 @@ public:
 		return { hX(), hY() };
 	}
 
+	POINT ConvertToWinApiPOINT()
+	{
+		return { iX(),iY() };
+	}
+
+	std::string ToString()
+	{
+		return "[X : " + std::to_string(X) + " Y : " + std::to_string(Y) + " Z : " + std::to_string(Z) + " W : " + std::to_string(W) + "]";
+	}
+
 	float Size2D()
 	{
 		return std::sqrtf((X * X) + (Y * Y));
@@ -210,9 +243,58 @@ public:
 		return X == 0.0f && Y == 0.0f;
 	}
 
-	std::string ToString()
+	static float4 LerpClamp(float4 p1, float4 p2, float d1)
 	{
-		return "[X : " + std::to_string(X) + " Y : " + std::to_string(Y) + " Z : " + std::to_string(Z) + " W : " + std::to_string(W) + "]";
+		if (d1 <= 0.0f)
+		{
+			d1 = 0.0f;
+		}
+
+		if (d1 >= 1.0f)
+		{
+			d1 = 1.0f;
+		}
+
+		return Lerp(p1, p2, d1);
+	}
+
+	static float4 Lerp(float4 p1, float4 p2, float d1)
+	{
+		return (p1 * (1.0f - d1)) + (p2 * d1);
+	}
+
+
+	void RotationZToDeg(float _Angle)
+	{
+		RotationZToRad(_Angle * UEngineMath::DToR);
+	}
+
+	void RotationZToRad(float _Angle)
+	{
+		*this = VectorRotationZToRad(*this, _Angle);
+		return;
+	}
+
+	static float4 VectorRotationZToDeg(float4 _OriginVector, float _Angle)
+	{
+		return VectorRotationZToRad(_OriginVector, _Angle * UEngineMath::DToR);
+	}
+
+	static float4 VectorRotationZToRad(float4 _OriginVector, float _Angle)
+	{
+		float4 Result;
+		Result.X = (_OriginVector.X * cosf(_Angle)) - (_OriginVector.Y * sinf(_Angle));
+		Result.Y = (_OriginVector.X * sinf(_Angle)) + (_OriginVector.Y * cosf(_Angle));
+		return Result;
+	}
+
+	static float4 DegToDir(float _Angle)
+	{
+		return RadToDir(_Angle * UEngineMath::DToR);
+	}
+	static float4 RadToDir(float _Angle)
+	{
+		return float4(cosf(_Angle), sinf(_Angle));
 	}
 };
 
@@ -274,21 +356,4 @@ public:
 	{
 		return Color8Bit{ R,G,B,0 };
 	}
-};
-
-class EngineMath
-{
-public:
-	EngineMath();
-	~EngineMath();
-
-	EngineMath(const EngineMath& _Other) = delete;
-	EngineMath(EngineMath&& _Other) noexcept = delete;
-	EngineMath& operator=(const EngineMath& _Other) = delete;
-	EngineMath& operator=(EngineMath&& _Other) noexcept = delete;
-
-protected:
-
-private:
-
 };
