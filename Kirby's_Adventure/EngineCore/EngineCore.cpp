@@ -84,6 +84,11 @@ void UEngineCore::CoreTick()
 	CurLevel->LevelRelease(DeltaTime);
 }
 
+void UEngineCore::Exit()
+{
+
+}
+
 void UEngineCore::EngineStart(HINSTANCE _hInstance)
 {
 	GEngine = this;

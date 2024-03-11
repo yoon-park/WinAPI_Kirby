@@ -25,6 +25,7 @@ public:
 	HBITMAP hBitMap;
 	FTransform CuttingTrans;
 	EWIndowImageType ImageType = EWIndowImageType::IMG_NONE;
+	UImageInfo* RotationMaskImage = nullptr;
 };
 
 class UEngineWindow;
@@ -62,8 +63,14 @@ public:
 	void BitCopy(UWindowImage* _CopyImage, FTransform _Trans);
 	void TransCopy(UWindowImage* _CopyImage, const FTransform& _Trans, int _Index, Color8Bit _Color = Color8Bit::Black);
 	void AlphaCopy(UWindowImage* _CopyImage, const FTransform& _Trans, int _Index, Color8Bit _Color = Color8Bit::Black);
-
+	void PlgCopy(UWindowImage* _CopyImage, const FTransform& _Trans, int _Index, float _RadAngle);
 	void TextCopy(const std::string& _Text, const std::string& _Font, float _Size, const FTransform& _Trans, Color8Bit _Color);
+
+	void SetRotationMaskImage(int _Index, UWindowImage* _RotationMaskImage, int _MaskIndex)
+	{
+		UImageInfo& Ref = _RotationMaskImage->Infos[_MaskIndex];
+		Infos[_Index].RotationMaskImage = &Ref;
+	}
 
 protected:
 

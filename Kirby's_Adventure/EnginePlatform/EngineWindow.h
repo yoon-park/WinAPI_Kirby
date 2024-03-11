@@ -47,6 +47,11 @@ public:
 	void ScreenClear();
 	void ScreenUpdate();
 
+	void Off()
+	{
+		WindowLive = false;
+	}
+
 	static void Init(HINSTANCE _hInst);
 	static unsigned __int64 WindowMessageLoop(void(*_Update)(), void(*_End)());
 

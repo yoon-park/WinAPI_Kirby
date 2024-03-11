@@ -2,6 +2,9 @@
 #include <string>
 #include <EngineCore/Level.h>
 
+class ABackGroundMap;
+class AFadeOut;
+
 class UKirbyLevel : public ULevel
 {
 public:
@@ -24,8 +27,9 @@ public:
 	}
 
 protected:
+	ABackGroundMap* Map;
+	AFadeOut* Fade;
 
 private:
 	std::string NextLevel = "";
-
 };

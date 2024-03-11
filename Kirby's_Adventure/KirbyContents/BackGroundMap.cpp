@@ -19,7 +19,7 @@ void ABackGroundMap::SetMapImage(std::string_view _MapImageName)
 	Renderer->SetImage(_MapImageName);
 
 	UWindowImage* Image = Renderer->GetImage();
-	FVector ImageScale = Image->GetScale();
+	ImageScale = Image->GetScale();
 
 	Renderer->SetTransform({ ImageScale.Half2D(), ImageScale });
 }
@@ -30,7 +30,7 @@ void ABackGroundMap::SetColMapImage(std::string_view _MapImageName)
 
 	UWindowImage* Image = ColRenderer->GetImage();
 	UContentsHelper::ColMapImage = Image;
-	FVector ImageScale = Image->GetScale();
+	ImageScale = Image->GetScale();
 
 	ColRenderer->SetTransform({ ImageScale.Half2D(), ImageScale });
 }

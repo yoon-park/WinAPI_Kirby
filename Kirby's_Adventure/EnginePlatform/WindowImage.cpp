@@ -381,6 +381,70 @@ void UWindowImage::AlphaCopy(UWindowImage* _CopyImage, const FTransform& _Trans,
 	);
 }
 
+void UWindowImage::PlgCopy(UWindowImage* _CopyImage, const FTransform& _Trans, int _Index, float _RadAngle)
+{
+	if (_CopyImage == nullptr)
+	{
+		MsgBoxAssert("복사하려는 이미지가 nullptr입니다.");
+	}
+
+	if (_Index >= _CopyImage->Infos.size())
+	{
+		MsgBoxAssert(GetName() + "이미지 정보의 인덱스를 초과했습니다.");
+	}
+
+	UImageInfo& CurInfo = _CopyImage->Infos[_Index];
+	FTransform& ImageTrans = _CopyImage->Infos[_Index].CuttingTrans;
+
+	POINT Arr[3];
+
+	{
+		FTransform Trans = FTransform(float4::Zero, _Trans.GetScale());
+
+		FVector LeftTop = Trans.LeftTop();
+		FVector RightTop = Trans.RightTop();
+		FVector LeftBot = Trans.LeftBottom();
+
+		LeftTop.RotationZToRad(_RadAngle);
+		RightTop.RotationZToRad(_RadAngle);
+		LeftBot.RotationZToRad(_RadAngle);
+
+		LeftTop += _Trans.GetPosition();
+		RightTop += _Trans.GetPosition();
+		LeftBot += _Trans.GetPosition();
+
+		Arr[0] = LeftTop.ConvertToWinApiPOINT();
+		Arr[1] = RightTop.ConvertToWinApiPOINT();
+		Arr[2] = LeftBot.ConvertToWinApiPOINT();
+	}
+
+	int ImageLeft = ImageTrans.GetPosition().iX();
+	int ImageTop = ImageTrans.GetPosition().iY();
+	int ImageScaleX = ImageTrans.GetScale().iX();
+	int ImageScaleY = ImageTrans.GetScale().iY();
+
+	if (CurInfo.RotationMaskImage == nullptr)
+	{
+		MsgBoxAssert("회전시킬 이미지가 존재하지 않습니다.");
+	}
+
+	HDC hdc = ImageDC;
+	HDC hdcSrc = _CopyImage->Infos[_Index].ImageDC;
+
+	PlgBlt(
+		hdc, 							  
+		Arr,
+		hdcSrc,	
+		ImageLeft,   					
+		ImageTop,   					
+		ImageScaleX, 					
+		ImageScaleY, 					
+		CurInfo.RotationMaskImage->hBitMap,
+		ImageLeft,   					
+		ImageTop   						
+	);
+}
+
 void UWindowImage::TextCopy(const std::string& _Text, const std::string& _Font, float _Size, const FTransform& _Trans, Color8Bit _Color/* = Color8Bit::Black*/)
 {
 	Gdiplus::Graphics graphics(ImageDC);

@@ -1,8 +1,6 @@
 #pragma once
 #include "KirbyLevel.h"
 
-class AFadeOut;
-
 class ULevel111 : public UKirbyLevel
 {
 public:
@@ -15,8 +13,6 @@ public:
 	ULevel111& operator=(ULevel111&& _Other) noexcept = delete;
 
 protected:
-	AFadeOut* Fade;
-
 	void BeginPlay() override;
 	void Tick(float _DeltaTime) override;
 

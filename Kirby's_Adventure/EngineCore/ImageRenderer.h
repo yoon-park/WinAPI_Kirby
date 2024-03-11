@@ -96,6 +96,11 @@ public:
 		TransColor.A = static_cast<char>(_Alpha * 255.0f);
 	}
 
+	void SetAngle(float _Angle)
+	{
+		Angle = _Angle;
+	}
+
 	void SetOrder(int _Order) override;
 	void SetImage(std::string_view _Name, int _InfoIndex = 0);
 
@@ -114,6 +119,10 @@ public:
 	void SetTextColor(Color8Bit _Color)
 	{
 		TextColor = _Color;
+	}
+	void SetCameraRatio(float _Ratio)
+	{
+		CameraRatio = _Ratio;
 	}
 
 	void CameraEffectOff()
@@ -158,6 +167,7 @@ private:
 	int InfoIndex = 0;
 	FTransform ImageCuttingTransform;
 	Color8Bit TransColor;
+	float Angle = 0.0f;
 	UWindowImage* Image = nullptr;
 
 	std::string Text = "";
@@ -166,6 +176,7 @@ private:
 	Color8Bit TextColor = Color8Bit::BlackA;
 
 	bool CameraEffect = true;
+	float CameraRatio = 1.0f;
 	UAnimationInfo* CurAnimation = nullptr;
 
 	std::map<std::string, UAnimationInfo> AnimationInfos;

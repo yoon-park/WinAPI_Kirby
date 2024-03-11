@@ -21,6 +21,11 @@ unsigned __int64 UEngineWindow::WindowMessageLoop(void(*_Update)(), void(*_End)(
 		{
 			TranslateMessage(&msg);
 			DispatchMessage(&msg);
+
+			if (WindowLive == false)
+			{
+				break;
+			}
 		}
 
 		if (_Update != nullptr)

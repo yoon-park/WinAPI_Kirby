@@ -61,6 +61,7 @@ FTransform UImageRenderer::GetRenderTransForm()
 		AActor* Actor = GetOwner();
 		ULevel* World = Actor->GetWorld();
 		FVector CameraPos = World->GetCameraPos();
+		CameraPos *= CameraRatio;
 		RendererTrans.AddPosition(-CameraPos);
 	}
 
@@ -229,7 +230,14 @@ void UImageRenderer::ImageRender(float _DeltaTime)
 		GEngine->MainWindow.GetBackBufferImage()->TransCopy(Image, RendererTrans, InfoIndex, TransColor);
 		break;
 	case EWIndowImageType::IMG_PNG:
-		GEngine->MainWindow.GetBackBufferImage()->AlphaCopy(Image, RendererTrans, InfoIndex, TransColor);
+		if (Angle == 0.0f)
+		{
+			GEngine->MainWindow.GetBackBufferImage()->AlphaCopy(Image, RendererTrans, InfoIndex, TransColor);
+		}
+		else
+		{
+			GEngine->MainWindow.GetBackBufferImage()->PlgCopy(Image, RendererTrans, InfoIndex, Angle * UEngineMath::DToR);
+		}
 		break;
 	default:
 		MsgBoxAssert("투명 처리가 불가능한 이미지입니다.");

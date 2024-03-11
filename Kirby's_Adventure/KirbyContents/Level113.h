@@ -1,8 +1,6 @@
 #pragma once
 #include "KirbyLevel.h"
 
-class AFadeOut;
-
 class ULevel113 : public UKirbyLevel
 {
 public:
@@ -22,5 +20,5 @@ protected:
 	void LevelEnd(ULevel* _Level) override;
 
 private:
-	AFadeOut* Fade;
+
 };

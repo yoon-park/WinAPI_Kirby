@@ -12,6 +12,11 @@ public:
 	ABackGroundMap& operator=(const ABackGroundMap& _Other) = delete;
 	ABackGroundMap& operator=(ABackGroundMap&& _Other) noexcept = delete;
 
+	FVector GetImageScale()
+	{
+		return ImageScale;
+	}
+
 	void SetMapImage(std::string_view _MapImageName);
 	void SetColMapImage(std::string_view _MapImageName);
 
@@ -24,4 +29,5 @@ protected:
 private:
 	UImageRenderer* Renderer = nullptr;
 	UImageRenderer* ColRenderer = nullptr;
+	FVector ImageScale;
 };
