@@ -16,9 +16,15 @@ protected:
 	void BeginPlay() override;
 	void Tick(float _DeltaTime) override;
 
-	void MoveStart() override;
+	void IdleStart() override;
+	void JumpStart() override;
+	void BreakfallStart() override;
+	void FallStart() override;
 	void AttackStart() override;
-	void Move(float _DeltaTime) override;
+	void Idle(float _DeltaTime) override;
+	void Jump(float _DeltaTime) override;
+	void Breakfall(float _DeltaTime) override;
+	void Fall(float _DeltaTime) override;
 	void Attack(float _DeltaTime) override;
 
 	void DirCheck() override;

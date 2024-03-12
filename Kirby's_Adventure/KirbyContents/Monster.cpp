@@ -31,8 +31,20 @@ void AMonster::StateChange(EMonsterState _State)
 	{
 		switch (_State)
 		{
+		case EMonsterState::Idle:
+			IdleStart();
+			break;
 		case EMonsterState::Move:
 			MoveStart();
+			break;
+		case EMonsterState::Jump:
+			JumpStart();
+			break;
+		case EMonsterState::Breakfall:
+			BreakfallStart();
+			break;
+		case EMonsterState::Fall:
+			FallStart();
 			break;
 		case EMonsterState::Attack:
 			AttackStart();
@@ -52,8 +64,20 @@ void AMonster::StateUpdate(float _DeltaTime)
 {
 	switch (State)
 	{
+	case EMonsterState::Idle:
+		Idle(_DeltaTime);
+		break;
 	case EMonsterState::Move:
 		Move(_DeltaTime);
+		break;
+	case EMonsterState::Jump:
+		Jump(_DeltaTime);
+		break;
+	case EMonsterState::Breakfall:
+		Breakfall(_DeltaTime);
+		break;
+	case EMonsterState::Fall:
+		Fall(_DeltaTime);
 		break;
 	case EMonsterState::Attack:
 		Attack(_DeltaTime);
@@ -168,7 +192,27 @@ void AMonster::MoveUpdate(float _DeltaTime, bool _IsGravity, bool _IsGroundUp, b
 	}
 }
 
+void AMonster::IdleStart()
+{
+
+}
+
 void AMonster::MoveStart()
+{
+
+}
+
+void AMonster::JumpStart()
+{
+
+}
+
+void AMonster::BreakfallStart()
+{
+
+}
+
+void AMonster::FallStart()
 {
 
 }
@@ -185,7 +229,27 @@ void AMonster::AbsorbStart()
 	GravityVector = FVector::Zero;
 }
 
+void AMonster::Idle(float _DeltaTime)
+{
+
+}
+
 void AMonster::Move(float _DeltaTime)
+{
+
+}
+
+void AMonster::Jump(float _DeltaTime)
+{
+
+}
+
+void AMonster::Breakfall(float _DeltaTime)
+{
+
+}
+
+void AMonster::Fall(float _DeltaTime)
 {
 
 }

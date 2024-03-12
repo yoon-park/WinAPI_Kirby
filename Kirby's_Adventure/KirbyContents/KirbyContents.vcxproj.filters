@@ -3,158 +3,164 @@
   <ItemGroup>
     <ClInclude Include="ContentsCore.h" />
     <ClInclude Include="TitleLevel.h">
-      <Filter>Object\0.Title</Filter>
+      <Filter>Object\TitleLevel</Filter>
     </ClInclude>
     <ClInclude Include="ContentsHelper.h" />
     <ClInclude Include="Level112.h">
-      <Filter>Object\1.VV\Stage\Stage1-2</Filter>
+      <Filter>Object\PlayLevel\Level\Stage1-2</Filter>
     </ClInclude>
     <ClInclude Include="Level113.h">
-      <Filter>Object\1.VV\Stage\Stage1-3</Filter>
+      <Filter>Object\PlayLevel\Level\Stage1-3</Filter>
     </ClInclude>
     <ClInclude Include="TitleKirby.h">
-      <Filter>Object\0.Title</Filter>
+      <Filter>Object\TitleLevel</Filter>
     </ClInclude>
     <ClInclude Include="TitleLogo.h">
-      <Filter>Object\0.Title</Filter>
-    </ClInclude>
-    <ClInclude Include="BackGroundMap.h">
-      <Filter>Object\1.VV\Common</Filter>
-    </ClInclude>
-    <ClInclude Include="HUD.h">
-      <Filter>Object\1.VV\Common</Filter>
+      <Filter>Object\TitleLevel</Filter>
     </ClInclude>
     <ClInclude Include="Player.h">
-      <Filter>Object\1.VV\Common</Filter>
+      <Filter>Object\PlayLevel\Actor\Common</Filter>
     </ClInclude>
     <ClInclude Include="Monster.h">
-      <Filter>Object\1.VV\Common</Filter>
-    </ClInclude>
-    <ClInclude Include="FadeOut.h">
-      <Filter>Object\1.VV\Common</Filter>
+      <Filter>Object\PlayLevel\Actor\Common</Filter>
     </ClInclude>
     <ClInclude Include="Level111.h">
-      <Filter>Object\1.VV\Stage\Stage1-1</Filter>
-    </ClInclude>
-    <ClInclude Include="KirbyLevel.h">
-      <Filter>Object\1.VV\Common</Filter>
+      <Filter>Object\PlayLevel\Level\Stage1-1</Filter>
     </ClInclude>
     <ClInclude Include="WaddleDee.h">
-      <Filter>Object\1.VV\Monster</Filter>
+      <Filter>Object\PlayLevel\Actor\Monster</Filter>
     </ClInclude>
     <ClInclude Include="BrontoBurt.h">
-      <Filter>Object\1.VV\Monster</Filter>
+      <Filter>Object\PlayLevel\Actor\Monster</Filter>
     </ClInclude>
     <ClInclude Include="Burp.h">
-      <Filter>Object\1.VV\Ability</Filter>
+      <Filter>Object\PlayLevel\Actor\Ability</Filter>
     </ClInclude>
     <ClInclude Include="Ability.h">
-      <Filter>Object\1.VV\Common</Filter>
+      <Filter>Object\PlayLevel\Actor\Common</Filter>
     </ClInclude>
     <ClInclude Include="SpitStar.h">
-      <Filter>Object\1.VV\Ability</Filter>
+      <Filter>Object\PlayLevel\Actor\Ability</Filter>
     </ClInclude>
     <ClInclude Include="Sparky.h">
-      <Filter>Object\1.VV\Monster</Filter>
+      <Filter>Object\PlayLevel\Actor\Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="KirbyLevel.h">
+      <Filter>Object\PlayLevel\Level</Filter>
     </ClInclude>
     <ClInclude Include="KirbyActor.h">
-      <Filter>Object\1.VV\Common</Filter>
+      <Filter>Object\PlayLevel\Actor</Filter>
+    </ClInclude>
+    <ClInclude Include="BackGroundMap.h">
+      <Filter>Object\PlayLevel\Actor\Common\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="FadeOut.h">
+      <Filter>Object\PlayLevel\Actor\Common\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="HUD.h">
+      <Filter>Object\PlayLevel\Actor\Common\Map</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ContentsCore.cpp" />
     <ClCompile Include="TitleLevel.cpp">
-      <Filter>Object\0.Title</Filter>
+      <Filter>Object\TitleLevel</Filter>
     </ClCompile>
     <ClCompile Include="ContentsHelper.cpp" />
     <ClCompile Include="Level112.cpp">
-      <Filter>Object\1.VV\Stage\Stage1-2</Filter>
+      <Filter>Object\PlayLevel\Level\Stage1-2</Filter>
     </ClCompile>
     <ClCompile Include="Level113.cpp">
-      <Filter>Object\1.VV\Stage\Stage1-3</Filter>
+      <Filter>Object\PlayLevel\Level\Stage1-3</Filter>
     </ClCompile>
     <ClCompile Include="TitleKirby.cpp">
-      <Filter>Object\0.Title</Filter>
+      <Filter>Object\TitleLevel</Filter>
     </ClCompile>
     <ClCompile Include="TitleLogo.cpp">
-      <Filter>Object\0.Title</Filter>
-    </ClCompile>
-    <ClCompile Include="BackGroundMap.cpp">
-      <Filter>Object\1.VV\Common</Filter>
-    </ClCompile>
-    <ClCompile Include="HUD.cpp">
-      <Filter>Object\1.VV\Common</Filter>
+      <Filter>Object\TitleLevel</Filter>
     </ClCompile>
     <ClCompile Include="Player.cpp">
-      <Filter>Object\1.VV\Common</Filter>
+      <Filter>Object\PlayLevel\Actor\Common</Filter>
     </ClCompile>
     <ClCompile Include="Monster.cpp">
-      <Filter>Object\1.VV\Common</Filter>
-    </ClCompile>
-    <ClCompile Include="FadeOut.cpp">
-      <Filter>Object\1.VV\Common</Filter>
+      <Filter>Object\PlayLevel\Actor\Common</Filter>
     </ClCompile>
     <ClCompile Include="Level111.cpp">
-      <Filter>Object\1.VV\Stage\Stage1-1</Filter>
-    </ClCompile>
-    <ClCompile Include="KirbyLevel.cpp">
-      <Filter>Object\1.VV\Common</Filter>
+      <Filter>Object\PlayLevel\Level\Stage1-1</Filter>
     </ClCompile>
     <ClCompile Include="WaddleDee.cpp">
-      <Filter>Object\1.VV\Monster</Filter>
+      <Filter>Object\PlayLevel\Actor\Monster</Filter>
     </ClCompile>
     <ClCompile Include="BrontoBurt.cpp">
-      <Filter>Object\1.VV\Monster</Filter>
+      <Filter>Object\PlayLevel\Actor\Monster</Filter>
     </ClCompile>
     <ClCompile Include="Burp.cpp">
-      <Filter>Object\1.VV\Ability</Filter>
+      <Filter>Object\PlayLevel\Actor\Ability</Filter>
     </ClCompile>
     <ClCompile Include="Ability.cpp">
-      <Filter>Object\1.VV\Common</Filter>
+      <Filter>Object\PlayLevel\Actor\Common</Filter>
     </ClCompile>
     <ClCompile Include="SpitStar.cpp">
-      <Filter>Object\1.VV\Ability</Filter>
+      <Filter>Object\PlayLevel\Actor\Ability</Filter>
     </ClCompile>
     <ClCompile Include="Sparky.cpp">
-      <Filter>Object\1.VV\Monster</Filter>
+      <Filter>Object\PlayLevel\Actor\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="KirbyLevel.cpp">
+      <Filter>Object\PlayLevel\Level</Filter>
     </ClCompile>
     <ClCompile Include="KirbyActor.cpp">
-      <Filter>Object\1.VV\Common</Filter>
+      <Filter>Object\PlayLevel\Actor</Filter>
+    </ClCompile>
+    <ClCompile Include="BackGroundMap.cpp">
+      <Filter>Object\PlayLevel\Actor\Common\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="FadeOut.cpp">
+      <Filter>Object\PlayLevel\Actor\Common\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="HUD.cpp">
+      <Filter>Object\PlayLevel\Actor\Common\Map</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Object">
       <UniqueIdentifier>{03d5be10-9296-4491-91f9-877d9a0a7d9b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Object\0.Title">
+    <Filter Include="Object\TitleLevel">
       <UniqueIdentifier>{8f652d2c-24f5-40df-98f3-36f1bb61dc47}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Object\1.VV">
+    <Filter Include="Object\PlayLevel">
       <UniqueIdentifier>{7cc9902d-d36f-42c7-a25e-be1208417ea1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Object\1.VV\Common">
-      <UniqueIdentifier>{11753c10-6b05-4d56-b38e-1da0f8d1ec36}</UniqueIdentifier>
+    <Filter Include="Object\PlayLevel\Actor">
+      <UniqueIdentifier>{9b6dbb4f-007a-409a-b989-79a5f38d8d18}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Object\1.VV\Stage">
+    <Filter Include="Object\PlayLevel\Level">
       <UniqueIdentifier>{6294efb0-c323-4b98-872a-38d4a602f1a4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Object\1.VV\Stage\Stage1-1">
+    <Filter Include="Object\PlayLevel\Level\Stage1-1">
       <UniqueIdentifier>{7e69bd9a-8ff0-4958-9d03-c90ab2ccfb26}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Object\1.VV\Stage\Stage1-2">
+    <Filter Include="Object\PlayLevel\Level\Stage1-2">
       <UniqueIdentifier>{16e4b608-2182-46c1-9dda-ddf08a92324a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Object\1.VV\Stage\Stage1-3">
+    <Filter Include="Object\PlayLevel\Level\Stage1-3">
       <UniqueIdentifier>{50e417e5-0c45-4b7a-8b9c-b5a838b0f3ee}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Object\1.VV\Stage\Hub">
+    <Filter Include="Object\PlayLevel\Level\Hub">
       <UniqueIdentifier>{65f0a611-1cae-4790-a1db-3994a32ec924}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Object\1.VV\Monster">
+    <Filter Include="Object\PlayLevel\Actor\Ability">
+      <UniqueIdentifier>{cf9a8f78-2c4b-4920-b654-0032f8aa232a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\PlayLevel\Actor\Common">
+      <UniqueIdentifier>{11753c10-6b05-4d56-b38e-1da0f8d1ec36}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\PlayLevel\Actor\Monster">
       <UniqueIdentifier>{a9c959c4-b2df-4d24-a5ec-2614fc35c1bd}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Object\1.VV\Ability">
-      <UniqueIdentifier>{cf9a8f78-2c4b-4920-b654-0032f8aa232a}</UniqueIdentifier>
+    <Filter Include="Object\PlayLevel\Actor\Common\Map">
+      <UniqueIdentifier>{8c0cbf24-8625-40c2-a8f8-9bc5c530c18c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

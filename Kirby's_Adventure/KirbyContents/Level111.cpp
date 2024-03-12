@@ -99,8 +99,8 @@ void ULevel111::Tick(float _DeltaTime)
 void ULevel111::LevelStart(ULevel* _Level)
 {
 	Map = SpawnActor<ABackGroundMap>();
-	Map->SetMapImage("Stage1-1.png");
-	Map->SetColMapImage("Stage1-1_Col.png");
+	Map->SetMapImage("Stage2-3.png");
+	Map->SetColMapImage("Stage2-3_Col.png");
 
 	Fade = SpawnActor<AFadeOut>();
 	Fade->SetActorLocation({ 400, 375 });

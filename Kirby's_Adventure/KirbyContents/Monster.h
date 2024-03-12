@@ -19,7 +19,7 @@ public:
 protected:
 	EActorDir DirState = EActorDir::Left;
 	EActorDir UpDownDirState = EActorDir::Down;
-	EMonsterState State = EMonsterState::None;
+	EMonsterState State = EMonsterState::Idle;
 	EGroundType GroundType = EGroundType::None;
 	EAbiltyType Ability = EAbiltyType::None;
 	std::string CurAnimationName = "None";
@@ -53,11 +53,19 @@ protected:
 	void AddUpDownMoveVector(const FVector& _DirDelta);
 	void MoveUpdate(float _DeltaTime, bool _IsGravity, bool _IsGroundUp, bool _IsGroundDown);
 
+	virtual void IdleStart();
 	virtual void MoveStart();
+	virtual void JumpStart();
+	virtual void BreakfallStart();
+	virtual void FallStart();
 	virtual void AttackStart();
 	void AbsorbStart();
 
+	virtual void Idle(float _DeltaTime);
 	virtual void Move(float _DeltaTime);
+	virtual void Jump(float _DeltaTime);
+	virtual void Breakfall(float _DeltaTime);
+	virtual void Fall(float _DeltaTime);
 	virtual void Attack(float _DeltaTime);
 	void Absorb(float _DeltaTime);
 

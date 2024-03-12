@@ -21,19 +21,26 @@ void ASparky::BeginPlay()
 		Renderer->SetImage("PowerEnemy1_Left.png");
 		Renderer->SetTransform({ {0,0}, {256, 256} });
 
-		Renderer->CreateAnimation("Run_Left", "PowerEnemy1_Left.png", 10, 12, 0.2f, true);
-		Renderer->CreateAnimation("Run_Right", "PowerEnemy1_Left.png", 10, 12, 0.2f, true);
+		Renderer->CreateAnimation("Jump_Left", "PowerEnemy1_Left.png", 10, 12, 0.2f, true);
+		Renderer->CreateAnimation("Jump_Right", "PowerEnemy1_Left.png", 10, 12, 0.2f, true);
+		Renderer->CreateAnimation("Attack_Left", "PowerEnemy1_Left.png", 10, 12, 0.2f, true);
+		Renderer->CreateAnimation("Attack_Right", "PowerEnemy1_Left.png", 10, 12, 0.2f, true);
 	}
 	{
 		BodyCollision = CreateCollision(KirbyCollisionOrder::Monster);
 		BodyCollision->SetColType(ECollisionType::Rect);
 		BodyCollision->SetTransform({ {0, -25}, {50, 50} });
 	}
+	{
+		DetectCollision = CreateCollision(KirbyCollisionOrder::Detect);
+		BodyCollision->SetColType(ECollisionType::Rect);
+		BodyCollision->SetTransform({ {0, -75}, {300, 150} });
+	}
 
 	SetAbility(EAbiltyType::Spark);
 	SetMoveMaxSpeed(100.0f);
 
-	StateChange(EMonsterState::Move);
+	StateChange(EMonsterState::Jump);
 }
 
 void ASparky::Tick(float _DeltaTime)
@@ -41,17 +48,45 @@ void ASparky::Tick(float _DeltaTime)
 	AMonster::Tick(_DeltaTime);
 }
 
-void ASparky::MoveStart()
+void ASparky::IdleStart()
+{
+
+}
+
+void ASparky::JumpStart()
 {
 	AMonster::MoveStart();
 
-	Renderer->ChangeAnimation(GetAnimationName("Run"));
+	Renderer->ChangeAnimation(GetAnimationName("Jump"));
 	DirCheck();
 }
 
-void ASparky::Move(float _DeltaTime)
+void ASparky::BreakfallStart()
 {
-	AMonster::Move(_DeltaTime);
+
+}
+
+void ASparky::FallStart()
+{
+
+}
+
+void ASparky::AttackStart()
+{
+	AMonster::AttackStart();
+
+	Renderer->ChangeAnimation(GetAnimationName("Attack"));
+	DirCheck();
+}
+
+void ASparky::Idle(float _DeltaTime)
+{
+
+}
+
+void ASparky::Jump(float _DeltaTime)
+{
+	AMonster::Jump(_DeltaTime);
 
 	if (AbsorbCheck() == true)
 	{
@@ -85,6 +120,21 @@ void ASparky::Move(float _DeltaTime)
 	{
 		MoveUpdate(_DeltaTime, true, true, true);
 	}
+}
+
+void ASparky::Breakfall(float _DeltaTime)
+{
+
+}
+
+void ASparky::Fall(float _DeltaTime)
+{
+
+}
+
+void ASparky::Attack(float _DeltaTime)
+{
+
 }
 
 void ASparky::DirCheck()

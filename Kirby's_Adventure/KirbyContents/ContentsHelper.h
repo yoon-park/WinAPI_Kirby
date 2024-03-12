@@ -63,8 +63,11 @@ enum class EPlayState
 
 enum class EMonsterState
 {
-	None,
+	Idle,
 	Move,
+	Jump,
+	Breakfall,
+	Fall,
 	Attack,
 	Absorb,
 };
