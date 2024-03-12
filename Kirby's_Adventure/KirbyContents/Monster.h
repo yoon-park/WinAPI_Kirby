@@ -1,8 +1,8 @@
 #pragma once
-#include <EngineCore\Actor.h>
+#include "KirbyActor.h"
 #include "ContentsHelper.h"
 
-class AMonster : public AActor
+class AMonster : public AKirbyActor
 {
 public:
 	AMonster();
@@ -13,6 +13,7 @@ public:
 	AMonster& operator=(const AMonster& _Other) = delete;
 	AMonster& operator=(AMonster&& _Other) noexcept = delete;
 
+	EActorDir GetDirState() const;
 	EAbiltyType GetAbility() const;
 
 protected:
@@ -26,6 +27,7 @@ protected:
 	UImageRenderer* Renderer = nullptr;
 	UImageRenderer* AttackRenderer = nullptr;
 	UCollision* BodyCollision = nullptr;
+	UCollision* DetectCollision = nullptr;
 	UCollision* AttackCollision = nullptr;
 
 	float MoveTimer = 0.0f;
@@ -59,7 +61,7 @@ protected:
 	virtual void Attack(float _DeltaTime);
 	void Absorb(float _DeltaTime);
 
-	void DirCheck();
+	virtual void DirCheck();
 	virtual void UpDownDirCheck();
 	void GroundTypeCheck();
 	bool IsGroundCheck(FVector _Pos);

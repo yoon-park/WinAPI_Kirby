@@ -18,11 +18,11 @@ void ASparky::BeginPlay()
 
 	{
 		Renderer = CreateImageRenderer(KirbyRenderOrder::Monster);
-		Renderer->SetImage("NormalEnemy_Left.png");
+		Renderer->SetImage("PowerEnemy1_Left.png");
 		Renderer->SetTransform({ {0,0}, {256, 256} });
 
-		Renderer->CreateAnimation("Run_Left", "NormalEnemy_Left.png", 0, 1, 0.15f, true);
-		Renderer->CreateAnimation("Run_Right", "NormalEnemy_Right.png", 0, 1, 0.15f, true);
+		Renderer->CreateAnimation("Run_Left", "PowerEnemy1_Left.png", 10, 12, 0.2f, true);
+		Renderer->CreateAnimation("Run_Right", "PowerEnemy1_Left.png", 10, 12, 0.2f, true);
 	}
 	{
 		BodyCollision = CreateCollision(KirbyCollisionOrder::Monster);
@@ -85,4 +85,34 @@ void ASparky::Move(float _DeltaTime)
 	{
 		MoveUpdate(_DeltaTime, true, true, true);
 	}
+}
+
+void ASparky::DirCheck()
+{
+	EActorDir Dir = DirState;
+
+	APlayer* Player = APlayer::GetMainPlayer();
+
+	FVector PlayerPos = Player->GetActorLocation();
+	FVector MonsterPos = GetActorLocation();
+
+	FVector MonsterDir = PlayerPos - MonsterPos;
+
+	if (MonsterDir.X < 0)
+	{
+		Dir = EActorDir::Left;
+	}
+	else if (MonsterDir.X > 0)
+	{
+		Dir = EActorDir::Right;
+	}
+
+	if (Dir != DirState)
+	{
+		DirState = Dir;
+		std::string Name = GetAnimationName(CurAnimationName);
+		Renderer->ChangeAnimation(Name, true, Renderer->GetCurAnimationFrame(), Renderer->GetCurAnimationTime());
+	}
+
+	AMonster::DirCheck();
 }

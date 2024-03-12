@@ -1,8 +1,8 @@
 #pragma once
-#include <EngineCore/Actor.h>
+#include "KirbyActor.h"
 #include "Player.h"
 
-class AAbility : public AActor
+class AAbility : public AKirbyActor
 {
 public:
 	AAbility();
@@ -13,10 +13,18 @@ public:
 	AAbility& operator=(const AAbility& _Other) = delete;
 	AAbility& operator=(AAbility&& _Other) noexcept = delete;
 
+	void SetOwner(AKirbyActor* _Owner)
+	{
+		Owner = _Owner;
+	}
+
+	virtual void SetDirState(EActorDir _DirState);
+
 protected:
 	UImageRenderer* Renderer = nullptr;
 	UCollision* AttackCollision = nullptr;
 
+	AKirbyActor* Owner = nullptr;
 	EActorDir DirState = EActorDir::Right;
 	std::string CurAnimationName = "None";
 	

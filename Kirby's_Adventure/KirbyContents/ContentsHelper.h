@@ -16,9 +16,11 @@ enum class KirbyRenderOrder
 enum class KirbyCollisionOrder
 {
 	Monster,
+	MonsterAbilty,
 	PlayerAbsorb,
 	PlayerAbility,
 	Player,
+	Detect
 };
 
 enum class EActorDir
@@ -27,6 +29,14 @@ enum class EActorDir
 	Right,
 	Up,
 	Down
+};
+
+enum class EActorType
+{
+	None,
+	Player,
+	Monster,
+	Ability,
 };
 
 enum class EPlayState

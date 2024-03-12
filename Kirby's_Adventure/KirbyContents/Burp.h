@@ -12,6 +12,8 @@ public:
 	ABurp& operator=(const ABurp& _Other) = delete;
 	ABurp& operator=(ABurp&& _Other) noexcept = delete;
 
+	void SetDirState(EActorDir _DirState) override;
+
 protected:
 	void BeginPlay() override;
 	void Tick(float _DeltaTime) override;

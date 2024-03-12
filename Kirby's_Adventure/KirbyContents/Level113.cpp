@@ -71,6 +71,7 @@ void ULevel113::LevelStart(ULevel* _Level)
 
 	APlayer* Kirby = SpawnActor<APlayer>();
 	Kirby->SetName("Kirby");
+	Kirby->SetActorType(EActorType::Player);
 	Kirby->SetActorLocation({ 200, 200 });
 }
 

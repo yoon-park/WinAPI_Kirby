@@ -1,8 +1,8 @@
 #pragma once
-#include <EngineCore\Actor.h>
+#include "KirbyActor.h"
 #include "ContentsHelper.h"
 
-class APlayer : public AActor
+class APlayer : public AKirbyActor
 {
 public:
 	APlayer();
@@ -15,7 +15,7 @@ public:
 
 	static APlayer* GetMainPlayer();
 
-	EActorDir GetDirState();
+	EActorDir GetDirState() const;
 
 protected:
 	EActorDir DirState = EActorDir::Right;

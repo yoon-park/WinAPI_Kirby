@@ -12,6 +12,8 @@ public:
 	ASpitStar& operator=(const ASpitStar& _Other) = delete;
 	ASpitStar& operator=(ASpitStar&& _Other) noexcept = delete;
 
+	void SetDirState(EActorDir _DirState) override;
+
 protected:
 	void BeginPlay() override;
 	void Tick(float _DeltaTime) override;

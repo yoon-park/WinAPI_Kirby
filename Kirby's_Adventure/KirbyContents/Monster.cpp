@@ -404,6 +404,11 @@ std::string AMonster::GetAnimationName(std::string _Name)
 	return _Name + DirName;
 }
 
+EActorDir AMonster::GetDirState() const
+{
+	return DirState;
+}
+
 EAbiltyType AMonster::GetAbility() const
 {
 	return Ability;

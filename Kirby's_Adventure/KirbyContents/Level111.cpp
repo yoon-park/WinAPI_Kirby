@@ -4,13 +4,14 @@
 #include <EngineBase\EngineFile.h>
 #include <EnginePlatform/EngineInput.h>
 #include <EngineCore\EngineResourcesManager.h>
+#include "Level112.h"
 #include "BackGroundMap.h"
 #include "HUD.h"
+#include "FadeOut.h"
 #include "Player.h"
 #include "WaddleDee.h"
 #include "BrontoBurt.h"
-#include "FadeOut.h"
-#include "Level112.h"
+#include "Sparky.h"
 
 ULevel111::ULevel111()
 {
@@ -110,15 +111,23 @@ void ULevel111::LevelStart(ULevel* _Level)
 
 	APlayer* Kirby = SpawnActor<APlayer>();
 	Kirby->SetName("Kirby");
+	Kirby->SetActorType(EActorType::Player);
 	Kirby->SetActorLocation({ 200, 200 });
 
 	AWaddleDee* WaddleDee = SpawnActor<AWaddleDee>();
 	WaddleDee->SetName("WaddleDee");
+	WaddleDee->SetActorType(EActorType::Monster);
 	WaddleDee->SetActorLocation({ 1500, 350 });
 
 	ABrontoBurt* BrontoBurt = SpawnActor<ABrontoBurt>();
 	BrontoBurt->SetName("BrontoBurt");
+	BrontoBurt->SetActorType(EActorType::Monster);
 	BrontoBurt->SetActorLocation({ 2000, 200 });
+
+	ASparky* Sparky = SpawnActor<ASparky>();
+	Sparky->SetName("Sparky");
+	Sparky->SetActorType(EActorType::Monster);
+	Sparky->SetActorLocation({ 500, 350 });
 }
 
 void ULevel111::LevelEnd(ULevel* _Level)

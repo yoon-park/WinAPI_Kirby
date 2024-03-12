@@ -17,7 +17,11 @@ protected:
 	void Tick(float _DeltaTime) override;
 
 	void MoveStart() override;
+	void AttackStart() override;
 	void Move(float _DeltaTime) override;
+	void Attack(float _DeltaTime) override;
+
+	void DirCheck() override;
 
 private:
 

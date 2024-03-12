@@ -152,7 +152,7 @@ void APlayer::Tick(float _DeltaTime)
 	StateUpdate(_DeltaTime);
 }
 
-EActorDir APlayer::GetDirState()
+EActorDir APlayer::GetDirState() const
 {
 	return DirState;
 }
@@ -1880,7 +1880,10 @@ void APlayer::SpitFlyStart()
 	DirCheck();
 
 	ABurp* Burp = GetWorld()->SpawnActor<ABurp>();
+	Burp->SetOwner(this);
+	Burp->SetActorType(EActorType::Ability);
 	Burp->SetActorLocation({ GetActorLocation().X, GetActorLocation().Y - 5 });
+	Burp->SetDirState(GetDirState());
 }
 
 void APlayer::AbsorbStart()
@@ -1945,7 +1948,10 @@ void APlayer::SpitStart()
 	DirCheck();
 
 	ASpitStar* SpitStar = GetWorld()->SpawnActor<ASpitStar>();
+	SpitStar->SetOwner(this);
+	SpitStar->SetActorType(EActorType::Ability);
 	SpitStar->SetActorLocation({ GetActorLocation().X, GetActorLocation().Y - 5 });
+	SpitStar->SetDirState(GetDirState());
 }
 
 void APlayer::DoorStart()

@@ -31,16 +31,6 @@ void ASpitStar::BeginPlay()
 		AttackCollision->SetColType(ECollisionType::Rect);
 		AttackCollision->SetTransform({ {0, -25}, { 50, 50 } });
 	}
-
-	DirCheck();
-	if (DirState == EActorDir::Left)
-	{
-		MoveVector = FVector::Left * 650.0f;
-	}
-	else if (DirState == EActorDir::Right)
-	{
-		MoveVector = FVector::Right * 650.0f;
-	}
 }
 
 void ASpitStar::Tick(float _DeltaTime)
@@ -106,4 +96,18 @@ bool ASpitStar::IsWallCheck()
 	}
 
 	return false;
+}
+
+void ASpitStar::SetDirState(EActorDir _DirState)
+{
+	AAbility::SetDirState(_DirState);
+
+	if (DirState == EActorDir::Left)
+	{
+		MoveVector = FVector::Left * 650.0f;
+	}
+	else if (DirState == EActorDir::Right)
+	{
+		MoveVector = FVector::Right * 650.0f;
+	}
 }

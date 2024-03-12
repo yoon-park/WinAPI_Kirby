@@ -1,5 +1,7 @@
 #include "Ability.h"
 
+#include "Monster.h"
+
 AAbility::AAbility()
 {
 
@@ -24,14 +26,33 @@ void AAbility::DirCheck()
 {
 	EActorDir Dir = DirState;
 
-	if (APlayer::GetMainPlayer()->GetDirState() == EActorDir::Left)
+	if (Owner->GetActorType() == EActorType::Player)
 	{
-		Dir = EActorDir::Left;
-	}
+		APlayer* Player = APlayer::GetMainPlayer();
 
-	if (APlayer::GetMainPlayer()->GetDirState() == EActorDir::Right)
+		if (Player->GetDirState() == EActorDir::Left)
+		{
+			Dir = EActorDir::Left;
+		}
+
+		if (Player->GetDirState() == EActorDir::Right)
+		{
+			Dir = EActorDir::Right;
+		}
+	}
+	else if (Owner->GetActorType() == EActorType::Monster)
 	{
-		Dir = EActorDir::Right;
+		AMonster* Monster = dynamic_cast<AMonster*>(Owner);
+
+		if (Monster->GetDirState() == EActorDir::Left)
+		{
+			Dir = EActorDir::Left;
+		}
+
+		if (Monster->GetDirState() == EActorDir::Right)
+		{
+			Dir = EActorDir::Right;
+		}
 	}
 
 	if (Dir != DirState)
@@ -66,4 +87,12 @@ std::string AAbility::GetAnimationName(std::string _Name)
 	CurAnimationName = _Name;
 
 	return _Name + DirName;
+}
+
+void AAbility::SetDirState(EActorDir _DirState)
+{
+	DirState = _DirState;
+
+	std::string Name = GetAnimationName(CurAnimationName);
+	Renderer->ChangeAnimation(Name, true, Renderer->GetCurAnimationFrame(), Renderer->GetCurAnimationTime());
 }

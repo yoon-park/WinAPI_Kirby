@@ -1,7 +1,7 @@
 #pragma once
-#include <EngineCore\Actor.h>
+#include "KirbyActor.h"
 
-class AHUD : public AActor
+class AHUD : public AKirbyActor
 {
 public:
 	AHUD();

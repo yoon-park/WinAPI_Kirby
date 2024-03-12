@@ -1,7 +1,7 @@
 #pragma once
-#include <EngineCore\Actor.h>
+#include "KirbyActor.h"
 
-class ABackGroundMap : public AActor
+class ABackGroundMap : public AKirbyActor
 {
 public:
 	ABackGroundMap();

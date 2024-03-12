@@ -1,5 +1,5 @@
 #pragma once
-#include "EngineCore/Actor.h"
+#include "KirbyActor.h"
 
 enum class FadeOption
 {
@@ -7,7 +7,7 @@ enum class FadeOption
 	FadeOut,
 };
 
-class AFadeOut : public AActor
+class AFadeOut : public AKirbyActor
 {
 public:
 	AFadeOut();

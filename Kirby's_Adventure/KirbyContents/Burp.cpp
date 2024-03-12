@@ -31,18 +31,6 @@ void ABurp::BeginPlay()
 		AttackCollision->SetColType(ECollisionType::Rect);
 		AttackCollision->SetTransform({ {0, -24}, { 50, 47 } });
 	}
-
-	DirCheck();
-	if (DirState == EActorDir::Left)
-	{
-		MoveVector = FVector::Left * 1000.0f;
-		MoveAcc = FVector::Right * 2500.0f;
-	}
-	else if (DirState == EActorDir::Right)
-	{
-		MoveVector = FVector::Right * 1000.0f;
-		MoveAcc = FVector::Left * 2500.0f;
-	}
 }
 
 void ABurp::Tick(float _DeltaTime)
@@ -113,4 +101,20 @@ bool ABurp::IsWallCheck()
 	}
 
 	return false;
+}
+
+void ABurp::SetDirState(EActorDir _DirState)
+{
+	AAbility::SetDirState(_DirState);
+
+	if (DirState == EActorDir::Left)
+	{
+		MoveVector = FVector::Left * 1000.0f;
+		MoveAcc = FVector::Right * 2500.0f;
+	}
+	else if (DirState == EActorDir::Right)
+	{
+		MoveVector = FVector::Right * 1000.0f;
+		MoveAcc = FVector::Left * 2500.0f;
+	}
 }
