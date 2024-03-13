@@ -7,6 +7,7 @@ enum class KirbyRenderOrder
 {
 	Map,
 	HUD,
+	Effect,
 	Monster,
 	Player,
 	Ability,

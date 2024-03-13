@@ -63,6 +63,9 @@
     <ClInclude Include="Ability.h">
       <Filter>Object\PlayLevel\Actor\Common</Filter>
     </ClInclude>
+    <ClInclude Include="Effect.h">
+      <Filter>Object\PlayLevel\Actor\Common</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ContentsCore.cpp" />
@@ -125,6 +128,9 @@
       <Filter>Object\PlayLevel\Actor\Ability</Filter>
     </ClCompile>
     <ClCompile Include="Ability.cpp">
+      <Filter>Object\PlayLevel\Actor\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="Effect.cpp">
       <Filter>Object\PlayLevel\Actor\Common</Filter>
     </ClCompile>
   </ItemGroup>
