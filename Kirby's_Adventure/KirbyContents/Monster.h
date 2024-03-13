@@ -19,7 +19,7 @@ public:
 protected:
 	EActorDir DirState = EActorDir::Left;
 	EActorDir UpDownDirState = EActorDir::Down;
-	EMonsterState State = EMonsterState::Idle;
+	EMonsterState State = EMonsterState::None;
 	EGroundType GroundType = EGroundType::None;
 	EAbiltyType Ability = EAbiltyType::None;
 	std::string CurAnimationName = "None";
@@ -31,12 +31,13 @@ protected:
 	UCollision* AttackCollision = nullptr;
 
 	float MoveTimer = 0.0f;
-	FVector MoveAcc = FVector::Right * 1000.0f;
+	FVector MoveAcc = FVector::Right * 300.0f;
 	FVector UpDownMoveAcc = FVector::Down * 1000.0f;
 	float MoveMaxSpeed = 100.0f;
-	FVector JumpPower = FVector::Up * 350.0f;
+	FVector JumpPower = FVector::Up * 500.0f;
 	FVector GravityAcc = FVector::Down * 2500.0f;
 	float GravityMaxSpeed = 1500.0f;
+	float AttackTimer = 0.0f;
 
 	FVector MoveVector = FVector::Zero;
 	FVector JumpVector = FVector::Zero;
@@ -59,7 +60,7 @@ protected:
 	virtual void BreakfallStart();
 	virtual void FallStart();
 	virtual void AttackStart();
-	void AbsorbStart();
+	virtual void AbsorbStart();
 
 	virtual void Idle(float _DeltaTime);
 	virtual void Move(float _DeltaTime);
@@ -67,7 +68,7 @@ protected:
 	virtual void Breakfall(float _DeltaTime);
 	virtual void Fall(float _DeltaTime);
 	virtual void Attack(float _DeltaTime);
-	void Absorb(float _DeltaTime);
+	virtual void Absorb(float _DeltaTime);
 
 	virtual void DirCheck();
 	virtual void UpDownDirCheck();
@@ -75,11 +76,14 @@ protected:
 	bool IsGroundCheck(FVector _Pos);
 	bool IsWallCheck();
 	bool AbsorbCheck();
+	bool DetectCheck();
 	std::string GetAnimationName(std::string _Name);
 
 	void SetAbility(EAbiltyType _Ability);
 	void SetMoveTimer(float _MoveTimer);
 	void SetMoveMaxSpeed(float _MoveMaxSpeed);
+	void SetJumpPower(FVector _JumpPower);
+	void SetAttackTimer(float _AttackTimer);
 
 private:
 

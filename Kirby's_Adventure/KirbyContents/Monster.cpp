@@ -104,7 +104,7 @@ void AMonster::MoveUpdate(float _DeltaTime, bool _IsGravity, bool _IsGroundUp, b
 {
 	GroundTypeCheck();
 
-	if (IsWallCheck() == true)
+	if (IsWallCheck() == true || MoveVector.Size2D() < 0.0f)
 	{
 		MoveVector = FVector::Zero;
 	}
@@ -447,6 +447,26 @@ bool AMonster::AbsorbCheck()
 	return false;
 }
 
+bool AMonster::DetectCheck()
+{
+	std::vector<UCollision*> Result;
+	if (DetectCollision->CollisionCheck(KirbyCollisionOrder::Player, Result) == true)
+	{
+		UCollision* Collision = Result[0];
+		AActor* Ptr = Collision->GetOwner();
+		APlayer* Player = dynamic_cast<APlayer*>(Ptr);
+
+		if (Player == nullptr)
+		{
+			MsgBoxAssert("Player가 존재하지 않습니다.");
+		}
+
+		return true;
+	}
+
+	return false;
+}
+
 std::string AMonster::GetAnimationName(std::string _Name)
 {
 	std::string DirName = "";
@@ -491,4 +511,14 @@ void AMonster::SetMoveTimer(float _MoveTimer)
 void AMonster::SetMoveMaxSpeed(float _MoveMaxSpeed)
 {
 	MoveMaxSpeed = _MoveMaxSpeed;
+}
+
+void AMonster::SetJumpPower(FVector _JumpPower)
+{
+	JumpPower = _JumpPower;
+}
+
+void AMonster::SetAttackTimer(float _AttackTimer)
+{
+	AttackTimer = _AttackTimer;
 }

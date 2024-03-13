@@ -59,6 +59,7 @@ void APlayer::BeginPlay()
 		Renderer->CreateAnimation("Crouch_SlopeDown_Right", "Kirby1_Right.png", 13, 13, 0.07f, true);
 		Renderer->CreateAnimation("Crouch_ScarpUp_Right", "Kirby1_Right.png", 21, 21, 0.07f, true);
 		Renderer->CreateAnimation("Crouch_ScarpDown_Right", "Kirby1_Right.png", 22, 22, 0.07f, true);
+		Renderer->CreateAnimation("Slide_Right", "Kirby1_Right.png", 9, 9, 0.5f, false);
 		Renderer->CreateAnimation("Squeeze_Right", "Kirby1_Right.png", 7, 7, 0.1f, false);
 		Renderer->CreateAnimation("Absorb_Fly_Right", "Kirby1_Right.png", 29, 32, 0.1f, false);
 		Renderer->CreateAnimation("Fly_Right", "Kirby1_Right.png", 33, 34, 0.5f, true);
@@ -98,6 +99,7 @@ void APlayer::BeginPlay()
 		Renderer->CreateAnimation("Crouch_SlopeDown_Left", "Kirby1_Left.png", 13, 13, 0.07f, true);
 		Renderer->CreateAnimation("Crouch_ScarpUp_Left", "Kirby1_Left.png", 21, 21, 0.07f, true);
 		Renderer->CreateAnimation("Crouch_ScarpDown_Left", "Kirby1_Left.png", 22, 22, 0.07f, true);
+		Renderer->CreateAnimation("Slide_Left", "Kirby1_Left.png", 9, 9, 0.5f, false);
 		Renderer->CreateAnimation("Squeeze_Left", "Kirby1_Left.png", 7, 7, 0.1f, false);
 		Renderer->CreateAnimation("Absorb_Fly_Left", "Kirby1_Left.png", 29, 32, 0.1f, false);
 		Renderer->CreateAnimation("Fly_Left", "Kirby1_Left.png", 33, 34, 0.5f, true);
@@ -423,6 +425,9 @@ void APlayer::StateUpdate(float _DeltaTime)
 	case EPlayState::Crouch:
 		Crouch(_DeltaTime);
 		break;
+	case EPlayState::Slide:
+		Slide(_DeltaTime);
+		break;
 	case EPlayState::Squeeze:
 		Squeeze(_DeltaTime);
 		break;
@@ -440,6 +445,9 @@ void APlayer::StateUpdate(float _DeltaTime)
 		break;
 	case EPlayState::Spit:
 		Spit(_DeltaTime);
+		break;
+	case EPlayState::Attack:
+		Attack(_DeltaTime);
 		break;
 	case EPlayState::Door:
 		Door(_DeltaTime);
@@ -479,6 +487,9 @@ void APlayer::StateChange(EPlayState _State)
 		case EPlayState::Crouch:
 			CrouchStart();
 			break;
+		case EPlayState::Slide:
+			SlideStart();
+			break;
 		case EPlayState::Squeeze:
 			SqueezeStart();
 			break;
@@ -496,6 +507,9 @@ void APlayer::StateChange(EPlayState _State)
 			break;
 		case EPlayState::Spit:
 			SpitStart();
+			break;
+		case EPlayState::Attack:
+			AttackStart();
 			break;
 		case EPlayState::Door:
 			DoorStart();
@@ -637,8 +651,16 @@ void APlayer::Idle(float _DeltaTime)
 	{
 		if (UEngineInput::IsDown('Z'))
 		{
-			StateChange(EPlayState::Absorb);
-			return;
+			if (Ability_Active == EAbiltyType::None)
+			{
+				StateChange(EPlayState::Absorb);
+				return;
+			}
+			else
+			{
+				StateChange(EPlayState::Attack);
+				return;
+			}
 		}
 
 		if (UEngineInput::IsPress(VK_DOWN))
@@ -814,8 +836,16 @@ void APlayer::Run(float _DeltaTime)
 	{
 		if (UEngineInput::IsDown('Z'))
 		{
-			StateChange(EPlayState::Absorb);
-			return;
+			if (Ability_Active == EAbiltyType::None)
+			{
+				StateChange(EPlayState::Absorb);
+				return;
+			}
+			else
+			{
+				StateChange(EPlayState::Attack);
+				return;
+			}
 		}
 
 		if (UEngineInput::IsPress(VK_DOWN))
@@ -997,8 +1027,16 @@ void APlayer::Dash(float _DeltaTime)
 	{
 		if (UEngineInput::IsDown('Z'))
 		{
-			StateChange(EPlayState::Absorb);
-			return;
+			if (Ability_Active == EAbiltyType::None)
+			{
+				StateChange(EPlayState::Absorb);
+				return;
+			}
+			else
+			{
+				StateChange(EPlayState::Attack);
+				return;
+			}
 		}
 
 		if (UEngineInput::IsPress(VK_DOWN))
@@ -1109,8 +1147,16 @@ void APlayer::Jump(float _DeltaTime)
 	{
 		if (UEngineInput::IsDown('Z'))
 		{
-			StateChange(EPlayState::Absorb);
-			return;
+			if (Ability_Active == EAbiltyType::None)
+			{
+				StateChange(EPlayState::Absorb);
+				return;
+			}
+			else
+			{
+				StateChange(EPlayState::Attack);
+				return;
+			}
 		}
 
 		if (UEngineInput::IsDown(VK_UP))
@@ -1199,8 +1245,16 @@ void APlayer::Breakfall(float _DeltaTime)
 
 		if (UEngineInput::IsDown('Z'))
 		{
-			StateChange(EPlayState::Absorb);
-			return;
+			if (Ability_Active == EAbiltyType::None)
+			{
+				StateChange(EPlayState::Absorb);
+				return;
+			}
+			else
+			{
+				StateChange(EPlayState::Attack);
+				return;
+			}
 		}
 
 		if (UEngineInput::IsDown(VK_UP))
@@ -1355,10 +1409,20 @@ void APlayer::Crouch(float _DeltaTime)
 
 	if (UEngineInput::IsDown('X') || UEngineInput::IsDown('Z'))
 	{
-
+		StateChange(EPlayState::Slide);
+		return;
 	}
 
 	MoveUpdate(_DeltaTime);
+}
+
+void APlayer::Slide(float _DeltaTime)
+{
+	if (Renderer->IsCurAnimationEnd())
+	{
+		StateChange(EPlayState::Idle);
+		return;
+	}
 }
 
 void APlayer::Squeeze(float _DeltaTime)
@@ -1504,8 +1568,11 @@ void APlayer::Absorb(float _DeltaTime)
 		}
 
 		IsAbsorb = true;
-		Ability = Monster->GetAbility();
-		
+		if (Monster->GetAbility() != EAbiltyType::None)
+		{
+			Ability_Absorb = Monster->GetAbility();
+		}
+
 		Monster->Destroy();
 		AbsorbCollision0->ActiveOff();
 		AbsorbCollision1->ActiveOff();
@@ -1516,32 +1583,35 @@ void APlayer::Absorb(float _DeltaTime)
 		return;
 	}
 
-	if (UEngineInput::IsFree('Z'))
+	if (
+		AbsorbCollision3->CollisionCheck(KirbyCollisionOrder::Monster, Result) == false &&
+		AbsorbCollision2->CollisionCheck(KirbyCollisionOrder::Monster, Result) == false &&
+		AbsorbCollision1->CollisionCheck(KirbyCollisionOrder::Monster, Result) == false &&
+		AbsorbCollision0->CollisionCheck(KirbyCollisionOrder::Monster, Result) == false
+		)
 	{
-		AbsorbCollision0->ActiveOff();
-		AbsorbCollision1->ActiveOff();
-		AbsorbCollision2->ActiveOff();
-		AbsorbCollision3->ActiveOff();
-		Renderer->ChangeAnimation(GetAnimationName("AbsorbFail"));
-		if (Renderer->IsCurAnimationEnd())
+		if (UEngineInput::IsFree('Z'))
 		{
-			if (IsGroundCheck(Pos) == true)
+			AbsorbCollision0->ActiveOff();
+			AbsorbCollision1->ActiveOff();
+			AbsorbCollision2->ActiveOff();
+			AbsorbCollision3->ActiveOff();
+
+			Renderer->ChangeAnimation(GetAnimationName("AbsorbFail"));
+			if (Renderer->IsCurAnimationEnd())
 			{
-				StateChange(EPlayState::Idle);
-				return;
-			}
-			else
-			{
-				StateChange(EPlayState::Breakfall);
-				return;
+				if (IsGroundCheck(Pos) == true)
+				{
+					StateChange(EPlayState::Idle);
+					return;
+				}
+				else
+				{
+					StateChange(EPlayState::Breakfall);
+					return;
+				}
 			}
 		}
-	}
-
-	if (UEngineInput::IsDown(VK_DOWN))
-	{
-		StateChange(EPlayState::Digest);
-		return;
 	}
 
 	if (IsGroundCheck(Pos) == true)
@@ -1559,7 +1629,8 @@ void APlayer::Digest(float _DeltaTime)
 	{
 		IsAbsorb = false;
 
-		StateChange(EPlayState::Idle);
+		StateChange(EPlayState::Attack);
+		return;
 	}
 
 	MoveUpdate(_DeltaTime, true, true, false);
@@ -1594,6 +1665,14 @@ void APlayer::Spit(float _DeltaTime)
 	}
 
 	MoveUpdate(_DeltaTime, true, false, false);
+}
+
+void APlayer::Attack(float _DeltaTime)
+{
+	if (Ability_Active == EAbiltyType::Spark)
+	{
+		
+	}
 }
 
 void APlayer::Door(float _DeltaTime)
@@ -1851,6 +1930,13 @@ void APlayer::CrouchStart()
 	DirCheck();
 }
 
+void APlayer::SlideStart()
+{
+	Renderer->ChangeAnimation(GetAnimationName("Slide"));
+	DashOff();
+	DirCheck();
+}
+
 void APlayer::SqueezeStart()
 {
 	if (IsAbsorb == false)
@@ -1939,6 +2025,9 @@ void APlayer::DigestStart()
 	Renderer->ChangeAnimation(GetAnimationName("Digest"));
 	DashOff();
 	DirCheck();
+
+	Ability_Active = Ability_Absorb;
+	Ability_Absorb = EAbiltyType::None;
 }
 
 void APlayer::SpitStart()
@@ -1952,6 +2041,17 @@ void APlayer::SpitStart()
 	SpitStar->SetActorType(EActorType::Ability);
 	SpitStar->SetActorLocation({ GetActorLocation().X, GetActorLocation().Y - 5 });
 	SpitStar->SetDirState(GetDirState());
+}
+
+void APlayer::AttackStart()
+{
+	if (Ability_Active == EAbiltyType::Spark)
+	{
+		int a = 0;
+	}
+	
+	DashOff();
+	DirCheck();
 }
 
 void APlayer::DoorStart()

@@ -20,7 +20,8 @@ public:
 protected:
 	EActorDir DirState = EActorDir::Right;
 	EPlayState State = EPlayState::None;
-	EAbiltyType Ability = EAbiltyType::None;
+	EAbiltyType Ability_Absorb = EAbiltyType::None;
+	EAbiltyType Ability_Active = EAbiltyType::None;
 	EGroundType GroundType = EGroundType::None;
 	bool IsAbsorb = false;
 	bool IsCrashland = false;
@@ -55,12 +56,14 @@ protected:
 	void Breakfall(float _DeltaTime);
 	void Fall(float _DeltaTime);
 	void Crouch(float _DeltaTime);
+	void Slide(float _DeltaTime);
 	void Squeeze(float _DeltaTime);
 	void Fly(float _DeltaTime);
 	void SpitFly(float _DeltaTime);
 	void Absorb(float _DeltaTime);
 	void Digest(float _DeltaTime);
 	void Spit(float _DeltaTime);
+	void Attack(float _DeltaTime);
 	void Door(float _DeltaTime);
 
 	void IdleStart();
@@ -71,12 +74,14 @@ protected:
 	void BreakfallStart();
 	void FallStart();
 	void CrouchStart();
+	void SlideStart();
 	void SqueezeStart();
 	void FlyStart();
 	void SpitFlyStart();
 	void AbsorbStart();
 	void DigestStart();
 	void SpitStart();
+	void AttackStart();
 	void DoorStart();
 
 private:
@@ -85,6 +90,7 @@ private:
 	UCollision* AbsorbCollision1 = nullptr;
 	UCollision* AbsorbCollision2 = nullptr;
 	UCollision* AbsorbCollision3 = nullptr;
+	UCollision* AttackCollision = nullptr;
 	UImageRenderer* Renderer = nullptr;
 	float AnimationTime = 0.0f;
 	int AnimationFrame = 0;

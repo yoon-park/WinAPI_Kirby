@@ -79,6 +79,7 @@ void ABrontoBurt::Move(float _DeltaTime)
 	}
 
 	UpDownDirCheck();
+	MoveTimer -= _DeltaTime;
 
 	if (UpDownDirState == EActorDir::Up)
 	{
@@ -90,7 +91,6 @@ void ABrontoBurt::Move(float _DeltaTime)
 	}
 
 	AddMoveVector(FVector::Left * _DeltaTime);
-	MoveTimer -= _DeltaTime;
 
 	MoveUpdate(_DeltaTime, false, false, false);
 }

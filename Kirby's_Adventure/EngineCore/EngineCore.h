@@ -31,7 +31,6 @@ public:
 
 	void CoreInit(HINSTANCE _Init);
 	void EngineStart(HINSTANCE _hInstance);
-	void Exit();
 
 	template<typename LevelType>
 	void CreateLevel(std::string_view _Name)

@@ -36,9 +36,6 @@
     <ClInclude Include="Burp.h">
       <Filter>Object\PlayLevel\Actor\Ability</Filter>
     </ClInclude>
-    <ClInclude Include="Ability.h">
-      <Filter>Object\PlayLevel\Actor\Common</Filter>
-    </ClInclude>
     <ClInclude Include="SpitStar.h">
       <Filter>Object\PlayLevel\Actor\Ability</Filter>
     </ClInclude>
@@ -59,6 +56,12 @@
     </ClInclude>
     <ClInclude Include="HUD.h">
       <Filter>Object\PlayLevel\Actor\Common\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="Spark.h">
+      <Filter>Object\PlayLevel\Actor\Ability</Filter>
+    </ClInclude>
+    <ClInclude Include="Ability.h">
+      <Filter>Object\PlayLevel\Actor\Common</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -97,9 +100,6 @@
     <ClCompile Include="Burp.cpp">
       <Filter>Object\PlayLevel\Actor\Ability</Filter>
     </ClCompile>
-    <ClCompile Include="Ability.cpp">
-      <Filter>Object\PlayLevel\Actor\Common</Filter>
-    </ClCompile>
     <ClCompile Include="SpitStar.cpp">
       <Filter>Object\PlayLevel\Actor\Ability</Filter>
     </ClCompile>
@@ -120,6 +120,12 @@
     </ClCompile>
     <ClCompile Include="HUD.cpp">
       <Filter>Object\PlayLevel\Actor\Common\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="Spark.cpp">
+      <Filter>Object\PlayLevel\Actor\Ability</Filter>
+    </ClCompile>
+    <ClCompile Include="Ability.cpp">
+      <Filter>Object\PlayLevel\Actor\Common</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

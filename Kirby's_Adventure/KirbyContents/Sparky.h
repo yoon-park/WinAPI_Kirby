@@ -21,14 +21,18 @@ protected:
 	void BreakfallStart() override;
 	void FallStart() override;
 	void AttackStart() override;
+	void AbsorbStart() override;
 	void Idle(float _DeltaTime) override;
 	void Jump(float _DeltaTime) override;
 	void Breakfall(float _DeltaTime) override;
 	void Fall(float _DeltaTime) override;
 	void Attack(float _DeltaTime) override;
+	void Absorb(float _DeltaTime) override;
 
 	void DirCheck() override;
+	void SetCreateAbilityTimer(float _CreateAbilityTimer);
 
 private:
-
+	bool CreateAbility = false;
+	float CreateAbilityTimer = 3.0f;
 };

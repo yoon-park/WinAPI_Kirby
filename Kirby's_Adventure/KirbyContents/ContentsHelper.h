@@ -15,6 +15,7 @@ enum class KirbyRenderOrder
 
 enum class KirbyCollisionOrder
 {
+	None,
 	Monster,
 	MonsterAbilty,
 	PlayerAbsorb,
@@ -52,17 +53,20 @@ enum class EPlayState
 	Breakfall,
 	Fall,
 	Crouch,
+	Slide,
 	Squeeze,
 	Fly,
 	SpitFly,
 	Absorb,
 	Digest,
 	Spit,
+	Attack,
 	Door,
 };
 
 enum class EMonsterState
 {
+	None,
 	Idle,
 	Move,
 	Jump,

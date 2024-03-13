@@ -2,7 +2,7 @@
 
 #include <Windows.h>
 
-#include "EnginePlatform\EngineInput.h"
+#include <EnginePlatform/EngineInput.h>
 #include "Level.h"
 
 UEngineCore* GEngine = nullptr;
@@ -58,6 +58,29 @@ void UEngineCore::CoreTick()
 
 	UEngineInput::KeyCheckTick(DeltaTime);
 
+	for (size_t i = 0; i < DestroyLevelName.size(); i++)
+	{
+		std::string UpperName = UEngineString::ToUpper(DestroyLevelName[i]);
+
+		ULevel* Level = AllLevel[UpperName];
+
+		AllLevel.erase(DestroyLevelName[i]);
+
+		if (CurLevel == Level)
+		{
+			CurLevel = nullptr;
+		}
+
+		Level->End();
+
+		if (Level != nullptr)
+		{
+			delete Level;
+			Level = nullptr;
+		}
+	}
+	DestroyLevelName.clear();
+
 	if (NextLevel != nullptr)
 	{
 		if (CurLevel != nullptr)
@@ -68,6 +91,9 @@ void UEngineCore::CoreTick()
 		NextLevel->LevelStart(CurLevel);
 		CurLevel = NextLevel;
 		NextLevel = nullptr;
+		MainTimer.TimeCheckStart();
+		DeltaTime = MainTimer.TimeCheck();
+		CurFrameTime = 0.0f;
 	}
 
 	if (CurLevel == nullptr)
@@ -82,11 +108,6 @@ void UEngineCore::CoreTick()
 	CurLevel->LevelRender(DeltaTime);
 	MainWindow.ScreenUpdate();
 	CurLevel->LevelRelease(DeltaTime);
-}
-
-void UEngineCore::Exit()
-{
-
 }
 
 void UEngineCore::EngineStart(HINSTANCE _hInstance)
