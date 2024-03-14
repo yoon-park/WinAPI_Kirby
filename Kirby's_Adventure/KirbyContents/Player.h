@@ -19,6 +19,7 @@ public:
 	bool GetAbsorbActive() const;
 	FVector GetLocationDifference() const;
 
+	void SetStateTimer(float _StateTimer);
 	void SetCreateEffectTimer(float _CreateEffectTimer);
 
 protected:
@@ -32,6 +33,7 @@ protected:
 	bool IsAbsorb = false;
 	bool AbsorbActive = false;
 	bool IsCrashland = false;
+	float StateTimer = 0.0f;
 	float CreateEffectTimer = 0.07f;
 
 	void BeginPlay() override;

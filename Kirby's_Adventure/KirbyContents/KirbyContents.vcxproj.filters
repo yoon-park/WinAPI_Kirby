@@ -6,12 +6,6 @@
       <Filter>Object\TitleLevel</Filter>
     </ClInclude>
     <ClInclude Include="ContentsHelper.h" />
-    <ClInclude Include="Level112.h">
-      <Filter>Object\PlayLevel\Level\Stage1-2</Filter>
-    </ClInclude>
-    <ClInclude Include="Level113.h">
-      <Filter>Object\PlayLevel\Level\Stage1-3</Filter>
-    </ClInclude>
     <ClInclude Include="TitleKirby.h">
       <Filter>Object\TitleLevel</Filter>
     </ClInclude>
@@ -25,7 +19,7 @@
       <Filter>Object\PlayLevel\Actor\Common</Filter>
     </ClInclude>
     <ClInclude Include="Level111.h">
-      <Filter>Object\PlayLevel\Level\Stage1-1</Filter>
+      <Filter>Object\PlayLevel\Level\Stage1</Filter>
     </ClInclude>
     <ClInclude Include="WaddleDee.h">
       <Filter>Object\PlayLevel\Actor\Monster</Filter>
@@ -78,6 +72,12 @@
     <ClInclude Include="Fire.h">
       <Filter>Object\PlayLevel\Actor\Ability</Filter>
     </ClInclude>
+    <ClInclude Include="Level112.h">
+      <Filter>Object\PlayLevel\Level\Stage1</Filter>
+    </ClInclude>
+    <ClInclude Include="Level113.h">
+      <Filter>Object\PlayLevel\Level\Stage1</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ContentsCore.cpp" />
@@ -85,12 +85,6 @@
       <Filter>Object\TitleLevel</Filter>
     </ClCompile>
     <ClCompile Include="ContentsHelper.cpp" />
-    <ClCompile Include="Level112.cpp">
-      <Filter>Object\PlayLevel\Level\Stage1-2</Filter>
-    </ClCompile>
-    <ClCompile Include="Level113.cpp">
-      <Filter>Object\PlayLevel\Level\Stage1-3</Filter>
-    </ClCompile>
     <ClCompile Include="TitleKirby.cpp">
       <Filter>Object\TitleLevel</Filter>
     </ClCompile>
@@ -104,7 +98,7 @@
       <Filter>Object\PlayLevel\Actor\Common</Filter>
     </ClCompile>
     <ClCompile Include="Level111.cpp">
-      <Filter>Object\PlayLevel\Level\Stage1-1</Filter>
+      <Filter>Object\PlayLevel\Level\Stage1</Filter>
     </ClCompile>
     <ClCompile Include="WaddleDee.cpp">
       <Filter>Object\PlayLevel\Actor\Monster</Filter>
@@ -157,6 +151,12 @@
     <ClCompile Include="Fire.cpp">
       <Filter>Object\PlayLevel\Actor\Ability</Filter>
     </ClCompile>
+    <ClCompile Include="Level112.cpp">
+      <Filter>Object\PlayLevel\Level\Stage1</Filter>
+    </ClCompile>
+    <ClCompile Include="Level113.cpp">
+      <Filter>Object\PlayLevel\Level\Stage1</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Object">
@@ -174,18 +174,6 @@
     <Filter Include="Object\PlayLevel\Level">
       <UniqueIdentifier>{6294efb0-c323-4b98-872a-38d4a602f1a4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Object\PlayLevel\Level\Stage1-1">
-      <UniqueIdentifier>{7e69bd9a-8ff0-4958-9d03-c90ab2ccfb26}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Object\PlayLevel\Level\Stage1-2">
-      <UniqueIdentifier>{16e4b608-2182-46c1-9dda-ddf08a92324a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Object\PlayLevel\Level\Stage1-3">
-      <UniqueIdentifier>{50e417e5-0c45-4b7a-8b9c-b5a838b0f3ee}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Object\PlayLevel\Level\Hub">
-      <UniqueIdentifier>{65f0a611-1cae-4790-a1db-3994a32ec924}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Object\PlayLevel\Actor\Ability">
       <UniqueIdentifier>{cf9a8f78-2c4b-4920-b654-0032f8aa232a}</UniqueIdentifier>
     </Filter>
@@ -200,6 +188,24 @@
     </Filter>
     <Filter Include="Object\PlayLevel\Actor\Effect">
       <UniqueIdentifier>{74941beb-3c7b-44df-b431-16a2dcea3a44}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\PlayLevel\Level\Stage1">
+      <UniqueIdentifier>{7e69bd9a-8ff0-4958-9d03-c90ab2ccfb26}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\PlayLevel\Level\Stage2">
+      <UniqueIdentifier>{16e4b608-2182-46c1-9dda-ddf08a92324a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\PlayLevel\Level\Stage3">
+      <UniqueIdentifier>{50e417e5-0c45-4b7a-8b9c-b5a838b0f3ee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\PlayLevel\Level\StageHub">
+      <UniqueIdentifier>{65f0a611-1cae-4790-a1db-3994a32ec924}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\PlayLevel\Level\Stage4">
+      <UniqueIdentifier>{1b0a1279-6afd-4c8d-adf9-fef455ff48f2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\PlayLevel\Level\StageBoss">
+      <UniqueIdentifier>{cabb76ad-876d-439e-8829-22a006c57b54}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

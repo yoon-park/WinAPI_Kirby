@@ -171,6 +171,11 @@ FVector APlayer::GetLocationDifference() const
 	return LocationDifference;
 }
 
+void APlayer::SetStateTimer(float _StateTimer)
+{
+	StateTimer = _StateTimer;
+}
+
 void APlayer::SetCreateEffectTimer(float _CreateEffectTimer)
 {
 	CreateEffectTimer = _CreateEffectTimer;
@@ -680,7 +685,7 @@ void APlayer::Idle(float _DeltaTime)
 			}
 		}
 
-		if (UEngineInput::IsPress(VK_DOWN))
+		if (UEngineInput::IsDown(VK_DOWN))
 		{
 			StateChange(EPlayState::Crouch);
 			return;
@@ -1437,9 +1442,34 @@ void APlayer::Slide(float _DeltaTime)
 {
 	if (Renderer->IsCurAnimationEnd())
 	{
+		AttackCollision->Destroy();
 		StateChange(EPlayState::Idle);
 		return;
 	}
+
+	if (IsWallCheck() == true)
+	{
+		MoveVector = FVector::Zero;
+		AttackCollision->Destroy();
+		StateChange(EPlayState::Squeeze);
+		return;
+	}
+
+	if (StateTimer > 0.0f)
+	{
+		if (DirState == EActorDir::Left)
+		{
+			AddMoveVector(FVector::Left * _DeltaTime);
+		}
+
+		if (DirState == EActorDir::Right)
+		{
+			AddMoveVector(FVector::Right * _DeltaTime);
+		}
+	}
+	StateTimer -= _DeltaTime;
+
+	MoveUpdate(_DeltaTime, true, true, true);
 }
 
 void APlayer::Squeeze(float _DeltaTime)
@@ -1719,6 +1749,8 @@ void APlayer::Attack(float _DeltaTime)
 	{
 		
 	}
+
+	MoveUpdate(_DeltaTime, true, false, false);
 }
 
 void APlayer::Door(float _DeltaTime)
@@ -1979,8 +2011,27 @@ void APlayer::CrouchStart()
 void APlayer::SlideStart()
 {
 	Renderer->ChangeAnimation(GetAnimationName("Slide"));
-	DashOff();
+	DashOn();
 	DirCheck();
+
+	SetStateTimer(0.2f);
+
+	FVector AddPos = FVector::Zero;
+
+	if (DirState == EActorDir::Left)
+	{
+		MoveVector = FVector::Left * 1000.0f;
+		AddPos = { -30, -25 };
+	}
+	else if (DirState == EActorDir::Right)
+	{
+		MoveVector = FVector::Right * 1000.0f;
+		AddPos = { 30, -25 };
+	}
+
+	AttackCollision = CreateCollision(KirbyCollisionOrder::Player);
+	AttackCollision->SetColType(ECollisionType::Rect);
+	AttackCollision->SetTransform({ AddPos, { 20, 50 } });
 }
 
 void APlayer::SqueezeStart()
