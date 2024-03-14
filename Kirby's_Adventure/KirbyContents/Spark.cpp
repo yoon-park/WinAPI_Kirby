@@ -12,6 +12,8 @@ ASpark::~ASpark()
 
 void ASpark::BeginPlay()
 {
+	AAbility::BeginPlay();
+
 	{
 		Renderer = CreateImageRenderer(KirbyRenderOrder::Ability);
 		Renderer->SetImage("EffectAbility_Right.png");
@@ -48,6 +50,7 @@ void ASpark::Tick(float _DeltaTime)
 	if (Renderer->IsCurAnimationEnd())
 	{
 		Destroy();
+		return;
 	}
 
 	FVector MonsterPos = Owner->GetActorLocation();

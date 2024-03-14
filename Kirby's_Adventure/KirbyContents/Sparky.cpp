@@ -158,11 +158,6 @@ void ASparky::Jump(float _DeltaTime)
 		return;
 	}
 
-	if (IsWallCheck() == true)
-	{
-		MoveVector = FVector::Zero;
-	}
-
 	DirCheck();
 
 	if (DirState == EActorDir::Left)
@@ -172,6 +167,11 @@ void ASparky::Jump(float _DeltaTime)
 	else if (DirState == EActorDir::Right)
 	{
 		AddMoveVector(FVector::Right * _DeltaTime);
+	}
+
+	if (IsWallCheck() == true)
+	{
+		MoveVector = FVector::Zero;
 	}
 
 	MoveUpdate(_DeltaTime, true, false, false);
@@ -185,11 +185,6 @@ void ASparky::Breakfall(float _DeltaTime)
 		return;
 	}
 
-	if (IsWallCheck() == true)
-	{
-		MoveVector = FVector::Zero;
-	}
-
 	DirCheck();
 
 	if (DirState == EActorDir::Left)
@@ -199,6 +194,11 @@ void ASparky::Breakfall(float _DeltaTime)
 	else if (DirState == EActorDir::Right)
 	{
 		AddMoveVector(FVector::Right * _DeltaTime);
+	}
+
+	if (IsWallCheck() == true)
+	{
+		MoveVector = FVector::Zero;
 	}
 
 	GroundTypeCheck();
@@ -257,26 +257,29 @@ void ASparky::Attack(float _DeltaTime)
 	}
 	AttackTimer -= _DeltaTime;
 
-	if ((CreateAbilityTimer - AttackTimer) >= 0.03f)
 	{
-		CreateAbilityTimer = AttackTimer;
-		CreateAbility = true;
-	}
-	
-	if(CreateAbility == true)
-	{
-		float AddPosX = UEngineRandom::MainRandom.RandomFloat(-50.0f, 50.0f);
-		float AddPosY = UEngineRandom::MainRandom.RandomFloat(-50.0f, 50.0f);
-		FVector AbilityPos = { GetActorLocation().X + AddPosX, GetActorLocation().Y + AddPosY };
+		if ((CreateAbilityTimer - AttackTimer) >= 0.03f)
+		{
+			CreateAbilityTimer = AttackTimer;
+			CreateAbility = true;
+		}
 
-		ASpark* Spark = GetWorld()->SpawnActor<ASpark>();
-		Spark->SetOwner(this);
-		Spark->SetActorType(EActorType::Ability);
-		Spark->SetActorLocation(AbilityPos);
-		Spark->SetDirState(GetDirState());
+		if (CreateAbility == true)
+		{
+			float AddPosX = UEngineRandom::MainRandom.RandomFloat(-50.0f, 50.0f);
+			float AddPosY = UEngineRandom::MainRandom.RandomFloat(-50.0f, 50.0f);
+			FVector AbilityPos = { GetActorLocation().X + AddPosX, GetActorLocation().Y + AddPosY };
 
-		CreateAbility = false;
+			ASpark* Spark = GetWorld()->SpawnActor<ASpark>();
+			Spark->SetOwner(this);
+			Spark->SetActorType(EActorType::Ability);
+			Spark->SetActorLocation(AbilityPos);
+			Spark->SetDirState(GetDirState());
+
+			CreateAbility = false;
+		}
 	}
+
 	MoveUpdate(_DeltaTime, true, true, true);
 }
 

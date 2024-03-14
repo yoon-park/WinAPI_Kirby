@@ -35,7 +35,7 @@ protected:
 	FVector UpDownMoveAcc = FVector::Down * 1000.0f;
 	float MoveMaxSpeed = 100.0f;
 	FVector JumpPower = FVector::Up * 500.0f;
-	FVector GravityAcc = FVector::Down * 2500.0f;
+	FVector GravityAcc = FVector::Down * 2000.0f;
 	float GravityMaxSpeed = 1500.0f;
 	float AttackTimer = 0.0f;
 

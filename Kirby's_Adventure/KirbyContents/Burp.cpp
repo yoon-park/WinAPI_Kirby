@@ -51,6 +51,7 @@ void ABurp::Tick(float _DeltaTime)
 
 		Monster->Destroy();
 		Destroy();
+		return;
 	}
 
 	if (
@@ -60,6 +61,7 @@ void ABurp::Tick(float _DeltaTime)
 		)
 	{
 		Destroy();
+		return;
 	}
 
 	MoveVector += MoveAcc * _DeltaTime;

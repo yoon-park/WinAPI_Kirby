@@ -1,6 +1,5 @@
 #pragma once
 #include "KirbyActor.h"
-#include "Player.h"
 
 class AAbility : public AKirbyActor
 {
@@ -23,7 +22,6 @@ public:
 protected:
 	UImageRenderer* Renderer = nullptr;
 	UCollision* AttackCollision = nullptr;
-
 	AKirbyActor* Owner = nullptr;
 	EActorDir DirState = EActorDir::Right;
 	std::string CurAnimationName = "None";

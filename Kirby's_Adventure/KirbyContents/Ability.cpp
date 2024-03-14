@@ -1,5 +1,6 @@
 #include "Ability.h"
 
+#include "Player.h"
 #include "Monster.h"
 
 AAbility::AAbility()

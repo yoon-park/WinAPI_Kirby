@@ -51,11 +51,13 @@ void ASpitStar::Tick(float _DeltaTime)
 
 		Monster->Destroy();
 		Destroy();
+		return;
 	}
 
 	if (IsWallCheck() == true)
 	{
 		Destroy();
+		return;
 	}
 
 	AddActorLocation(MoveVector * _DeltaTime);

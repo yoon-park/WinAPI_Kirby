@@ -66,6 +66,18 @@
     <ClInclude Include="Effect.h">
       <Filter>Object\PlayLevel\Actor\Common</Filter>
     </ClInclude>
+    <ClInclude Include="AbsorbEffect.h">
+      <Filter>Object\PlayLevel\Actor\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="PoppyBrosJr.h">
+      <Filter>Object\PlayLevel\Actor\Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="HotHead.h">
+      <Filter>Object\PlayLevel\Actor\Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="Fire.h">
+      <Filter>Object\PlayLevel\Actor\Ability</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ContentsCore.cpp" />
@@ -133,6 +145,18 @@
     <ClCompile Include="Effect.cpp">
       <Filter>Object\PlayLevel\Actor\Common</Filter>
     </ClCompile>
+    <ClCompile Include="AbsorbEffect.cpp">
+      <Filter>Object\PlayLevel\Actor\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="PoppyBrosJr.cpp">
+      <Filter>Object\PlayLevel\Actor\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="HotHead.cpp">
+      <Filter>Object\PlayLevel\Actor\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="Fire.cpp">
+      <Filter>Object\PlayLevel\Actor\Ability</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Object">
@@ -173,6 +197,9 @@
     </Filter>
     <Filter Include="Object\PlayLevel\Actor\Common\Map">
       <UniqueIdentifier>{8c0cbf24-8625-40c2-a8f8-9bc5c530c18c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\PlayLevel\Actor\Effect">
+      <UniqueIdentifier>{74941beb-3c7b-44df-b431-16a2dcea3a44}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

@@ -11,6 +11,7 @@
 #include "Player.h"
 #include "WaddleDee.h"
 #include "BrontoBurt.h"
+#include "PoppyBrosJr.h"
 #include "Sparky.h"
 
 ULevel111::ULevel111()
@@ -123,6 +124,11 @@ void ULevel111::LevelStart(ULevel* _Level)
 	BrontoBurt->SetName("BrontoBurt");
 	BrontoBurt->SetActorType(EActorType::Monster);
 	BrontoBurt->SetActorLocation({ 2000, 200 });
+
+	APoppyBrosJr* PoppyBrosJr = SpawnActor<APoppyBrosJr>();
+	PoppyBrosJr->SetName("PoppyBrosJr");
+	PoppyBrosJr->SetActorType(EActorType::Monster);
+	PoppyBrosJr->SetActorLocation({ 700, 350 });
 
 	ASparky* Sparky = SpawnActor<ASparky>();
 	Sparky->SetName("Sparky");

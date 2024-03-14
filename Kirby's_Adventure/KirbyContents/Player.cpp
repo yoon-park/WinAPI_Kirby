@@ -1,6 +1,7 @@
 #include "Player.h"
 
 #include <EngineBase/EngineDebug.h>
+#include <EngineBase/EngineRandom.h>
 #include <EngineBase\EngineTime.h>
 #include <EnginePlatform\EngineInput.h>
 #include <EngineCore\EngineCore.h>
@@ -9,6 +10,7 @@
 #include "Monster.h"
 #include "Burp.h"
 #include "SpitStar.h"
+#include "AbsorbEffect.h"
 
 APlayer* APlayer::MainPlayer = nullptr;
 
@@ -157,6 +159,21 @@ void APlayer::Tick(float _DeltaTime)
 EActorDir APlayer::GetDirState() const
 {
 	return DirState;
+}
+
+bool APlayer::GetAbsorbActive() const
+{
+	return AbsorbActive;
+}
+
+FVector APlayer::GetLocationDifference() const
+{
+	return LocationDifference;
+}
+
+void APlayer::SetCreateEffectTimer(float _CreateEffectTimer)
+{
+	CreateEffectTimer = _CreateEffectTimer;
 }
 
 void APlayer::DirCheck()
@@ -1555,69 +1572,98 @@ void APlayer::Absorb(float _DeltaTime)
 {
 	FVector Pos = { GetActorLocation().iX(), GetActorLocation().iY() };
 
-	std::vector<UCollision*> Result;
-	if (AbsorbCollision0->CollisionCheck(KirbyCollisionOrder::Monster, Result) == true)
+	if (IsGroundCheck(Pos) == true)
 	{
-		UCollision* Collision = Result[0];
-		AActor* Ptr = Collision->GetOwner();
-		AMonster* Monster = dynamic_cast<AMonster*>(Ptr);
-
-		if (Monster == nullptr)
-		{
-			MsgBoxAssert("Monster가 존재하지 않습니다.");
-		}
-
-		IsAbsorb = true;
-		if (Monster->GetAbility() != EAbiltyType::None)
-		{
-			Ability_Absorb = Monster->GetAbility();
-		}
-
-		Monster->Destroy();
-		AbsorbCollision0->ActiveOff();
-		AbsorbCollision1->ActiveOff();
-		AbsorbCollision2->ActiveOff();
-		AbsorbCollision3->ActiveOff();
-
-		StateChange(EPlayState::Idle);
-		return;
+		JumpVector = FVector::Zero;
+		GravityVector = FVector::Zero;
 	}
 
-	if (
-		AbsorbCollision3->CollisionCheck(KirbyCollisionOrder::Monster, Result) == false &&
-		AbsorbCollision2->CollisionCheck(KirbyCollisionOrder::Monster, Result) == false &&
-		AbsorbCollision1->CollisionCheck(KirbyCollisionOrder::Monster, Result) == false &&
-		AbsorbCollision0->CollisionCheck(KirbyCollisionOrder::Monster, Result) == false
-		)
 	{
-		if (UEngineInput::IsFree('Z'))
+		std::vector<UCollision*> Result;
+		if (AbsorbCollision0->CollisionCheck(KirbyCollisionOrder::Monster, Result) == true)
 		{
+			UCollision* Collision = Result[0];
+			AActor* Ptr = Collision->GetOwner();
+			AMonster* Monster = dynamic_cast<AMonster*>(Ptr);
+
+			if (Monster == nullptr)
+			{
+				MsgBoxAssert("Monster가 존재하지 않습니다.");
+			}
+
+			IsAbsorb = true;
+			if (Monster->GetAbility() != EAbiltyType::None)
+			{
+				Ability_Absorb = Monster->GetAbility();
+			}
+
+			Monster->Destroy();
 			AbsorbCollision0->ActiveOff();
 			AbsorbCollision1->ActiveOff();
 			AbsorbCollision2->ActiveOff();
 			AbsorbCollision3->ActiveOff();
 
-			Renderer->ChangeAnimation(GetAnimationName("AbsorbFail"));
-			if (Renderer->IsCurAnimationEnd())
+			AbsorbActive = false;
+
+			StateChange(EPlayState::Idle);
+			return;
+		}
+
+		if (
+			AbsorbCollision3->CollisionCheck(KirbyCollisionOrder::Monster, Result) == false &&
+			AbsorbCollision2->CollisionCheck(KirbyCollisionOrder::Monster, Result) == false &&
+			AbsorbCollision1->CollisionCheck(KirbyCollisionOrder::Monster, Result) == false &&
+			AbsorbCollision0->CollisionCheck(KirbyCollisionOrder::Monster, Result) == false
+			)
+		{
+			if (UEngineInput::IsFree('Z'))
 			{
-				if (IsGroundCheck(Pos) == true)
+				AbsorbCollision0->ActiveOff();
+				AbsorbCollision1->ActiveOff();
+				AbsorbCollision2->ActiveOff();
+				AbsorbCollision3->ActiveOff();
+
+				AbsorbActive = false;
+
+				Renderer->ChangeAnimation(GetAnimationName("AbsorbFail"));
+				if (Renderer->IsCurAnimationEnd())
 				{
-					StateChange(EPlayState::Idle);
-					return;
-				}
-				else
-				{
-					StateChange(EPlayState::Breakfall);
-					return;
+					if (IsGroundCheck(Pos) == true)
+					{
+						StateChange(EPlayState::Idle);
+						return;
+					}
+					else
+					{
+						StateChange(EPlayState::Breakfall);
+						return;
+					}
 				}
 			}
 		}
 	}
-
-	if (IsGroundCheck(Pos) == true)
 	{
-		JumpVector = FVector::Zero;
-		GravityVector = FVector::Zero;
+		if (CreateEffectTimer <= 0.0f)
+		{
+			float AddPosX = UEngineRandom::MainRandom.RandomFloat(50.0f, 200.0f);
+			if (DirState == EActorDir::Left)
+			{
+				AddPosX = -AddPosX;
+			}
+			float AddPosY = UEngineRandom::MainRandom.RandomFloat(-60.0f, 20.0f);
+
+			FVector EffectPos = { GetActorLocation().X + AddPosX, GetActorLocation().Y + AddPosY };
+
+			AAbsorbEffect* AbsorbEffect = GetWorld()->SpawnActor<AAbsorbEffect>();
+			AbsorbEffect->SetOwner(this);
+			AbsorbEffect->SetActorType(EActorType::Effect);
+			AbsorbEffect->SetActorLocation(EffectPos);
+			AbsorbEffect->SetDirState(GetDirState());
+
+			SetCreateEffectTimer(0.07f);
+		}
+
+		CreateEffectTimer -= _DeltaTime;
 	}
 
 	MoveUpdate(_DeltaTime, true, false, false);
@@ -1976,6 +2022,7 @@ void APlayer::AbsorbStart()
 {
 	Renderer->ChangeAnimation(GetAnimationName("Absorb"));
 	DashOff();
+	MoveVector = FVector::Zero;
 
 	FVector AddPos0;
 	FVector AddPos1;
@@ -2018,6 +2065,8 @@ void APlayer::AbsorbStart()
 	AbsorbCollision3->SetPosition(AddPos3);
 	AbsorbCollision3->GetActorBaseTransform();
 	AbsorbCollision3->ActiveOn();
+
+	AbsorbActive = true;
 }
 
 void APlayer::DigestStart()
@@ -2212,6 +2261,8 @@ void APlayer::MoveUpdate(float _DeltaTime, bool _IsGravity, bool _IsGroundUp, bo
 {
 	GroundTypeCheck();
 
+	FVector PrevLocation = GetActorLocation();
+
 	CalMoveVector(_DeltaTime);
 	if (_IsGravity == true)
 	{
@@ -2227,4 +2278,7 @@ void APlayer::MoveUpdate(float _DeltaTime, bool _IsGravity, bool _IsGroundUp, bo
 	{
  		GroundDown();
 	}
+
+	FVector CurLocation = GetActorLocation();
+	LocationDifference = CurLocation - PrevLocation;
 }

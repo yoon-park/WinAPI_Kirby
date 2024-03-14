@@ -39,6 +39,7 @@ enum class EActorType
 	Player,
 	Monster,
 	Ability,
+	Effect,
 };
 
 enum class EPlayState
