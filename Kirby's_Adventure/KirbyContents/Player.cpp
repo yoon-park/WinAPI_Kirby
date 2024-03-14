@@ -1645,12 +1645,12 @@ void APlayer::Absorb(float _DeltaTime)
 	{
 		if (CreateEffectTimer <= 0.0f)
 		{
-			float AddPosX = UEngineRandom::MainRandom.RandomFloat(50.0f, 200.0f);
+			float AddPosX = UEngineRandom::MainRandom.RandomFloat(50.0f, 220.0f);
 			if (DirState == EActorDir::Left)
 			{
 				AddPosX = -AddPosX;
 			}
-			float AddPosY = UEngineRandom::MainRandom.RandomFloat(-60.0f, 20.0f);
+			float AddPosY = UEngineRandom::MainRandom.RandomFloat(-100.0f, 40.0f);
 
 			FVector EffectPos = { GetActorLocation().X + AddPosX, GetActorLocation().Y + AddPosY };
 

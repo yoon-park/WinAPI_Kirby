@@ -522,3 +522,8 @@ void AMonster::SetAttackTimer(float _AttackTimer)
 {
 	AttackTimer = _AttackTimer;
 }
+
+void AMonster::SetCreateAbilityTimer(float _CreateAbilityTimer)
+{
+	CreateAbilityTimer = _CreateAbilityTimer;
+}

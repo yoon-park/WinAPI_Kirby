@@ -1,6 +1,7 @@
 #pragma once
+#include "Ability.h"
 
-class AFire
+class AFire : public AAbility
 {
 public:
 	AFire();
@@ -12,6 +13,8 @@ public:
 	AFire& operator=(AFire&& _Other) noexcept = delete;
 
 protected:
+	void BeginPlay() override;
+	void Tick(float _DeltaTime) override;
 
 private:
 

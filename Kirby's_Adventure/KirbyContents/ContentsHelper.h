@@ -81,7 +81,9 @@ enum class EMonsterState
 enum class EAbiltyType
 {
 	None,
+	Beam,
 	Spark,
+	Fire,
 };
 
 enum class EGroundType

@@ -13,6 +13,7 @@
 #include "BrontoBurt.h"
 #include "PoppyBrosJr.h"
 #include "Sparky.h"
+#include "HotHead.h"
 
 ULevel111::ULevel111()
 {
@@ -123,17 +124,22 @@ void ULevel111::LevelStart(ULevel* _Level)
 	ABrontoBurt* BrontoBurt = SpawnActor<ABrontoBurt>();
 	BrontoBurt->SetName("BrontoBurt");
 	BrontoBurt->SetActorType(EActorType::Monster);
-	BrontoBurt->SetActorLocation({ 2000, 200 });
+	BrontoBurt->SetActorLocation({ 2000, 100 });
 
 	APoppyBrosJr* PoppyBrosJr = SpawnActor<APoppyBrosJr>();
 	PoppyBrosJr->SetName("PoppyBrosJr");
 	PoppyBrosJr->SetActorType(EActorType::Monster);
-	PoppyBrosJr->SetActorLocation({ 700, 350 });
+	PoppyBrosJr->SetActorLocation({ 1500, 350 });
 
 	ASparky* Sparky = SpawnActor<ASparky>();
 	Sparky->SetName("Sparky");
 	Sparky->SetActorType(EActorType::Monster);
-	Sparky->SetActorLocation({ 500, 350 });
+	Sparky->SetActorLocation({ 1500, 350 });
+
+	AHotHead* HotHead = SpawnActor<AHotHead>();
+	HotHead->SetName("HotHead");
+	HotHead->SetActorType(EActorType::Monster);
+	HotHead->SetActorLocation({ 500, 350 });
 }
 
 void ULevel111::LevelEnd(ULevel* _Level)

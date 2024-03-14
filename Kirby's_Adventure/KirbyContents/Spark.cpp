@@ -53,9 +53,9 @@ void ASpark::Tick(float _DeltaTime)
 		return;
 	}
 
-	FVector MonsterPos = Owner->GetActorLocation();
+	FVector OwnerPos = Owner->GetActorLocation();
 	FVector AttackPos = GetActorLocation();
-	FVector AttackDir = AttackPos - MonsterPos;
+	FVector AttackDir = AttackPos - OwnerPos;
 
 	AddActorLocation(AttackDir.Normalize2DReturn() * _DeltaTime * 300.0f);
 }

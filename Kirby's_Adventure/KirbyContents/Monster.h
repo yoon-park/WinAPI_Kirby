@@ -44,6 +44,9 @@ protected:
 	FVector GravityVector = FVector::Zero;
 	FVector LastMoveVector = FVector::Zero;
 
+	bool CreateAbility = false;
+	float CreateAbilityTimer = 3.0f;
+
 	void BeginPlay() override;
 	void Tick(float _DeltaTime) override;
 
@@ -84,7 +87,7 @@ protected:
 	void SetMoveMaxSpeed(float _MoveMaxSpeed);
 	void SetJumpPower(FVector _JumpPower);
 	void SetAttackTimer(float _AttackTimer);
+	void SetCreateAbilityTimer(float _CreateAbilityTimer);
 
 private:
-
 };

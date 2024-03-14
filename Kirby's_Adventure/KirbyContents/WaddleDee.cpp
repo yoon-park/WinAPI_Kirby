@@ -58,11 +58,6 @@ void AWaddleDee::Move(float _DeltaTime)
 		return;
 	}
 
-	if (IsWallCheck() == true)
-	{
-		MoveVector = FVector::Zero;
-	}
-
 	DirCheck();
 
 	if (DirState == EActorDir::Left)
@@ -72,6 +67,11 @@ void AWaddleDee::Move(float _DeltaTime)
 	else if (DirState == EActorDir::Right)
 	{
 		AddMoveVector(FVector::Right * _DeltaTime);
+	}
+
+	if (IsWallCheck() == true)
+	{
+		MoveVector = FVector::Zero;
 	}
 	
 	FVector Ground = { GetActorLocation().iX(), GetActorLocation().iY() + 5 };

@@ -43,7 +43,7 @@ void ASparky::BeginPlay()
 	}
 
 	SetAbility(EAbiltyType::Spark);
-	SetJumpPower(FVector::Up * 700.0f);
+	SetJumpPower(FVector::Up * 600.0f);
 	SetAttackTimer(2.0f);
 
 	StateChange(EMonsterState::Idle);
@@ -59,7 +59,6 @@ void ASparky::IdleStart()
 	AMonster::IdleStart();
 
 	Renderer->ChangeAnimation(GetAnimationName("Idle"));
-	DirCheck();
 }
 
 void ASparky::JumpStart()
@@ -102,11 +101,6 @@ void ASparky::AttackStart()
 	MoveVector = FVector::Zero;
 	JumpVector = FVector::Zero;
 	GravityVector = FVector::Zero;
-}
-
-void ASparky::AbsorbStart()
-{
-	AMonster::AbsorbStart();
 }
 
 void ASparky::Idle(float _DeltaTime)
@@ -283,17 +277,6 @@ void ASparky::Attack(float _DeltaTime)
 	MoveUpdate(_DeltaTime, true, true, true);
 }
 
-void ASparky::Absorb(float _DeltaTime)
-{
-	if (AbsorbCheck() == false)
-	{
-		StateChange(EMonsterState::Idle);
-		return;
-	}
-
-	AMonster::Absorb(_DeltaTime);
-}
-
 void ASparky::DirCheck()
 {
 	EActorDir Dir = DirState;
@@ -322,9 +305,4 @@ void ASparky::DirCheck()
 	}
 
 	AMonster::DirCheck();
-}
-
-void ASparky::SetCreateAbilityTimer(float _CreateAbilityTimer)
-{
-	CreateAbilityTimer = _CreateAbilityTimer;
 }
