@@ -51,16 +51,30 @@ void ULevel111::BeginPlay()
 			UEngineResourcesManager::GetInst().LoadImg(File.GetFullPath());
 		}
 
-		UEngineResourcesManager::GetInst().CuttingImage("Kirby1_Left.png", 10, 7);
-		UEngineResourcesManager::GetInst().CuttingImage("Kirby1_Right.png", 10, 7);
-		UEngineResourcesManager::GetInst().CuttingImage("Kirby2_Left.png", 10, 4);
-		UEngineResourcesManager::GetInst().CuttingImage("Kirby2_Right.png", 10, 4);
-		UEngineResourcesManager::GetInst().CuttingImage("EffectAbility_Left.png", 10, 6);
-		UEngineResourcesManager::GetInst().CuttingImage("EffectAbility_Right.png", 10, 6);
-		UEngineResourcesManager::GetInst().CuttingImage("NormalEnemy_Left.png", 10, 7);
-		UEngineResourcesManager::GetInst().CuttingImage("NormalEnemy_Right.png", 10, 7);
-		UEngineResourcesManager::GetInst().CuttingImage("PowerEnemy1_Left.png", 10, 9);
-		UEngineResourcesManager::GetInst().CuttingImage("PowerEnemy1_Right.png", 10, 9);
+		UEngineResourcesManager::GetInst().CuttingImage("Kirby1_Left.png", 10, 7);			// 256 * 256
+		UEngineResourcesManager::GetInst().CuttingImage("Kirby1_Right.png", 10, 7);			// 256 * 256
+		UEngineResourcesManager::GetInst().CuttingImage("Kirby2_Left.png", 10, 4);			// 256 * 256
+		UEngineResourcesManager::GetInst().CuttingImage("Kirby2_Right.png", 10, 4);			// 256 * 256
+		//UEngineResourcesManager::GetInst().CuttingImage("Kirby3_Left.png", 10, 4);			// 256 * 256
+		//UEngineResourcesManager::GetInst().CuttingImage("Kirby3_Right.png", 10, 4);			// 256 * 256
+		UEngineResourcesManager::GetInst().CuttingImage("EffectAbility1_Left.png", 10, 6);	// 256 * 256
+		UEngineResourcesManager::GetInst().CuttingImage("EffectAbility2_Right.png", 10, 6);	// 256 * 256
+		UEngineResourcesManager::GetInst().CuttingImage("EffectAbility1_Left.png", 10, 1);	// 256 * 256
+		UEngineResourcesManager::GetInst().CuttingImage("EffectAbility2_Right.png", 10, 1);	// 256 * 256
+		UEngineResourcesManager::GetInst().CuttingImage("NormalEnemy_Left.png", 10, 7);		// 256 * 256
+		UEngineResourcesManager::GetInst().CuttingImage("NormalEnemy_Right.png", 10, 7);	// 256 * 256
+		UEngineResourcesManager::GetInst().CuttingImage("PowerEnemy1_Left.png", 10, 9);		// 256 * 256
+		UEngineResourcesManager::GetInst().CuttingImage("PowerEnemy1_Right.png", 10, 9);	// 256 * 256
+		//UEngineResourcesManager::GetInst().CuttingImage("PowerEnemy2_Left.png", 10, 9);		// 256 * 256
+		//UEngineResourcesManager::GetInst().CuttingImage("PowerEnemy2_Right.png", 10, 9);		// 256 * 256
+		UEngineResourcesManager::GetInst().CuttingImage("MidBossEnemy_Left.png", 10, 4);	// 256 * 256
+		UEngineResourcesManager::GetInst().CuttingImage("MidBossEnemy_Right.png", 10, 4);	// 256 * 256
+		UEngineResourcesManager::GetInst().CuttingImage("BossEnemy_Left.png", 5, 2);		// 256 * 1024
+		UEngineResourcesManager::GetInst().CuttingImage("BossEnemy_Right.png", 5, 2);		// 256 * 1024
+		UEngineResourcesManager::GetInst().CuttingImage("HUDUI.png", 1, 5);					// 1024 * 256
+		UEngineResourcesManager::GetInst().CuttingImage("HUDAbility.png", 10, 2);			// 256 * 256
+		UEngineResourcesManager::GetInst().CuttingImage("HUDComponent.png", 10, 2);			// 128 * 128
+		UEngineResourcesManager::GetInst().CuttingImage("Item.png", 10, 3);					// 300 * 300
 	}
 
 	GEngine->CreateLevel<ULevel112>("Level112");
