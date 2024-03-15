@@ -17,10 +17,10 @@ enum class KirbyRenderOrder
 enum class KirbyCollisionOrder
 {
 	None,
-	Monster,
 	MonsterAbilty,
-	PlayerAbsorb,
 	PlayerAbility,
+	Monster,
+	PlayerAbsorb,
 	Player,
 	Detect
 };
@@ -84,6 +84,11 @@ enum class EAbiltyType
 	Beam,
 	Spark,
 	Fire,
+	Sword,
+	Fireball,
+	Needle,
+	Crash,
+	Freeze
 };
 
 enum class EGroundType

@@ -112,7 +112,7 @@ void ULevel::LevelRelease(float _DeltaTime)
 			{
 				UCollision* Collision = StartIter.operator*();
 
-				if (false == Collision->IsDestroy())
+				if (Collision->IsDestroy() == false)
 				{
 					++StartIter;
 					continue;

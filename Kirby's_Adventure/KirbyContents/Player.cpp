@@ -1749,6 +1749,10 @@ void APlayer::Attack(float _DeltaTime)
 	{
 		
 	}
+	else if (Ability_Active == EAbiltyType::Fire)
+	{
+
+	}
 
 	MoveUpdate(_DeltaTime, true, false, false);
 }

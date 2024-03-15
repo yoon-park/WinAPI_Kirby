@@ -275,6 +275,10 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="TitleLogo.h" />
+    <ClInclude Include="Togezo.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="WaddleDee.h">
       <SubType>
       </SubType>
@@ -382,6 +386,10 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="TitleLogo.cpp" />
+    <ClCompile Include="Togezo.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="WaddleDee.cpp">
       <SubType>
       </SubType>

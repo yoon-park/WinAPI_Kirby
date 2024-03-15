@@ -33,7 +33,7 @@ void APoppyBrosJr::BeginPlay()
 
 		DetectCollision = CreateCollision(KirbyCollisionOrder::Detect);
 		DetectCollision->SetColType(ECollisionType::Rect);
-		DetectCollision->SetTransform({ {0, -75}, {300, 150} });
+		DetectCollision->SetTransform({ {0, -25}, {300, 150} });
 	}
 
 	StateChange(EMonsterState::Jump);
