@@ -16,11 +16,11 @@ void AFire::BeginPlay()
 
 	{
 		Renderer = CreateImageRenderer(KirbyRenderOrder::Ability);
-		Renderer->SetImage("EffectAbility_Right.png");
+		Renderer->SetImage("EffectAbility1_Right.png");
 		Renderer->SetTransform({ {0,0}, {256, 256} });
 
-		Renderer->CreateAnimation("Fire_Right", "EffectAbility_Right.png", 39, 42, 0.03f, false);
-		Renderer->CreateAnimation("Fire_Left", "EffectAbility_Left.png", 39, 42, 0.03f, false);
+		Renderer->CreateAnimation("Fire_Right", "EffectAbility1_Right.png", 39, 42, 0.03f, false);
+		Renderer->CreateAnimation("Fire_Left", "EffectAbility1_Left.png", 39, 42, 0.03f, false);
 
 		Renderer->ChangeAnimation(GetAnimationName("Fire"));
 	}

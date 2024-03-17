@@ -25,9 +25,8 @@ void AHUD::SetHUDImage(std::string_view _HUDImageName)
 void AHUD::BeginPlay()
 {
 	Renderer = CreateImageRenderer(KirbyRenderOrder::HUD);
+	SetHUDImage("HUDUI_Normal.png");
 	Renderer->CameraEffectOff();
-
-	SetHUDImage("HUD.png");
 }
 
 void AHUD::Tick(float _DeltaTime)

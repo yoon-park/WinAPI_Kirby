@@ -81,6 +81,12 @@
     <ClInclude Include="Togezo.h">
       <Filter>Object\PlayLevel\Actor\Monster\Power</Filter>
     </ClInclude>
+    <ClInclude Include="Level141.h">
+      <Filter>Object\PlayLevel\Level\Stage4</Filter>
+    </ClInclude>
+    <ClInclude Include="MrFrosty.h">
+      <Filter>Object\PlayLevel\Actor\Monster\Boss</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ContentsCore.cpp" />
@@ -162,6 +168,12 @@
     </ClCompile>
     <ClCompile Include="Togezo.cpp">
       <Filter>Object\PlayLevel\Actor\Monster\Power</Filter>
+    </ClCompile>
+    <ClCompile Include="Level141.cpp">
+      <Filter>Object\PlayLevel\Level\Stage4</Filter>
+    </ClCompile>
+    <ClCompile Include="MrFrosty.cpp">
+      <Filter>Object\PlayLevel\Actor\Monster\Boss</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

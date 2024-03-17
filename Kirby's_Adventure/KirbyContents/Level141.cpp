@@ -1,4 +1,4 @@
-#include "Level112.h"
+#include "Level141.h"
 
 #include <EngineBase\EngineDirectory.h>
 #include <EngineBase\EngineFile.h>
@@ -9,27 +9,23 @@
 #include "Player.h"
 #include "Monster.h"
 #include "FadeOut.h"
-#include "Level141.h"
 
-ULevel112::ULevel112()
+ULevel141::ULevel141()
 {
 
 }
 
-ULevel112::~ULevel112()
+ULevel141::~ULevel141()
 {
 
 }
 
-void ULevel112::BeginPlay()
+void ULevel141::BeginPlay()
 {
 	ULevel::BeginPlay();
-
-	GEngine->CreateLevel<ULevel141>("Level141");
-	SetNextLevel("Level141");
 }
 
-void ULevel112::Tick(float _DeltaTime)
+void ULevel141::Tick(float _DeltaTime)
 {
 	ULevel::Tick(_DeltaTime);
 
@@ -60,11 +56,11 @@ void ULevel112::Tick(float _DeltaTime)
 	SetCameraPos(Pos);
 }
 
-void ULevel112::LevelStart(ULevel* _Level)
+void ULevel141::LevelStart(ULevel* _Level)
 {
 	Map = SpawnActor<ABackGroundMap>();
-	Map->SetMapImage("Stage1-2.png");
-	Map->SetColMapImage("Stage1-2_Col.png");
+	Map->SetMapImage("Stage4-1.png");
+	Map->SetColMapImage("Stage4-1_Col.png");
 
 	Fade = SpawnActor<AFadeOut>();
 	Fade->SetActorLocation({ 400, 375 });
@@ -79,9 +75,9 @@ void ULevel112::LevelStart(ULevel* _Level)
 	Kirby->SetActorLocation({ 200, 200 });
 }
 
-void ULevel112::LevelEnd(ULevel* _Level)
+void ULevel141::LevelEnd(ULevel* _Level)
 {
 	Fade->FadeStart(FadeOption::FadeOut);
 
-	GEngine->DestroyLevel("Level112");
+	GEngine->DestroyLevel("Level141");
 }

@@ -234,10 +234,12 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="Level141.h" />
     <ClInclude Include="Monster.h">
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="MrFrosty.h" />
     <ClInclude Include="Player.h">
       <SubType>
       </SubType>
@@ -345,10 +347,12 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="Level141.cpp" />
     <ClCompile Include="Monster.cpp">
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="MrFrosty.cpp" />
     <ClCompile Include="Player.cpp">
       <SubType>
       </SubType>

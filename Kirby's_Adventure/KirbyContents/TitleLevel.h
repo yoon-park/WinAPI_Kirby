@@ -1,7 +1,7 @@
 #pragma once
-#include <EngineCore\Level.h>
+#include "KirbyLevel.h"
 
-class UTitleLevel : public ULevel
+class UTitleLevel : public UKirbyLevel
 {
 public:
 	UTitleLevel();

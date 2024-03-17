@@ -18,11 +18,11 @@ void AAbsorbEffect::BeginPlay()
 
 	{
 		Renderer = CreateImageRenderer(KirbyRenderOrder::Effect);
-		Renderer->SetImage("EffectAbility_Right.png");
+		Renderer->SetImage("EffectAbility1_Right.png");
 		Renderer->SetTransform({ {0,0}, {256, 256} });
 
-		Renderer->CreateAnimation("Absorb_Effect_Right", "EffectAbility_Right.png", 3, 3, 0.1f, false);
-		Renderer->CreateAnimation("Absorb_Effect_Left", "EffectAbility_Left.png", 3, 3, 0.1f, false);
+		Renderer->CreateAnimation("Absorb_Effect_Right", "EffectAbility1_Right.png", 3, 3, 0.1f, false);
+		Renderer->CreateAnimation("Absorb_Effect_Left", "EffectAbility1_Left.png", 3, 3, 0.1f, false);
 
 		Renderer->ChangeAnimation(GetAnimationName("Absorb_Effect"));
 	}

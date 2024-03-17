@@ -22,9 +22,8 @@ void UContentsCore::BeginPlay()
 	UEngineCore::BeginPlay();
 
 	CreateLevel<UTitleLevel>("TitleLevel");
-	CreateLevel<ULevel111>("Level111");
 
-	ChangeLevel("Level111");
+	ChangeLevel("TitleLevel");
 }
 
 void UContentsCore::Tick(float _DeltaTime)
