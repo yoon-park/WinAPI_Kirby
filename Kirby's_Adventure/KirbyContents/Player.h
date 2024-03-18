@@ -16,11 +16,14 @@ public:
 	static APlayer* GetMainPlayer();
 
 	EActorDir GetDirState() const;
+	EAbiltyType GetActiveAbility() const;
 	bool GetAbsorbActive() const;
 	FVector GetLocationDifference() const;
 
 	void SetStateTimer(float _StateTimer);
+	void SetAttackTimer(float _AttackTimer);
 	void SetCreateEffectTimer(float _CreateEffectTimer);
+	void SetActiveAbility(EAbiltyType _ActiveAbility);
 
 protected:
 	EActorDir DirState = EActorDir::Right;
@@ -34,6 +37,8 @@ protected:
 	bool AbsorbActive = false;
 	bool IsCrashland = false;
 	float StateTimer = 0.0f;
+	float AttackTimer = 0.0f;
+	bool CreateAbility = false;
 	float CreateEffectTimer = 0.07f;
 
 	void BeginPlay() override;

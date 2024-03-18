@@ -50,8 +50,8 @@ void UTitleLevel::BeginPlay()
 		UEngineResourcesManager::GetInst().CuttingImage("Kirby1_Right.png", 10, 7);			// 256 * 256
 		UEngineResourcesManager::GetInst().CuttingImage("Kirby2_Left.png", 10, 4);			// 256 * 256
 		UEngineResourcesManager::GetInst().CuttingImage("Kirby2_Right.png", 10, 4);			// 256 * 256
-		//UEngineResourcesManager::GetInst().CuttingImage("Kirby3_Left.png", 10, 4);			// 256 * 256
-		//UEngineResourcesManager::GetInst().CuttingImage("Kirby3_Right.png", 10, 4);			// 256 * 256
+		UEngineResourcesManager::GetInst().CuttingImage("Kirby3_Left.png", 5, 9);			// 256 * 256
+		UEngineResourcesManager::GetInst().CuttingImage("Kirby3_Right.png", 5, 9);			// 256 * 256
 		UEngineResourcesManager::GetInst().CuttingImage("EffectAbility1_Left.png", 10, 6);	// 256 * 256
 		UEngineResourcesManager::GetInst().CuttingImage("EffectAbility1_Right.png", 10, 6);	// 256 * 256
 		UEngineResourcesManager::GetInst().CuttingImage("EffectAbility2_Left.png", 10, 1);	// 256 * 256
@@ -85,6 +85,7 @@ void UTitleLevel::Tick(float _DeltaTime)
 	if (UEngineInput::IsDown('P'))
 	{
 		GEngine->ChangeLevel("Level111");
+		//GEngine->ChangeLevel("Level141");
 	}
 }
 

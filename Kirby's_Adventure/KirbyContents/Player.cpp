@@ -11,6 +11,8 @@
 #include "Burp.h"
 #include "SpitStar.h"
 #include "AbsorbEffect.h"
+#include "Spark.h"
+#include "Fire.h"
 
 APlayer* APlayer::MainPlayer = nullptr;
 
@@ -120,24 +122,22 @@ void APlayer::BeginPlay()
 		Renderer->CreateAnimation("Breakfall_Absorb_Left", "Kirby1_Left.png", 42, 42, 0.07f, false);
 		Renderer->CreateAnimation("Breakfall_Absorb_Right", "Kirby1_Right.png", 42, 42, 0.07f, false);
 
-		/*
-		Renderer->CreateAnimation("Beam_Ability_Left", "Kirby3_Left", 0, 0, 0.1f, true);
-		Renderer->CreateAnimation("Beam_Ability_Right", "Kirby3_Right", 0, 0, 0.1f, true);
-		Renderer->CreateAnimation("Spark_Ability_Left", "Kirby3_Left", 0, 0, 0.1f, true);
-		Renderer->CreateAnimation("Spark_Ability_Right", "Kirby3_Right", 0, 0, 0.1f, true);
-		Renderer->CreateAnimation("Fire_Ability_Left", "Kirby3_Left", 0, 0, 0.1f, true);
-		Renderer->CreateAnimation("Fire_Ability_Right", "Kirby3_Right", 0, 0, 0.1f, true);
-		Renderer->CreateAnimation("Needle_Ability_Left", "Kirby3_Left", 0, 0, 0.1f, true);
-		Renderer->CreateAnimation("Needle_Ability_Right", "Kirby3_Right", 0, 0, 0.1f, true);
-		Renderer->CreateAnimation("Fireball_Ability_Left", "Kirby3_Left", 0, 0, 0.1f, true);
-		Renderer->CreateAnimation("Fireball_Ability_Right", "Kirby3_Right", 0, 0, 0.1f, true);
-		Renderer->CreateAnimation("Freeze_Ability_Left", "Kirby3_Left", 0, 0, 0.1f, true);
-		Renderer->CreateAnimation("Freeze_Ability_Right", "Kirby3_Right", 0, 0, 0.1f, true);
-		Renderer->CreateAnimation("Sword_Ability_Left", "Kirby3_Left", 0, 0, 0.1f, true);
-		Renderer->CreateAnimation("Sword_Ability_Right", "Kirby3_Right", 0, 0, 0.1f, true);
-		Renderer->CreateAnimation("Crash_Ability_Left", "Kirby3_Left", 0, 0, 0.1f, true);
-		Renderer->CreateAnimation("Crash_Ability_Right", "Kirby3_Right", 0, 0, 0.1f, true);
-		*/
+		//Renderer->CreateAnimation("Beam_Ability_Left", "Kirby3_Left.png", 0, 0, 0.1f, true);
+		//Renderer->CreateAnimation("Beam_Ability_Right", "Kirby3_Right.png", 0, 0, 0.1f, true);
+		Renderer->CreateAnimation("Spark_Ability_Left", "Kirby3_Left.png", 3, 4, 0.03f, true);
+		Renderer->CreateAnimation("Spark_Ability_Right", "Kirby3_Right.png", 3, 4, 0.03f, true);
+		Renderer->CreateAnimation("Fire_Ability_Left", "Kirby3_Left.png", 5, 6, 0.03f, true);
+		Renderer->CreateAnimation("Fire_Ability_Right", "Kirby3_Right.png", 5, 6, 0.03f, true);
+		//Renderer->CreateAnimation("Needle_Ability_Left", "Kirby3_Left.png", 0, 0, 0.1f, true);
+		//Renderer->CreateAnimation("Needle_Ability_Right", "Kirby3_Right.png", 0, 0, 0.1f, true);
+		//Renderer->CreateAnimation("Fireball_Ability_Left", "Kirby3_Left.png", 0, 0, 0.1f, true);
+		//Renderer->CreateAnimation("Fireball_Ability_Right", "Kirby3_Right.png", 0, 0, 0.1f, true);
+		//Renderer->CreateAnimation("Freeze_Ability_Left", "Kirby3_Left.png", 0, 0, 0.1f, true);
+		//Renderer->CreateAnimation("Freeze_Ability_Right", "Kirby3_Right.png", 0, 0, 0.1f, true);
+		//Renderer->CreateAnimation("Sword_Ability_Left", "Kirby3_Left.png", 0, 0, 0.1f, true);
+		//Renderer->CreateAnimation("Sword_Ability_Right", "Kirby3_Right.png", 0, 0, 0.1f, true);
+		//Renderer->CreateAnimation("Crash_Ability_Left", "Kirby3_Left.png", 0, 0, 0.1f, true);
+		//Renderer->CreateAnimation("Crash_Ability_Right", "Kirby3_Right.png", 0, 0, 0.1f, true);
 	}
 	{
 		BodyCollision = CreateCollision(KirbyCollisionOrder::Player);
@@ -180,6 +180,11 @@ EActorDir APlayer::GetDirState() const
 	return DirState;
 }
 
+EAbiltyType APlayer::GetActiveAbility() const
+{
+	return Ability_Active;
+}
+
 bool APlayer::GetAbsorbActive() const
 {
 	return AbsorbActive;
@@ -195,9 +200,19 @@ void APlayer::SetStateTimer(float _StateTimer)
 	StateTimer = _StateTimer;
 }
 
+void APlayer::SetAttackTimer(float _AttackTimer)
+{
+	AttackTimer = _AttackTimer;
+}
+
 void APlayer::SetCreateEffectTimer(float _CreateEffectTimer)
 {
 	CreateEffectTimer = _CreateEffectTimer;
+}
+
+void APlayer::SetActiveAbility(EAbiltyType _ActiveAbility)
+{
+	Ability_Active = _ActiveAbility;
 }
 
 void APlayer::DirCheck()
@@ -1724,7 +1739,7 @@ void APlayer::Digest(float _DeltaTime)
 	{
 		IsAbsorb = false;
 
-		StateChange(EPlayState::Attack);
+		StateChange(EPlayState::Idle);
 		return;
 	}
 
@@ -1764,13 +1779,69 @@ void APlayer::Spit(float _DeltaTime)
 
 void APlayer::Attack(float _DeltaTime)
 {
+	if (UEngineInput::IsFree('Z'))
+	{
+		StateChange(EPlayState::Idle);
+		return;
+	}
+
+	if (AttackTimer <= 0.0f)
+	{
+		SetAttackTimer(1.0f);
+		SetCreateEffectTimer(1.0f);
+	}
+	AttackTimer -= _DeltaTime;
+
 	if (Ability_Active == EAbiltyType::Spark)
 	{
-		
+		if ((CreateEffectTimer - AttackTimer) >= 0.03f)
+		{
+			CreateEffectTimer = AttackTimer;
+			CreateAbility = true;
+		}
+
+		if (CreateAbility == true)
+		{
+			float AddPosX = UEngineRandom::MainRandom.RandomFloat(-50.0f, 50.0f);
+			float AddPosY = UEngineRandom::MainRandom.RandomFloat(-50.0f, 50.0f);
+			FVector AbilityPos = { GetActorLocation().X + AddPosX, GetActorLocation().Y + AddPosY };
+
+			ASpark* Spark = GetWorld()->SpawnActor<ASpark>();
+			Spark->SetOwner(this);
+			Spark->SetActorType(EActorType::Ability);
+			Spark->SetActorLocation(AbilityPos);
+			Spark->SetDirState(GetDirState());
+
+			CreateAbility = false;
+		}
 	}
 	else if (Ability_Active == EAbiltyType::Fire)
 	{
+		if ((CreateEffectTimer - AttackTimer) >= 0.03f)
+		{
+			CreateEffectTimer = AttackTimer;
+			CreateAbility = true;
+		}
 
+		if (CreateAbility == true)
+		{
+			float AddPosX = UEngineRandom::MainRandom.RandomFloat(30.0f, 120.0f);
+			if (DirState == EActorDir::Left)
+			{
+				AddPosX = -AddPosX;
+			}
+			float AddPosY = UEngineRandom::MainRandom.RandomFloat(-20.0f, 15.0f);
+
+			FVector AbilityPos = { GetActorLocation().X + AddPosX, GetActorLocation().Y + AddPosY };
+
+			AFire* Fire = GetWorld()->SpawnActor<AFire>();
+			Fire->SetOwner(this);
+			Fire->SetActorType(EActorType::Ability);
+			Fire->SetActorLocation(AbilityPos);
+			Fire->SetDirState(GetDirState());
+
+			CreateAbility = false;
+		}
 	}
 
 	MoveUpdate(_DeltaTime, true, false, false);
@@ -2052,7 +2123,7 @@ void APlayer::SlideStart()
 		AddPos = { 30, -25 };
 	}
 
-	AttackCollision = CreateCollision(KirbyCollisionOrder::Player);
+	AttackCollision = CreateCollision(KirbyCollisionOrder::PlayerAbility);
 	AttackCollision->SetColType(ECollisionType::Rect);
 	AttackCollision->SetTransform({ AddPos, { 20, 50 } });
 }
@@ -2168,9 +2239,16 @@ void APlayer::SpitStart()
 
 void APlayer::AttackStart()
 {
+	SetAttackTimer(1.0f);
+	SetCreateEffectTimer(1.0f);
+
 	if (Ability_Active == EAbiltyType::Spark)
 	{
-		int a = 0;
+		Renderer->ChangeAnimation(GetAnimationName("Spark_Ability"));
+	}
+	else if (Ability_Active == EAbiltyType::Fire)
+	{
+		Renderer->ChangeAnimation(GetAnimationName("Fire_Ability"));
 	}
 	
 	DashOff();

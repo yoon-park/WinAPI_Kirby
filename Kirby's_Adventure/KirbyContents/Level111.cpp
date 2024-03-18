@@ -4,6 +4,7 @@
 #include <EngineBase\EngineFile.h>
 #include <EnginePlatform/EngineInput.h>
 #include <EngineCore\EngineResourcesManager.h>
+#include "ContentsHelper.h"
 #include "Level112.h"
 #include "BackGroundMap.h"
 #include "HUD.h"
@@ -76,11 +77,13 @@ void ULevel111::LevelStart(ULevel* _Level)
 	Fade->FadeStart(FadeOption::FadeIn);
 
 	AHUD* HUD = SpawnActor<AHUD>();
+	HUD->SetHUDImage("HUDUI_Normal.png");
 
 	APlayer* Kirby = SpawnActor<APlayer>();
 	Kirby->SetName("Kirby");
 	Kirby->SetActorType(EActorType::Player);
 	Kirby->SetActorLocation({ 200, 200 });
+	Kirby->SetActiveAbility(UContentsHelper::KirbyAbilityType);
 
 	AWaddleDee* WaddleDee = SpawnActor<AWaddleDee>();
 	WaddleDee->SetName("WaddleDee");
@@ -95,22 +98,18 @@ void ULevel111::LevelStart(ULevel* _Level)
 	APoppyBrosJr* PoppyBrosJr = SpawnActor<APoppyBrosJr>();
 	PoppyBrosJr->SetName("PoppyBrosJr");
 	PoppyBrosJr->SetActorType(EActorType::Monster);
-	PoppyBrosJr->SetActorLocation({ 1500, 350 });
-
-	ASparky* Sparky = SpawnActor<ASparky>();
-	Sparky->SetName("Sparky");
-	Sparky->SetActorType(EActorType::Monster);
-	Sparky->SetActorLocation({ 1500, 350 });
+	PoppyBrosJr->SetActorLocation({ 3000, 350 });
 
 	AHotHead* HotHead = SpawnActor<AHotHead>();
 	HotHead->SetName("HotHead");
 	HotHead->SetActorType(EActorType::Monster);
-	HotHead->SetActorLocation({ 500, 350 });
+	HotHead->SetActorLocation({ 3000, 350 });
 }
 
 void ULevel111::LevelEnd(ULevel* _Level)
 {
 	Fade->FadeStart(FadeOption::FadeOut);
 	
+	UContentsHelper::KirbyAbilityType = APlayer::GetMainPlayer()->GetActiveAbility();
 	GEngine->DestroyLevel("Level111");
 }

@@ -2,6 +2,7 @@
 
 #include "ContentsHelper.h"
 #include "Player.h"
+#include "DisappearEffect.h"
 
 AMonster::AMonster()
 {
@@ -52,6 +53,8 @@ void AMonster::StateChange(EMonsterState _State)
 		case EMonsterState::Absorb:
 			AbsorbStart();
 			break;
+		case EMonsterState::Dead:
+			DeadStart();
 		default:
 			break;
 		}
@@ -85,6 +88,8 @@ void AMonster::StateUpdate(float _DeltaTime)
 	case EMonsterState::Absorb:
 		Absorb(_DeltaTime);
 		break;
+	case EMonsterState::Dead:
+		Dead(_DeltaTime);
 	default:
 		break;
 	}
@@ -229,6 +234,11 @@ void AMonster::AbsorbStart()
 	GravityVector = FVector::Zero;
 }
 
+void AMonster::DeadStart()
+{
+
+}
+
 void AMonster::Idle(float _DeltaTime)
 {
 
@@ -272,6 +282,11 @@ void AMonster::Absorb(float _DeltaTime)
 	MoveVector += MonsterDirNormal * _DeltaTime * 2000.0f;
 	
 	MoveUpdate(_DeltaTime, false, false, false);
+}
+
+void AMonster::Dead(float _DeltaTime)
+{
+
 }
 
 void AMonster::DirCheck()
@@ -447,6 +462,26 @@ bool AMonster::AbsorbCheck()
 	return false;
 }
 
+bool AMonster::AttackCheck()
+{
+	std::vector<UCollision*> Result;
+	if (BodyCollision->CollisionCheck(KirbyCollisionOrder::PlayerAbility, Result) == true)
+	{
+		UCollision* Collision = Result[0];
+		AActor* Ptr = Collision->GetOwner();
+		APlayer* Player = dynamic_cast<APlayer*>(Ptr);
+
+		/*if (Player == nullptr)
+		{
+			MsgBoxAssert("Player가 존재하지 않습니다.");
+		}*/
+
+		return true;
+	}
+
+	return false;
+}
+
 bool AMonster::DetectCheck()
 {
 	std::vector<UCollision*> Result;
@@ -526,4 +561,9 @@ void AMonster::SetAttackTimer(float _AttackTimer)
 void AMonster::SetCreateAbilityTimer(float _CreateAbilityTimer)
 {
 	CreateAbilityTimer = _CreateAbilityTimer;
+}
+
+void AMonster::SubHealthCount()
+{
+	HealthCount -= 1;
 }

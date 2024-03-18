@@ -15,6 +15,7 @@ public:
 
 	EActorDir GetDirState() const;
 	EAbiltyType GetAbility() const;
+	void SubHealthCount();
 
 protected:
 	EActorDir DirState = EActorDir::Left;
@@ -46,6 +47,7 @@ protected:
 
 	bool CreateAbility = false;
 	float CreateAbilityTimer = 3.0f;
+	int HealthCount = 200;
 
 	void BeginPlay() override;
 	void Tick(float _DeltaTime) override;
@@ -64,6 +66,7 @@ protected:
 	virtual void FallStart();
 	virtual void AttackStart();
 	virtual void AbsorbStart();
+	virtual void DeadStart();
 
 	virtual void Idle(float _DeltaTime);
 	virtual void Move(float _DeltaTime);
@@ -72,6 +75,7 @@ protected:
 	virtual void Fall(float _DeltaTime);
 	virtual void Attack(float _DeltaTime);
 	virtual void Absorb(float _DeltaTime);
+	virtual void Dead(float _DeltaTime);
 
 	virtual void DirCheck();
 	virtual void UpDownDirCheck();
@@ -79,6 +83,7 @@ protected:
 	bool IsGroundCheck(FVector _Pos);
 	bool IsWallCheck();
 	bool AbsorbCheck();
+	bool AttackCheck();
 	bool DetectCheck();
 	std::string GetAnimationName(std::string _Name);
 

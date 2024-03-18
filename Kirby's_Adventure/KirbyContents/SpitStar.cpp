@@ -1,6 +1,7 @@
 #include "SpitStar.h"
 
 #include "Monster.h"
+#include "DisappearEffect.h"
 
 ASpitStar::ASpitStar()
 {
@@ -37,25 +38,12 @@ void ASpitStar::Tick(float _DeltaTime)
 {
 	AAbility::Tick(_DeltaTime);
 
-	std::vector<UCollision*> Result;
-	if (AttackCollision->CollisionCheck(KirbyCollisionOrder::Monster, Result) == true)
-	{
-		UCollision* Collision = Result[0];
-		AActor* Ptr = Collision->GetOwner();
-		AMonster* Monster = dynamic_cast<AMonster*>(Ptr);
-
-		if (Monster == nullptr)
-		{
-			MsgBoxAssert("Monster가 존재하지 않습니다.");
-		}
-
-		Monster->Destroy();
-		Destroy();
-		return;
-	}
-
 	if (IsWallCheck() == true)
 	{
+		ADisappearEffect* DisappearEffect = GetWorld()->SpawnActor<ADisappearEffect>();
+		DisappearEffect->SetActorType(EActorType::Effect);
+		DisappearEffect->SetActorLocation(GetActorLocation());
+
 		Destroy();
 		return;
 	}

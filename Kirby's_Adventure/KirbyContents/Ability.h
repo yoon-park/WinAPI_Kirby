@@ -31,6 +31,7 @@ protected:
 
 	void DirCheck();
 	virtual bool IsWallCheck();
+	void AttackCheck();
 	std::string GetAnimationName(std::string _Name);
 
 private:

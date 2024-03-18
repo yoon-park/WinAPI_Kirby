@@ -2,6 +2,7 @@
 
 #include "Player.h"
 #include "Monster.h"
+#include "DisappearEffect.h"
 
 AAbility::AAbility()
 {
@@ -21,6 +22,8 @@ void AAbility::BeginPlay()
 void AAbility::Tick(float _DeltaTime)
 {
 	AActor::Tick(_DeltaTime);
+
+	AttackCheck();
 }
 
 void AAbility::DirCheck()
@@ -96,4 +99,48 @@ void AAbility::SetDirState(EActorDir _DirState)
 
 	std::string Name = GetAnimationName(CurAnimationName);
 	Renderer->ChangeAnimation(Name, true, Renderer->GetCurAnimationFrame(), Renderer->GetCurAnimationTime());
+}
+
+void AAbility::AttackCheck()
+{
+	if (Owner->GetActorType() == EActorType::Player)
+	{
+		std::vector<UCollision*> Result;
+
+		if (AttackCollision->CollisionCheck(KirbyCollisionOrder::Monster, Result) == true)
+		{
+			UCollision* Collision = Result[0];
+			AActor* Ptr = Collision->GetOwner();
+			AMonster* Monster = dynamic_cast<AMonster*>(Ptr);
+
+			if (Monster == nullptr)
+			{
+				MsgBoxAssert("Monster가 존재하지 않습니다.");
+			}
+
+			ADisappearEffect* DisappearEffect = GetWorld()->SpawnActor<ADisappearEffect>();
+			DisappearEffect->SetActorType(EActorType::Effect);
+			DisappearEffect->SetActorLocation(GetActorLocation());
+
+			Monster->Destroy();
+
+			return;
+		}
+
+		if (AttackCollision->CollisionCheck(KirbyCollisionOrder::BossMonster, Result) == true)
+		{
+			UCollision* Collision = Result[0];
+			AActor* Ptr = Collision->GetOwner();
+			AMonster* Monster = dynamic_cast<AMonster*>(Ptr);
+
+			if (Monster == nullptr)
+			{
+				MsgBoxAssert("Monster가 존재하지 않습니다.");
+			}
+
+			Monster->SubHealthCount();
+
+			return;
+		}
+	}
 }

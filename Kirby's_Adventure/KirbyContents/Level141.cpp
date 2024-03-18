@@ -9,6 +9,7 @@
 #include "Player.h"
 #include "Monster.h"
 #include "FadeOut.h"
+#include "MrFrosty.h"
 
 ULevel141::ULevel141()
 {
@@ -68,16 +69,24 @@ void ULevel141::LevelStart(ULevel* _Level)
 	Fade->FadeStart(FadeOption::FadeIn);
 
 	AHUD* HUD = SpawnActor<AHUD>();
+	HUD->SetHUDImage("HUDUI_Boss.png");
 
 	APlayer* Kirby = SpawnActor<APlayer>();
 	Kirby->SetName("Kirby");
 	Kirby->SetActorType(EActorType::Player);
 	Kirby->SetActorLocation({ 200, 200 });
+	Kirby->SetActiveAbility(UContentsHelper::KirbyAbilityType);
+
+	AMrFrosty* MrFrosty = SpawnActor<AMrFrosty>();
+	MrFrosty->SetName("HotHead");
+	MrFrosty->SetActorType(EActorType::Monster);
+	MrFrosty->SetActorLocation({ 500, 350 });
 }
 
 void ULevel141::LevelEnd(ULevel* _Level)
 {
 	Fade->FadeStart(FadeOption::FadeOut);
 
+	UContentsHelper::KirbyAbilityType = APlayer::GetMainPlayer()->GetActiveAbility();
 	GEngine->DestroyLevel("Level141");
 }

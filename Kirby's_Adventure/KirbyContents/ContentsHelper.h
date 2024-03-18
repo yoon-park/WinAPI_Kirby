@@ -20,6 +20,7 @@ enum class KirbyCollisionOrder
 	MonsterAbilty,
 	PlayerAbility,
 	Monster,
+	BossMonster,
 	PlayerAbsorb,
 	Player,
 	Detect
@@ -40,6 +41,7 @@ enum class EActorType
 	Monster,
 	Ability,
 	Effect,
+	Item,
 };
 
 enum class EPlayState
@@ -76,6 +78,7 @@ enum class EMonsterState
 	Fall,
 	Attack,
 	Absorb,
+	Dead,
 };
 
 enum class EAbiltyType
@@ -105,6 +108,7 @@ class UContentsHelper
 {
 public:
 	static UWindowImage* ColMapImage;
+	static EAbiltyType KirbyAbilityType;
 
 private:
 	UContentsHelper();

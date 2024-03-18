@@ -37,23 +37,6 @@ void ABurp::Tick(float _DeltaTime)
 {
 	AAbility::Tick(_DeltaTime);
 
-	std::vector<UCollision*> Result;
-	if (AttackCollision->CollisionCheck(KirbyCollisionOrder::Monster, Result) == true)
-	{
-		UCollision* Collision = Result[0];
-		AActor* Ptr = Collision->GetOwner();
-		AMonster* Monster = dynamic_cast<AMonster*>(Ptr);
-
-		if (Monster == nullptr)
-		{
-			MsgBoxAssert("Monster가 존재하지 않습니다.");
-		}
-
-		Monster->Destroy();
-		Destroy();
-		return;
-	}
-
 	if (
 		DirState == EActorDir::Left && MoveVector.X > 0.0f || 
 		DirState == EActorDir::Right && MoveVector.X < 0.0f ||

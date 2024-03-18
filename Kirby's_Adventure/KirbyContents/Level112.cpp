@@ -10,6 +10,7 @@
 #include "Monster.h"
 #include "FadeOut.h"
 #include "Level141.h"
+#include "Sparky.h"
 
 ULevel112::ULevel112()
 {
@@ -72,16 +73,24 @@ void ULevel112::LevelStart(ULevel* _Level)
 	Fade->FadeStart(FadeOption::FadeIn);
 
 	AHUD* HUD = SpawnActor<AHUD>();
+	HUD->SetHUDImage("HUDUI_Normal.png");
 
 	APlayer* Kirby = SpawnActor<APlayer>();
 	Kirby->SetName("Kirby");
 	Kirby->SetActorType(EActorType::Player);
 	Kirby->SetActorLocation({ 200, 200 });
+	Kirby->SetActiveAbility(UContentsHelper::KirbyAbilityType);
+
+	ASparky* Sparky = SpawnActor<ASparky>();
+	Sparky->SetName("Sparky");
+	Sparky->SetActorType(EActorType::Monster);
+	Sparky->SetActorLocation({ 300, 200 });
 }
 
 void ULevel112::LevelEnd(ULevel* _Level)
 {
 	Fade->FadeStart(FadeOption::FadeOut);
 
+	UContentsHelper::KirbyAbilityType = APlayer::GetMainPlayer()->GetActiveAbility();
 	GEngine->DestroyLevel("Level112");
 }
