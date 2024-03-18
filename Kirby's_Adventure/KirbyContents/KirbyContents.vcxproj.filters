@@ -93,6 +93,9 @@
     <ClInclude Include="DisappearEffect.h">
       <Filter>Object\PlayLevel\Actor\Effect</Filter>
     </ClInclude>
+    <ClInclude Include="AbilityStarEffect.h">
+      <Filter>Object\PlayLevel\Actor\Effect</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ContentsCore.cpp" />
@@ -185,6 +188,9 @@
       <Filter>Object\PlayLevel\Actor\Item</Filter>
     </ClCompile>
     <ClCompile Include="DisappearEffect.cpp">
+      <Filter>Object\PlayLevel\Actor\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="AbilityStarEffect.cpp">
       <Filter>Object\PlayLevel\Actor\Effect</Filter>
     </ClCompile>
   </ItemGroup>

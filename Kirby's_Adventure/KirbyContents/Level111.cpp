@@ -98,7 +98,7 @@ void ULevel111::LevelStart(ULevel* _Level)
 	APoppyBrosJr* PoppyBrosJr = SpawnActor<APoppyBrosJr>();
 	PoppyBrosJr->SetName("PoppyBrosJr");
 	PoppyBrosJr->SetActorType(EActorType::Monster);
-	PoppyBrosJr->SetActorLocation({ 3000, 350 });
+	PoppyBrosJr->SetActorLocation({ 400, 350 });
 
 	AHotHead* HotHead = SpawnActor<AHotHead>();
 	HotHead->SetName("HotHead");

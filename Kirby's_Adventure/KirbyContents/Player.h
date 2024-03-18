@@ -54,6 +54,7 @@ protected:
 	bool IsDoorCheck();
 	void DashOn();
 	void DashOff();
+	void DeleteAbility();
 	std::string GetAnimationName(std::string _Name);
 
 	void StateUpdate(float _DeltaTime);

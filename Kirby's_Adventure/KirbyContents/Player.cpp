@@ -11,6 +11,7 @@
 #include "Burp.h"
 #include "SpitStar.h"
 #include "AbsorbEffect.h"
+#include "AbilityStarEffect.h"
 #include "Spark.h"
 #include "Fire.h"
 
@@ -426,6 +427,27 @@ void APlayer::DashOff()
 	MoveMaxSpeed = 300.0f;
 }
 
+void APlayer::DeleteAbility()
+{
+	Ability_Active = EAbiltyType::None;
+
+	float AddPosX = UEngineRandom::MainRandom.RandomFloat(-50.0f, 50.0f);
+	float AddPosY = UEngineRandom::MainRandom.RandomFloat(-50.0f, 0.0f);
+	FVector AbilityPos = { GetActorLocation().X + AddPosX, GetActorLocation().Y + AddPosY };
+
+	AAbilityStarEffect* AbilityStarEffect = GetWorld()->SpawnActor<AAbilityStarEffect>();
+	AbilityStarEffect->SetOwner(this);
+	AbilityStarEffect->SetActorType(EActorType::Effect);
+	AbilityStarEffect->SetActorLocation(AbilityPos);
+	AbilityStarEffect->SetDirState(GetDirState());
+
+	FVector PlayerPos = { GetActorLocation().X, GetActorLocation().Y - 20 };
+	FVector EffectPos = AbilityStarEffect->GetActorLocation();
+	FVector EffectDir = PlayerPos - EffectPos;
+
+	AbilityStarEffect->SetEffectDirNormal(EffectDir.Normalize2DReturn());
+}
+
 std::string APlayer::GetAnimationName(std::string _Name)
 {
 	std::string DirName = "";
@@ -760,6 +782,11 @@ void APlayer::Idle(float _DeltaTime)
 		}
 	}
 
+	if (Ability_Active != EAbiltyType::None && UEngineInput::IsDown(VK_LSHIFT))
+	{
+		DeleteAbility();
+	}
+
 	MoveUpdate(_DeltaTime, true, true, true);
 }
 
@@ -854,6 +881,11 @@ void APlayer::Run(float _DeltaTime)
 	{
 		StateChange(EPlayState::Squeeze);
 		return;
+	}
+
+	if (Ability_Active != EAbiltyType::None && UEngineInput::IsDown(VK_LSHIFT))
+	{
+		DeleteAbility();
 	}
 
 	if (UEngineInput::IsFree(VK_LEFT) && UEngineInput::IsFree(VK_RIGHT))
@@ -1136,6 +1168,11 @@ void APlayer::Dash(float _DeltaTime)
 		}
 	}
 
+	if (Ability_Active != EAbiltyType::None && UEngineInput::IsDown(VK_LSHIFT))
+	{
+		DeleteAbility();
+	}
+
 	if (UEngineInput::IsPress(VK_LEFT))
 	{
 		AddMoveVector(FVector::Left * _DeltaTime);
@@ -1242,6 +1279,11 @@ void APlayer::Jump(float _DeltaTime)
 			StateChange(EPlayState::Spit);
 			return;
 		}
+	}
+
+	if (Ability_Active != EAbiltyType::None && UEngineInput::IsDown(VK_LSHIFT))
+	{
+		DeleteAbility();
 	}
 
 	if (UEngineInput::IsFree('X'))
